@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--TextView
+        android:layout_width="wrap_content"
+        android:layout_height="145dp"
+        android:text="Hello World!"
+        tools:layout_editor_absoluteX="196dp"
+        tools:layout_editor_absoluteY="107dp" /-->
+    <ImageView
+        android:id="@+id/imageForest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/forest" />
+
+    <ImageView
+        android:id="@+id/imageUnicorn"
+        android:layout_width="440dp"
+        android:layout_height="418dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="196dp"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:src="@drawable/unicorn"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/bubble"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="297dp"
+        android:layout_marginTop="75dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/sprechblase"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/bubbleText"
+        android:layout_width="128dp"
+        android:layout_height="151dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="403dp"
+        android:layout_marginTop="85dp"
+        android:gravity="center"
+        android:text="Hallo!"
+        android:textColor="#000000"
+        android:textSize="20pt"
+        android:visibility="invisible" />
+
+
+</RelativeLayout>
