@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DragAndDropActivity"
+            android:label="@string/title_activity_drag_and_drop"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"></activity>
+        <activity
+            android:name=".DragActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_drag"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/FullscreenTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="research.educational.thiessen.learningappmock.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

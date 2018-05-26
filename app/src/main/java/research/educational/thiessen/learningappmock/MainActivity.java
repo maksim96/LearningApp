@@ -1,6 +1,7 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -81,5 +82,13 @@ public class MainActivity extends Activity {
                             }
                         }
                 );
+
+        bubbleText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DragActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
