@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00cc64"
+    tools:context=".Task1"
+    android:id="@+id/drag_root">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/forest2" />
+
+
+    <ImageView
+        android:id="@+id/squirrel"
+        android:layout_width="164dp"
+        android:layout_height="216dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="65dp"
+        android:layout_marginStart="169dp"
+        android:src="@drawable/squirrel" />
+
+    <ImageView
+        android:id="@+id/bag"
+        android:layout_width="278dp"
+        android:layout_height="486dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="411dp"
+        android:src="@drawable/bag2" />
+
+    <ImageView
+        android:id="@+id/honey1"
+        android:layout_width="105dp"
+        android:layout_height="109dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="181dp"
+        android:layout_marginEnd="540dp"
+        android:src="@drawable/honey"
+        android:visibility="invisible"
+        android:alpha="0.2"/>
+
+    <ImageView
+        android:id="@+id/honey2"
+        android:layout_width="119dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="116dp"
+        android:layout_marginEnd="430dp"
+        android:src="@drawable/honey"
+        android:visibility="invisible"
+        android:alpha="0.2"/>
+
+
+
+    <ImageView
+        android:id="@+id/bubbleBear"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="152dp"
+        android:layout_marginTop="118dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/sprechblase" />
+
+    <TextView
+        android:id="@+id/textViewBear"
+        android:layout_width="179dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="267dp"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:text="Hallo Eichhörnchen, kannst du mir helfen?"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:typeface="sans"
+        tools:text="Hallo Eichhörnchen, kannst du mir helfen?" />
+
+
+    <ImageView
+        android:id="@+id/bear"
+        android:layout_width="187dp"
+        android:layout_height="261dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/honeyEdit"
+        android:layout_marginEnd="58dp"
+        android:src="@drawable/bear" />
+
+    <ImageView
+        android:id="@+id/sign"
+        android:layout_width="513dp"
+        android:layout_height="350dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="166dp"
+        android:src="@drawable/sign" />
+
+    <EditText
+        android:id="@+id/honeyEdit"
+        android:layout_width="199dp"
+        android:layout_height="184dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="193dp"
+        android:layout_marginTop="207dp"
+        android:background="#80FFFFFF"
+        android:ems="10"
+        android:maxLength="4"
+        android:inputType="numberPassword"
+        android:textAlignment="center"
+        android:textSize="72dp" />
+
+    <ImageView
+        android:id="@+id/bubbleSquirrel"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="291dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/sprechblase_left"
+        android:visibility="invisible" />
+
+
+    <TextView
+        android:id="@+id/textViewSquirrel"
+        android:layout_width="179dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="399dp"
+        android:layout_marginTop="279dp"
+        android:gravity="center"
+        android:text="Ja klar, kannst du dem Bären helfen?"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:typeface="sans"
+        android:visibility="invisible" />
+
+
+</RelativeLayout>
