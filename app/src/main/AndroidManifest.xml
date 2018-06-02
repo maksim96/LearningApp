@@ -10,11 +10,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DragAndDropActivity"
@@ -23,14 +19,16 @@
             android:supportsRtl="true"
             android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"></activity>
         <activity
-            android:name=".DragActivity"
+            android:name=".Task1"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_drag"
             android:parentActivityName=".MainActivity"
             android:theme="@style/FullscreenTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="research.educational.thiessen.learningappmock.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -2,13 +2,10 @@ package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -86,7 +83,7 @@ public class MainActivity extends Activity {
         bubbleText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), DragActivity.class);
+                Intent intent = new Intent(view.getContext(), Task1.class);
                 startActivity(intent);
             }
         });

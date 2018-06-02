@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00cc64"
-    tools:context=".DragActivity"
+    tools:context=".Task1"
     android:id="@+id/drag_root">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -21,18 +21,10 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/forest" />
 
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="53dp"
-        android:layout_marginEnd="237dp"
-        android:src="@drawable/sack" />
+
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/squirrel"
         android:layout_width="136dp"
         android:layout_height="216dp"
         android:layout_alignParentBottom="true"
@@ -51,13 +43,22 @@
         android:src="@drawable/tree" />
 
     <ImageView
+        android:id="@+id/bag"
+        android:layout_width="185dp"
+        android:layout_height="311dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="53dp"
+        android:layout_marginEnd="237dp"
+        android:src="@drawable/sack" />
+    <ImageView
         android:id="@+id/nuts4"
         android:layout_width="147dp"
         android:layout_height="144dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginStart="370dp"
+        android:layout_marginTop="250dp"
         android:src="@drawable/nuts" />
 
     <ImageView
@@ -66,7 +67,7 @@
         android:layout_height="144dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="342dp"
+        android:layout_marginStart="400dp"
         android:layout_marginTop="154dp"
         android:src="@drawable/nuts" />
 
@@ -75,8 +76,10 @@
         android:layout_width="147dp"
         android:layout_height="144dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="-317dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginStart="700dp"
+        android:layout_marginTop="200dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
         android:src="@drawable/nuts" />
 
     <ImageView
@@ -89,6 +92,30 @@
         android:layout_marginTop="124dp"
         android:src="@drawable/nuts" />
 
+    <ImageView
+        android:id="@+id/bubble"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="135dp"
+        android:layout_marginStart="293dp"
+        android:src="@drawable/sprechblase_left" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="179dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="201dp"
+        android:layout_marginStart="380dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:typeface="sans"
+        tools:text="Hallo, kannst du mir helfen?" />
 
 
 </RelativeLayout>
