@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00cc64"
-    tools:context=".Task1"
-    android:id="@+id/drag_root">
+    tools:context=".Task2"
+    android:id="@+id/task2_root">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -82,11 +82,11 @@
 
     <TextView
         android:id="@+id/textViewBear"
-        android:layout_width="179dp"
+        android:layout_width="218dp"
         android:layout_height="150dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="267dp"
+        android:layout_marginEnd="228dp"
         android:layout_marginTop="150dp"
         android:gravity="center"
         android:text="Hallo Eichhörnchen, kannst du mir helfen?"
@@ -152,6 +152,39 @@
         android:layout_marginTop="279dp"
         android:gravity="center"
         android:text="Ja klar, kannst du dem Bären helfen?"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:typeface="sans"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/bunny"
+        android:layout_width="218dp"
+        android:layout_height="324dp"
+        android:layout_alignBottom="@+id/squirrel"
+        android:layout_alignEnd="@+id/textViewSquirrel"
+        android:src="@drawable/bunny"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/bunnyBubble"
+        android:layout_width="398dp"
+        android:layout_height="324dp"
+        android:layout_above="@+id/bear"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="385dp"
+        android:src="@drawable/sprechblase_left"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewBunny"
+        android:layout_width="293dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="140dp"
+        android:layout_toEndOf="@+id/textViewSquirrel"
+        android:gravity="center"
+        android:text="Ich habe auch noch 2 Viererbündel Karotten im Sack."
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         android:typeface="sans"

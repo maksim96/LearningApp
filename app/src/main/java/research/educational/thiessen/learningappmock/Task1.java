@@ -1,6 +1,7 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -29,7 +30,7 @@ public class Task1 extends Activity {
 
         setContentView(R.layout.activity_task1);
 
-        rootLayout = (ViewGroup) findViewById(R.id.drag_root);
+        rootLayout = findViewById(R.id.task1_root);
         bag = findViewById(R.id.bag);
 
         nuts = new ImageView[4];
@@ -75,18 +76,22 @@ public class Task1 extends Activity {
         @Override
         public void onClick(View view) {
             bubbleSetVisible(true);
-            if (firstClicked) {
+            if (firstClicked && nutCount != 6) {
                 firstClicked = false;
                 textView.setText("Könntest du mir 6 Nüsse in meinen Beutel tun?");
 
+            } else if (firstClicked && nutCount == 6) {
+                Intent intent = new Intent(view.getContext(), Task2.class);
+                startActivity(intent);
             } else {
-                if (nutCount < 6) {
-                    textView.setText("Ich brauche ein paar mehr Nüsse");
-                } else if (nutCount == 6) {
-                    textView.setText("Wow! Vielen Dank!");
-                } else {
-                    textView.setText("So viele brauche ich doch gar nicht...");
-                }
+                    if (nutCount < 6) {
+                        textView.setText("Ich brauche ein paar mehr Nüsse");
+                    } else if (nutCount == 6) {
+                        textView.setText("Wow! Vielen Dank!");
+                        firstClicked = true;
+                    } else {
+                        textView.setText("So viele brauche ich doch gar nicht...");
+                    }
             }
 
         }
@@ -181,10 +186,6 @@ public class Task1 extends Activity {
         // are available.
     }
 
-    private int getPx(float dp) {
-        float density = rootLayout.getContext().getResources().getDisplayMetrics().density;
-        return (int)((dp * density) + 0.5);
-    }
 
 
 

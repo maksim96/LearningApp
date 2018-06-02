@@ -27,21 +27,38 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/FullscreenTheme"
             android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
             android:name=".Task2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_drag"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Task1"
             android:theme="@style/FullscreenTheme"
             android:screenOrientation="landscape">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".Task3"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_drag"
+            android:parentActivityName=".Task2"
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape">
+
+
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

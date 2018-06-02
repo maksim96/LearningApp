@@ -1,8 +1,10 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import research.educational.thiessen.learningappmock.helpers.NumericKeyBoardTransformationMethod;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -32,6 +36,11 @@ public class Task2 extends Activity {
     private ImageView bear;
     private ImageView honey1;
     private ImageView honey2;
+    private ImageView bunny;
+    private ImageView bubbleBunny;
+    private TextView textViewBunny;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +52,7 @@ public class Task2 extends Activity {
 
         setContentView(R.layout.activity_task2);
 
-        rootLayout = (ViewGroup) findViewById(R.id.drag_root);
+        rootLayout = (ViewGroup) findViewById(R.id.task2_root);
         rootLayout.setOnClickListener(new GlobalOnTouchListener());
 
         textViewBear = findViewById(R.id.textViewBear);
@@ -53,7 +62,9 @@ public class Task2 extends Activity {
         bear = findViewById(R.id.bear);
         honey1 = findViewById(R.id.honey1);
         honey2 = findViewById(R.id.honey2);
-
+        bunny = findViewById(R.id.bunny);
+        bubbleBunny = findViewById(R.id.bunnyBubble);
+        textViewBunny = findViewById(R.id.textViewBunny);
 
         honeyEditText = findViewById(R.id.honeyEdit);
         honeyEditText.setTransformationMethod(new NumericKeyBoardTransformationMethod());
@@ -82,11 +93,41 @@ public class Task2 extends Activity {
                         if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                                 actionId == EditorInfo.IME_ACTION_DONE) {
                                 // the user is done typing.
+                            if (situation < 3) {
                                 if (honeyEditText.getText().toString().equals("6")) {
                                     textViewBear.setText("Ja, richtig!");
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //do this after 3 seconds first
+                                            textViewBear.setVisibility(View.INVISIBLE);
+                                            bubbleBear.setVisibility(View.INVISIBLE);
+                                            textViewBunny.setVisibility(View.VISIBLE);
+                                            bunny.setVisibility(View.VISIBLE);
+                                            bubbleBunny.setVisibility(View.VISIBLE);
+                                            situation = 3;
+                                        }
+                                    }, 3000);
                                 } else {
                                     textViewBear.setText("Bist du sicher?");
                                 }
+                            } else {
+                                if (honeyEditText.getText().toString().equals("8")) {
+                                    textViewBunny.setText("Ja, super!");
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(textViewBunny.getContext(), Task3.class);
+                                            startActivity(intent);
+                                        }
+                                    }, 3000);
+                                } else {
+                                    textViewBunny.setText("Bist du sicher?");
+                                }
+                            }
+
                                 InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
                                 return true; // consume.
@@ -223,18 +264,7 @@ public class Task2 extends Activity {
         // are available.
     }
 
-    private int getPx(float dp) {
-        float density = rootLayout.getContext().getResources().getDisplayMetrics().density;
-        return (int)((dp * density) + 0.5);
-    }
 
-
-    private class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
-        @Override
-        public CharSequence getTransformation(CharSequence source, View view) {
-            return source;
-        }
-    }
 
 
 
