@@ -42,6 +42,7 @@ public class Task3 extends Activity {
     private ImageView bunnyBubble;
     private TextView bunnyText;
     private boolean firstTimeAutoFocus = true;
+    private ImageView rightFood;
 
 
     @Override
@@ -67,7 +68,7 @@ public class Task3 extends Activity {
         int[] lineIds = {R.id.line1, R.id.line2, R.id.line3, R.id.line4, R.id.line5, R.id.line6};
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/finger_paint.ttf");
-        for (int i = 0; i < plateIds.length; i++) {
+        for (int i = 0; i < lineIds.length; i++) {
             linesOnBoard[i] = findViewById(lineIds[i]);
             linesOnBoard[i].setTypeface(custom_font);
 
@@ -100,6 +101,8 @@ public class Task3 extends Activity {
 
         squirrelBubble = findViewById(R.id.squirrelBubble);
         squirrelText = findViewById(R.id.squirrelText);
+
+        rightFood = findViewById(R.id.rightImage);
 
     }
 
@@ -225,13 +228,13 @@ public class Task3 extends Activity {
         if (tasksLeft[i] == left && tasksRight[i] == right && product == left*right) {
             squirrelBubble.setVisibility(View.INVISIBLE);
             squirrelText.setVisibility(View.INVISIBLE);
+            linesOnBoard[i].setText(left + " x " + right + " = " + (left*right));
             if (currentSubTask == 6) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearText.setVisibility(View.VISIBLE);
                 bearText.setText("Wow! Danke");
                 return;
             } else {
-                linesOnBoard[i].setText(left + " x " + right + " = " + (left*right));
                 currentSubTask++;
                 updateTable();
             }
@@ -254,6 +257,8 @@ public class Task3 extends Activity {
                 for (int i = 2; i < plates.length; i++) {
                     plates[i].setVisibility(View.INVISIBLE);
                 }
+                squirrelText.setText("Richtig! Wie viele Nüsse sind es nun?");
+                bubbleSetVisible(0, true);
                 break;
             case 3:
                 plates[0].setVisibility(View.VISIBLE);
@@ -265,6 +270,7 @@ public class Task3 extends Activity {
                 for (ImageView food: food) {
                     food.setImageResource(R.drawable.honey);
                 }
+                rightFood.setImageResource(R.drawable.honey);
                 bear.setVisibility(View.VISIBLE);
                 bearBubble.setVisibility(View.VISIBLE);
                 bearText.setVisibility(View.VISIBLE);
@@ -272,6 +278,8 @@ public class Task3 extends Activity {
                 break;
             case 4:
                 plates[3].setVisibility(View.VISIBLE);
+                bearText.setText("Genau! Und jetzt?");
+                bubbleSetVisible(1, true);
                 break;
             case 5:
                 plates[2].setVisibility(View.INVISIBLE);
@@ -280,6 +288,7 @@ public class Task3 extends Activity {
                 for (ImageView food: food) {
                     food.setImageResource(R.drawable.carrots);
                 }
+                rightFood.setImageResource(R.drawable.carrots);
                 bunny.setVisibility(View.VISIBLE);
                 bunnyBubble.setVisibility(View.VISIBLE);
                 bunnyText.setVisibility(View.VISIBLE);
@@ -288,6 +297,9 @@ public class Task3 extends Activity {
                 plates[2].setVisibility(View.VISIBLE);
                 plates[3].setVisibility(View.VISIBLE);
                 plates[4].setVisibility(View.VISIBLE);
+                bunnyText.setText("Klasse! Wie viele Möhren gibt es zum Nachtisch?");
+                bubbleSetVisible(2, true);
+                break;
         }
     }
 
@@ -369,6 +381,48 @@ public class Task3 extends Activity {
     }
 
 
+    private void bubbleSetVisible(int animal, boolean visible) {
+        if (animal == 0) {
+            if (visible) {
+                squirrelBubble.setVisibility(View.VISIBLE);
+                squirrelText.setVisibility(View.VISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
+            } else {
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
+            }
+
+        } else if (animal == 1) {
+            if (visible) {
+                bearBubble.setVisibility(View.VISIBLE);
+                bearText.setVisibility(View.VISIBLE);
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
+            } else {
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
+            }
+        } else if (animal == 2) {
+            if (visible) {
+                bunnyBubble.setVisibility(View.VISIBLE);
+                bunnyText.setVisibility(View.VISIBLE);
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
+            } else {
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
+            }
+        }
+
+
+    }
 
     private class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override

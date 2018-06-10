@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +35,9 @@ public class Task1 extends Activity {
     private int subTask = 0;
     private float defaultNutPos[][] = new float[6][2];
     private int defaultNutSize[] = new int[2];
+    ImageView squirrel;
+    Handler handler = new Handler();
+    Runnable shaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +73,9 @@ public class Task1 extends Activity {
                     }
                 });
 
+        rootLayout.setOnClickListener( new TextTouchListener());
 
-
-        ImageView squirrel = findViewById(R.id.squirrel);
+        squirrel = findViewById(R.id.squirrel);
         textView = findViewById(R.id.textView);
         textView.setText("Hallo, kannst du mir helfen?");
         bubble = findViewById(R.id.bearBubble);
@@ -100,6 +106,14 @@ public class Task1 extends Activity {
         bubbleSetVisible(true);
         if (firstClicked) {
             textView.setText("Hilfst du mir 2 Nüsse zu sammeln?");
+            shaker = new Runnable() {
+                @Override
+                public void run() {
+                    Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                    nuts[0].startAnimation(shake);
+                }
+            };
+            handler.postDelayed(shaker, 3000);
 
         }
     }
@@ -109,7 +123,7 @@ public class Task1 extends Activity {
         if (firstClicked && nutCount != 8) {
             textView.setText("Danke, das waren jetzt 3 x 2 Nüsse! Könntest du mir als nächstes 4 x 2 Nüsse sammeln?");
 
-        } else if (firstClicked && nutCount == 8) {
+        } else if (textView.getText().equals("Wow! Vielen Dank!") && nutCount == 8) {
             Intent intent = new Intent(view.getContext(), Task2.class);
             startActivity(intent);
         } else {
@@ -117,6 +131,14 @@ public class Task1 extends Activity {
                 textView.setText("Ich brauche ein paar mehr Nüsse");
             } else if (nutCount == 8) {
                 textView.setText("Wow! Vielen Dank!");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                        squirrel.startAnimation(shake);
+                    }
+                }, 3000);
             } else {
                 textView.setText("So viele brauche ich doch gar nicht...");
             }
@@ -129,10 +151,11 @@ public class Task1 extends Activity {
 
         @Override
         public void onClick(View view) {
+            handler.removeCallbacks(shaker);
             if (subTask == 0) {
                 firstSubTask(view, firstClicked);
             } else {
-                secondSubTask(view, firstClicked);
+                secondSubTask(view, false);
             }
 
 
@@ -145,14 +168,15 @@ public class Task1 extends Activity {
         private boolean inBag = false;
         private boolean changed = false;
         private int myNutPosition;
-
+        int xDelta = 0, yDelta = 0;
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            handler.removeCallbacks(shaker);
             bubbleSetVisible(false);
             final int x = (int) motionEvent.getRawX();
             final int y = (int) motionEvent.getRawY();
-            int xDelta = 0, yDelta = 0;
+
             RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
@@ -211,11 +235,14 @@ public class Task1 extends Activity {
                             nutPlaceOccupied[myNutPosition] = false;
                             nutCount -= 2;
                         }
+
+
+
                         System.out.println(subTask);
                         if (subTask < 3) {
                             validateFirstSubTask();
                         } else {
-                            secondSubTask(textView, false);
+                            handler.postDelayed(shaker, 3000);
                         }
                     }
                     view.setLayoutParams(lParams);
@@ -260,12 +287,24 @@ public class Task1 extends Activity {
         }
         nutCount = 0;
         nutPlaceOccupied = new boolean[6];
+        shaker = new Runnable() {
+            @Override
+            public void run() {
+                shaker = new Runnable() {
+                    @Override
+                    public void run() {
+                        Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                        squirrel.startAnimation(shake);
+                    }
+                };
+            }
+        };
     }
 
     private void validateFirstSubTask() {
         if (nutCount == (subTask+1)*2) {
             bubbleSetVisible(true);
-            textView.setText("Super! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
+            textView.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
             subTask++;
             if (subTask == 3) {
                 restoreNuts();

@@ -47,25 +47,34 @@
         android:id="@+id/honey1"
         android:layout_width="105dp"
         android:layout_height="109dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/honey2"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="181dp"
-        android:layout_marginEnd="540dp"
+        android:layout_marginEnd="499dp"
+        android:alpha="0.4"
         android:src="@drawable/honey"
-        android:visibility="invisible"
-        android:alpha="0.2"/>
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/honey3"
+        android:layout_width="105dp"
+        android:layout_height="109dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/sign"
+        android:layout_marginEnd="562dp"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/honey2"
         android:layout_width="119dp"
         android:layout_height="110dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="116dp"
-        android:layout_marginEnd="430dp"
+        android:layout_below="@+id/bubbleSquirrel"
+        android:layout_marginEnd="436dp"
+        android:alpha="0.4"
         android:src="@drawable/honey"
-        android:visibility="invisible"
-        android:alpha="0.2"/>
+        android:visibility="invisible" />
 
 
 
@@ -130,32 +139,7 @@
         android:textAlignment="center"
         android:textSize="72dp" />
 
-    <ImageView
-        android:id="@+id/bubbleSquirrel"
-        android:layout_width="330dp"
-        android:layout_height="264dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="291dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/sprechblase_left"
-        android:visibility="invisible" />
 
-
-    <TextView
-        android:id="@+id/textViewSquirrel"
-        android:layout_width="179dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="399dp"
-        android:layout_marginTop="279dp"
-        android:gravity="center"
-        android:text="Ja klar, kannst du dem Bären helfen?"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
-        android:typeface="sans"
-        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/bunny"
@@ -185,6 +169,33 @@
         android:layout_toEndOf="@+id/textViewSquirrel"
         android:gravity="center"
         android:text="Ich habe 2 x 4 Möhren gesammelt. Wie viele sind im Beutel?"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:typeface="sans"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/bubbleSquirrel"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="291dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/sprechblase_left"
+        android:visibility="invisible" />
+
+
+    <TextView
+        android:id="@+id/textViewSquirrel"
+        android:layout_width="179dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="399dp"
+        android:layout_marginTop="279dp"
+        android:gravity="center"
+        android:text="Ja klar, kannst du dem Bären helfen?"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         android:typeface="sans"

@@ -2,20 +2,19 @@ package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import research.educational.thiessen.learningappmock.helpers.NumericKeyBoardTransformationMethod;
@@ -27,19 +26,22 @@ import research.educational.thiessen.learningappmock.helpers.NumericKeyBoardTran
 public class Task2 extends Activity {
 
     private ViewGroup rootLayout;
-    private TextView textViewBear;
-    private TextView textViewSquirrel;
-    private ImageView bubbleBear;
-    private ImageView bubbleSquirrel;
+    private TextView bearText;
+    private TextView squirrelText;
+    private ImageView bearBubble;
+    private ImageView squirrelBubble;
     private EditText honeyEditText;
     private int situation = 0;
     private ImageView bear;
-    private ImageView honey1;
-    private ImageView honey2;
+    private ImageView food1;
+    private ImageView food2;
+    private ImageView food3;
     private ImageView bunny;
-    private ImageView bubbleBunny;
-    private TextView textViewBunny;
-
+    private ImageView bunnyBubble;
+    private TextView bunnyText;
+    private ImageView squirrel;
+    private Runnable squirrelShaker;
+    Handler handler = new Handler();
 
 
     @Override
@@ -55,16 +57,19 @@ public class Task2 extends Activity {
         rootLayout = (ViewGroup) findViewById(R.id.task2_root);
         rootLayout.setOnClickListener(new GlobalOnTouchListener());
 
-        textViewBear = findViewById(R.id.textViewBear);
-        textViewSquirrel = findViewById(R.id.textViewSquirrel);
-        bubbleBear = findViewById(R.id.bubbleBear);
-        bubbleSquirrel = findViewById(R.id.bubbleSquirrel);
+        bearText = findViewById(R.id.textViewBear);
+        squirrelText = findViewById(R.id.textViewSquirrel);
+        bearBubble = findViewById(R.id.bubbleBear);
+        squirrelBubble = findViewById(R.id.bubbleSquirrel);
         bear = findViewById(R.id.bear);
-        honey1 = findViewById(R.id.honey1);
-        honey2 = findViewById(R.id.honey2);
+        food1 = findViewById(R.id.honey1);
+        food2 = findViewById(R.id.honey2);
+        food3 = findViewById(R.id.honey3);
         bunny = findViewById(R.id.bunny);
-        bubbleBunny = findViewById(R.id.bunnyBubble);
-        textViewBunny = findViewById(R.id.textViewBunny);
+        bunnyBubble = findViewById(R.id.bunnyBubble);
+        bunnyText = findViewById(R.id.textViewBunny);
+
+        squirrel = findViewById(R.id.squirrel);
 
         honeyEditText = findViewById(R.id.honeyEdit);
         honeyEditText.setTransformationMethod(new NumericKeyBoardTransformationMethod());
@@ -77,13 +82,21 @@ public class Task2 extends Activity {
                 System.out.println("muh!!!: " + hasFocus);
                 if (!hasFocus) {
                     if (honeyEditText.getText().equals("6")) {
-                        textViewBear.setText("Ja, richtig!");
+                        bearText.setText("Ja, richtig!");
                     } else {
-                        textViewBear.setText("Bist du sicher?");
+                        bearText.setText("Bist du sicher?");
                     }
                 }
             }
         });*/
+
+        squirrelShaker = new Runnable() {
+            @Override
+            public void run() {
+                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                squirrel.startAnimation(shake);
+            }
+        };
 
         honeyEditText.setOnEditorActionListener(
                 new EditText.OnEditorActionListener() {
@@ -93,38 +106,50 @@ public class Task2 extends Activity {
                         if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                                 actionId == EditorInfo.IME_ACTION_DONE) {
                                 // the user is done typing.
-                            if (situation < 3) {
-                                if (honeyEditText.getText().toString().equals("6")) {
-                                    textViewBear.setText("Ja, richtig!");
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            //do this after 3 seconds first
-                                            textViewBear.setVisibility(View.INVISIBLE);
-                                            bubbleBear.setVisibility(View.INVISIBLE);
-                                            textViewBunny.setVisibility(View.VISIBLE);
-                                            bunny.setVisibility(View.VISIBLE);
-                                            bubbleBunny.setVisibility(View.VISIBLE);
-                                            situation = 3;
-                                        }
-                                    }, 3000);
+                            if (situation < 4) {
+                                if (honeyEditText.getText().toString().equals(Integer.toString((situation)*3))) {
+                                    honeyEditText.setText("");
+                                    if (situation == 2) {
+                                        bearText.setText("Ja, richtig! Wie viele Waben habe ich bei 3 x 3?");
+                                        bubbleSetVisible(1, true);
+
+                                    } else {
+                                        bearText.setText("Ja, richtig! Danke!");
+                                        bubbleSetVisible(1, true);
+
+
+                                        handler.postDelayed(squirrelShaker, 3000);
+                                    }
+
+
+                                   situation++;
                                 } else {
-                                    textViewBear.setText("Bist du sicher?");
+                                    squirrelText.setText("Leider falsch. Tipp den Bären an, wenn du Hilfe brauchst.");
+                                    bubbleSetVisible(0, true);
                                 }
                             } else {
-                                if (honeyEditText.getText().toString().equals("8")) {
-                                    textViewBunny.setText("Ja, super!");
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Intent intent = new Intent(textViewBunny.getContext(), Task3.class);
-                                            startActivity(intent);
-                                        }
-                                    }, 3000);
+                                if (honeyEditText.getText().toString().equals(Integer.toString((situation-2)*4))) {
+                                    honeyEditText.setText("");
+                                    if (situation == 4) {
+                                        bunnyText.setText("Ja, super! Und wie viele Möhren habe ich bei 3 x 4?");
+                                        bubbleSetVisible(2, true);
+                                    } else {
+                                        bunnyText.setText("Ja, super! Vielen Dank");
+                                        bubbleSetVisible(2, true);
+                                        Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                                                squirrel.startAnimation(shake);
+                                            }
+                                        }, 3000);
+                                    }
+
+                                   situation++;
                                 } else {
-                                    textViewBunny.setText("Bist du sicher?");
+                                    squirrelText.setText("Leider falsch. Tipp den Hasen an, wenn du Hilfe brauchst.");
+                                    bubbleSetVisible(0, true);
                                 }
                             }
 
@@ -143,14 +168,18 @@ public class Task2 extends Activity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
-                    honey1.setVisibility(View.VISIBLE);
-                    honey2.setVisibility(View.VISIBLE);
+                    food1.setVisibility(View.VISIBLE);
+                    food2.setVisibility(View.VISIBLE);
+                    if (situation == 3) {
+                        food3.setVisibility(View.VISIBLE);
+                    }
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            honey1.setVisibility(View.INVISIBLE);
-                            honey2.setVisibility(View.INVISIBLE);
+                            food1.setVisibility(View.INVISIBLE);
+                            food2.setVisibility(View.INVISIBLE);
+                            food3.setVisibility(View.INVISIBLE);
                         }
                     }, 1500);
                 }
@@ -192,42 +221,94 @@ public class Task2 extends Activity {
 
         @Override
         public void onClick(View view) {
+            handler.removeCallbacks(squirrelShaker);
             if (situation == 0) {
-                bubbleSetVisible(true, false);
-                bubbleSetVisible(false, true);
+                bubbleSetVisible(0, true);
                 situation++;
                 return;
             } else if (situation == 1) {
-                bubbleSetVisible(true, true);
-                bubbleSetVisible(false, false);
-                textViewBear.setText("Ich habe 2 x 3 Waben gesammelt. Wie viele sind im Beutel?");
+                bubbleSetVisible(1, true);
+                bearText.setText("Ich habe 2 x 3 Waben gesammelt. Wie viele sind im Beutel?");
                 situation++;
                 return;
-            } else {
-                InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
+            } else if (situation == 4)  {
+                bunny.setVisibility(View.VISIBLE);
 
+                bunny.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                            food1.setVisibility(View.VISIBLE);
+                            food2.setVisibility(View.VISIBLE);
+                            if (situation == 5) {
+                                food3.setVisibility(View.VISIBLE);
+                            }
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    food1.setVisibility(View.INVISIBLE);
+                                    food2.setVisibility(View.INVISIBLE);
+                                    food3.setVisibility(View.INVISIBLE);
+                                }
+                            }, 1500);
+                        }
+                        return true;
+                    }
+                });
+                food1.setImageResource(R.drawable.carrots);
+                food2.setImageResource(R.drawable.carrots);
+                food3.setImageResource(R.drawable.carrots);
+
+                bubbleSetVisible(2, true);
+            } else if (situation == 6) {
+                Intent intent = new Intent(bunnyText.getContext(), Task3.class);
+                startActivity(intent);
             }
+            InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
 
         }
     }
 
-    private void bubbleSetVisible(boolean bear, boolean visible) {
-        if (bear) {
+    private void bubbleSetVisible(int animal, boolean visible) {
+        if (animal == 0) {
             if (visible) {
-                bubbleBear.setVisibility(View.VISIBLE);
-                textViewBear.setVisibility(View.VISIBLE);
+                squirrelBubble.setVisibility(View.VISIBLE);
+                squirrelText.setVisibility(View.VISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
             } else {
-                bubbleBear.setVisibility(View.INVISIBLE);
-                textViewBear.setVisibility(View.INVISIBLE);
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
             }
-        } else {
+
+        } else if (animal == 1) {
             if (visible) {
-                bubbleSquirrel.setVisibility(View.VISIBLE);
-                textViewSquirrel.setVisibility(View.VISIBLE);
+                bearBubble.setVisibility(View.VISIBLE);
+                bearText.setVisibility(View.VISIBLE);
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
             } else {
-                bubbleSquirrel.setVisibility(View.INVISIBLE);
-                textViewSquirrel.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
+            }
+        } else if (animal == 2) {
+            if (visible) {
+                bunnyBubble.setVisibility(View.VISIBLE);
+                bunnyText.setVisibility(View.VISIBLE);
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                squirrelText.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
+            } else {
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
             }
         }
 
