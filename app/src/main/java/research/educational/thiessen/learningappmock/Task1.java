@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,9 @@ public class Task1 extends Activity {
     private ImageView bubble;
     private int nutCount = 0;
     private boolean[] nutPlaceOccupied = new boolean[6];
+    private int subTask = 0;
+    private float defaultNutPos[][] = new float[6][2];
+    private int defaultNutSize[] = new int[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,32 @@ public class Task1 extends Activity {
         rootLayout = findViewById(R.id.task1_root);
         bag = findViewById(R.id.bag);
 
-        nuts = new ImageView[4];
+        nuts = new ImageView[6];
 
-        int[] nutIds = new int[] { R.id.nuts, R.id.nuts2, R.id.nuts3, R.id.nuts4 };
-
-        for (int i = 0; i < 4; i++) {
+        final int[] nutIds = new int[] { R.id.nuts, R.id.nuts2, R.id.nuts3, R.id.nuts4, R.id.nuts5, R.id.nuts6 };
+        for (int i = 0; i < nutIds.length; i++) {
             nuts[i] = findViewById(nutIds[i]);
             nuts[i].setOnTouchListener(new ChoiceTouchListener());
         }
+        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        // Layout has happened here.
+                        for (int i = 0; i < nutIds.length; i++) {
+                            nuts[i] = findViewById(nutIds[i]);
+                            nuts[i].setOnTouchListener(new ChoiceTouchListener());
+                            defaultNutPos[i][0] = nuts[i].getX();
+                            defaultNutPos[i][1] = nuts[i].getY();
+                        }
+                        defaultNutSize[0] = nuts[0].getWidth();
+                        defaultNutSize[1] = nuts[1].getHeight();
+                        // Don't forget to remove your listener when you are done with it.
+                        rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+
+
 
         ImageView squirrel = findViewById(R.id.squirrel);
         textView = findViewById(R.id.textView);
@@ -74,39 +96,56 @@ public class Task1 extends Activity {
 
     }
 
+    private final void firstSubTask(View view, boolean firstClicked) {
+        bubbleSetVisible(true);
+        if (firstClicked) {
+            textView.setText("Hilfst du mir 2 Nüsse zu sammeln?");
+
+        }
+    }
+
+    private final void secondSubTask(View view, boolean firstClicked) {
+        bubbleSetVisible(true);
+        if (firstClicked && nutCount != 8) {
+            textView.setText("Danke, das waren jetzt 3 x 2 Nüsse! Könntest du mir als nächstes 4 x 2 Nüsse sammeln?");
+
+        } else if (firstClicked && nutCount == 8) {
+            Intent intent = new Intent(view.getContext(), Task2.class);
+            startActivity(intent);
+        } else {
+            if (nutCount < 8) {
+                textView.setText("Ich brauche ein paar mehr Nüsse");
+            } else if (nutCount == 8) {
+                textView.setText("Wow! Vielen Dank!");
+            } else {
+                textView.setText("So viele brauche ich doch gar nicht...");
+            }
+        }
+    }
+
     private final class TextTouchListener implements View.OnClickListener {
         boolean firstClicked = true;
 
 
         @Override
         public void onClick(View view) {
-            bubbleSetVisible(true);
-            if (firstClicked && nutCount != 6) {
-                firstClicked = false;
-                textView.setText("Könntest du mir 3 x 2 Nüsse in meinen Beutel tun?");
-
-            } else if (firstClicked && nutCount == 6) {
-                Intent intent = new Intent(view.getContext(), Task2.class);
-                startActivity(intent);
+            if (subTask == 0) {
+                firstSubTask(view, firstClicked);
             } else {
-                    if (nutCount < 6) {
-                        textView.setText("Ich brauche ein paar mehr Nüsse");
-                    } else if (nutCount == 6) {
-                        textView.setText("Wow! Vielen Dank!");
-                        firstClicked = true;
-                    } else {
-                        textView.setText("So viele brauche ich doch gar nicht...");
-                    }
+                secondSubTask(view, firstClicked);
             }
 
+
+            firstClicked = false;
         }
     }
-
+    private boolean firstTimeSecondSubTask = true;
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
         private boolean inBag = false;
         private boolean changed = false;
         private int myNutPosition;
+
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -165,11 +204,18 @@ public class Task1 extends Activity {
                             lParams.leftMargin = (int) getPx(870 + (nutPosition)%3*60);
                             lParams.topMargin = (int) getPx(520 + (nutPosition)/3*60);
                             nutCount += 2;
+
                         } else {
                             lParams.height *= 2;
                             lParams.width *= 2;
                             nutPlaceOccupied[myNutPosition] = false;
                             nutCount -= 2;
+                        }
+                        System.out.println(subTask);
+                        if (subTask < 3) {
+                            validateFirstSubTask();
+                        } else {
+                            secondSubTask(textView, false);
                         }
                     }
                     view.setLayoutParams(lParams);
@@ -189,6 +235,44 @@ public class Task1 extends Activity {
             }
             rootLayout.invalidate();
             return true;
+        }
+    }
+
+    private void restoreNuts() {
+        for (int i = 0; i < nuts.length; i++) {
+
+            nuts[i].setOnTouchListener(new ChoiceTouchListener());
+
+         //   nuts[i].setLayoutParams(new RelativeLayout.LayoutParams().LayoutParams(defaultNutSize[0], defaultNutSize[1], ));
+
+
+
+            //nuts[i].setLeft((int) defaultNutPos[i][0]);
+            //nuts[i].setTop((int) defaultNutPos[i][1]);
+
+            ((RelativeLayout.LayoutParams) nuts[i].getLayoutParams()).width = defaultNutSize[0];
+            ((RelativeLayout.LayoutParams) nuts[i].getLayoutParams()).height = defaultNutSize[1];
+            ((RelativeLayout.LayoutParams) nuts[i].getLayoutParams()).leftMargin = (int) defaultNutPos[i][0];
+            ((RelativeLayout.LayoutParams) nuts[i].getLayoutParams()).topMargin = (int) defaultNutPos[i][1];
+
+            System.out.println(defaultNutPos[i][0] + " " + defaultNutPos[i][1] + " " + defaultNutSize[0] + " " + defaultNutSize[1]);
+
+        }
+        nutCount = 0;
+        nutPlaceOccupied = new boolean[6];
+    }
+
+    private void validateFirstSubTask() {
+        if (nutCount == (subTask+1)*2) {
+            bubbleSetVisible(true);
+            textView.setText("Super! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
+            subTask++;
+            if (subTask == 3) {
+                restoreNuts();
+                secondSubTask(textView, firstTimeSecondSubTask);
+                firstTimeSecondSubTask = false;
+            }
+
         }
     }
 

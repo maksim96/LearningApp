@@ -141,13 +141,18 @@ public class Task2 extends Activity {
         bear.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
                     honey1.setVisibility(View.VISIBLE);
                     honey2.setVisibility(View.VISIBLE);
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    honey1.setVisibility(View.INVISIBLE);
-                    honey2.setVisibility(View.INVISIBLE);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            honey1.setVisibility(View.INVISIBLE);
+                            honey2.setVisibility(View.INVISIBLE);
+                        }
+                    }, 1500);
                 }
                 return true;
             }
