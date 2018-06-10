@@ -184,7 +184,7 @@
         android:layout_marginTop="140dp"
         android:layout_toEndOf="@+id/textViewSquirrel"
         android:gravity="center"
-        android:text="Ich habe auch noch 2 Viererbündel Karotten im Sack."
+        android:text="Ich habe 2 x 4 Möhren gesammelt. Wie viele sind im Beutel?"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         android:typeface="sans"

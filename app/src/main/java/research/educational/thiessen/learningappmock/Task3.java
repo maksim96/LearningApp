@@ -1,13 +1,13 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
-import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -35,10 +35,12 @@ public class Task3 extends Activity {
     private ImageView bear;
     private ImageView bunny;
     private ImageView squirrel;
-    private ImageView bubble;
-    private TextView bubbleText;
+    private ImageView bearBubble;
+    private TextView bearText;
     private TextView squirrelText;
     private ImageView squirrelBubble;
+    private ImageView bunnyBubble;
+    private TextView bunnyText;
     private boolean firstTimeAutoFocus = true;
 
 
@@ -50,6 +52,7 @@ public class Task3 extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         rootLayout = findViewById(R.id.task3_root);
+        rootLayout.setOnClickListener(new GlobalOnTouchListener());
 
         int[] plateIds = {R.id.plate1, R.id.plate2, R.id.plate3, R.id.plate4, R.id.plate5};
         int[] foodIds = {R.id.food1, R.id.food2, R.id.food3, R.id.food4, R.id.food5};
@@ -63,15 +66,20 @@ public class Task3 extends Activity {
         linesOnBoard = new TextView[6];
         int[] lineIds = {R.id.line1, R.id.line2, R.id.line3, R.id.line4, R.id.line5, R.id.line6};
 
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/finger_paint.ttf");
         for (int i = 0; i < plateIds.length; i++) {
             linesOnBoard[i] = findViewById(lineIds[i]);
+            linesOnBoard[i].setTypeface(custom_font);
+
         }
 
         bear = findViewById(R.id.bear);
         squirrel = findViewById(R.id.squirrel);
         bunny = findViewById(R.id.bunny);
-        bubble = findViewById(R.id.bubble);
-        bubbleText = findViewById(R.id.bubbleText);
+        bearBubble = findViewById(R.id.bearBubble);
+        bearText = findViewById(R.id.bearText);
+        bunnyBubble = findViewById(R.id.bunnyBubble);
+        bunnyText = findViewById(R.id.bunnyText);
 
         editTextLeft = findViewById(R.id.editTextLeft);
         editTextRight = findViewById(R.id.editTextRight);
@@ -82,9 +90,11 @@ public class Task3 extends Activity {
         editTextProduct.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
         editTextLeft.setOnEditorActionListener(new OnDoneListener());
+        editTextLeft.addTextChangedListener(new OnNumberMoveOnListener(editTextLeft));
         editTextLeft.setOnFocusChangeListener(new OnLeaveListener());
         editTextRight.setOnEditorActionListener(new OnDoneListener());
         editTextRight.setOnFocusChangeListener(new OnLeaveListener());
+        editTextRight.addTextChangedListener(new OnNumberMoveOnListener(editTextRight));
         editTextProduct.setOnEditorActionListener(new OnDoneListener());
         editTextProduct.setOnFocusChangeListener(new OnLeaveListener());
 
@@ -99,7 +109,6 @@ public class Task3 extends Activity {
             System.out.println(hasFocus);
             if (!hasFocus) {
                 checkResult();
-
             } else {
                 if (firstTimeAutoFocus) {
                     firstTimeAutoFocus = false;
@@ -107,6 +116,10 @@ public class Task3 extends Activity {
                 }
                 squirrelBubble.setVisibility(View.INVISIBLE);
                 squirrelText.setVisibility(View.INVISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bunnyText.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
+                bearText.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -126,6 +139,65 @@ public class Task3 extends Activity {
                 return false; // pass on to other listeners.
             }
 
+    }
+
+    private final class OnDoneAndMoveOnListener implements TextView.OnEditorActionListener {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            System.out.println(actionId);
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    actionId == EditorInfo.IME_ACTION_DONE) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(editTextProduct.getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextProduct.getWindowToken(), 0);
+
+                checkResult();
+                return true; // consume.
+
+            } else if (actionId == EditorInfo.TYPE_CLASS_NUMBER) {
+                View nextView = v.focusSearch(View.FOCUS_RIGHT);
+                nextView.requestFocus();
+            }
+            return false; // pass on to other listeners.
+        }
+
+    }
+
+   /* private final class OnNumberMoveOnListener implements View.OnKeyListener {
+
+        @Override
+        public boolean onKey(View view, int i, KeyEvent keyEvent) {
+            if (keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL && keyEvent.getKeyCode() != KeyEvent.KEYCODE_ENTER) {
+                View nextView = view.focusSearch(View.FOCUS_RIGHT);
+                nextView.requestFocus();
+            }
+        }
+    }*/
+
+    private final class OnNumberMoveOnListener implements TextWatcher {
+
+        private View view;
+
+        public OnNumberMoveOnListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            if (charSequence.length() > before) {
+                View nextView = this.view.focusSearch(View.FOCUS_RIGHT);
+                nextView.requestFocus();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
     }
 
     private final void checkResult() {
@@ -151,10 +223,12 @@ public class Task3 extends Activity {
         int i = currentSubTask-1;
 
         if (tasksLeft[i] == left && tasksRight[i] == right && product == left*right) {
-
+            squirrelBubble.setVisibility(View.INVISIBLE);
+            squirrelText.setVisibility(View.INVISIBLE);
             if (currentSubTask == 6) {
-                bubble.setVisibility(View.VISIBLE);
-                bubbleText.setVisibility(View.VISIBLE);
+                bearBubble.setVisibility(View.VISIBLE);
+                bearText.setVisibility(View.VISIBLE);
+                bearText.setText("Wow! Danke");
                 return;
             } else {
                 linesOnBoard[i].setText(left + " x " + right + " = " + (left*right));
@@ -166,7 +240,7 @@ public class Task3 extends Activity {
         } else {
             squirrelBubble.setVisibility(View.VISIBLE);
             squirrelText.setVisibility(View.VISIBLE);
-            squirrelText.setText("Leider verzählt!");
+            squirrelText.setText("Bist du sicher?");
         }
     }
 
@@ -192,6 +266,8 @@ public class Task3 extends Activity {
                     food.setImageResource(R.drawable.honey);
                 }
                 bear.setVisibility(View.VISIBLE);
+                bearBubble.setVisibility(View.VISIBLE);
+                bearText.setVisibility(View.VISIBLE);
 
                 break;
             case 4:
@@ -205,6 +281,8 @@ public class Task3 extends Activity {
                     food.setImageResource(R.drawable.carrots);
                 }
                 bunny.setVisibility(View.VISIBLE);
+                bunnyBubble.setVisibility(View.VISIBLE);
+                bunnyText.setVisibility(View.VISIBLE);
                 break;
             case 6:
                 plates[2].setVisibility(View.VISIBLE);
@@ -212,31 +290,27 @@ public class Task3 extends Activity {
                 plates[4].setVisibility(View.VISIBLE);
         }
     }
-    /*
+
     private final class GlobalOnTouchListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            if (situation == 0) {
-                bubbleSetVisible(true, false);
-                bubbleSetVisible(false, true);
-                situation++;
-                return;
-            } else if (situation == 1) {
-                bubbleSetVisible(true, true);
-                bubbleSetVisible(false, false);
-                textViewBear.setText("Kannst du mir sagen wie viele Honigwaben ich habe, " +
-                        "wenn ich 2 x 3 Waben habe?");
-                situation++;
-                return;
-            } else {
-                InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
+            squirrelBubble.setVisibility(View.INVISIBLE);
+            squirrelText.setVisibility(View.INVISIBLE);
+            bunnyBubble.setVisibility(View.INVISIBLE);
+            bunnyText.setVisibility(View.INVISIBLE);
+            bearBubble.setVisibility(View.INVISIBLE);
+            bearText.setVisibility(View.INVISIBLE);
+
+            InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            checkResult();
 
             }
 
         }
-    }*/
+
     /*
     private void bubbleSetVisible(boolean bear, boolean visible) {
         if (bear) {

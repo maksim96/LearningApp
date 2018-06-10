@@ -24,8 +24,8 @@ public class MainActivity extends Activity {
 
 //And the layout we want to change is visibility
         final ImageView unicorn = (ImageView) findViewById(R.id.imageUnicorn);
-        final ImageView bubble = (ImageView) findViewById(R.id.bubble);
-        final TextView bubbleText = (TextView) findViewById(R.id.bubbleText);
+        final ImageView bubble = (ImageView) findViewById(R.id.bearBubble);
+        final TextView bubbleText = (TextView) findViewById(R.id.bearText);
 
         forest.setOnClickListener
                 (

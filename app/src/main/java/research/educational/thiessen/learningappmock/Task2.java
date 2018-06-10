@@ -195,8 +195,7 @@ public class Task2 extends Activity {
             } else if (situation == 1) {
                 bubbleSetVisible(true, true);
                 bubbleSetVisible(false, false);
-                textViewBear.setText("Kannst du mir sagen wie viele Honigwaben ich habe, " +
-                        "wenn ich 2 x 3 Waben habe?");
+                textViewBear.setText("Ich habe 2 x 3 Waben gesammelt. Wie viele sind im Beutel?");
                 situation++;
                 return;
             } else {

@@ -45,13 +45,13 @@
 
     <ImageView
         android:id="@+id/bag"
-        android:layout_width="185dp"
-        android:layout_height="311dp"
+        android:layout_width="257dp"
+        android:layout_height="346dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="53dp"
-        android:layout_marginEnd="237dp"
-        android:src="@drawable/sack" />
+        android:layout_marginEnd="185dp"
+        android:src="@drawable/bag2" />
     <ImageView
         android:id="@+id/nuts4"
         android:layout_width="147dp"
@@ -82,7 +82,69 @@
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:src="@drawable/nuts" />
-
+    <!--
+    <ImageView
+        android:id="@+id/nuts_2"
+        android:layout_width="75dp"
+        android:layout_height="72dp"
+        android:layout_alignLeft="@+id/nuts_1"
+        android:layout_alignTop="@id/nuts_1"
+        android:layout_marginLeft="60dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:src="@drawable/nuts" />
+    <ImageView
+        android:id="@+id/nuts_1"
+        android:layout_width="75dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="870dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:src="@drawable/nuts" />
+    <ImageView
+        android:id="@+id/nuts_3"
+        android:layout_width="75dp"
+        android:layout_height="72dp"
+        android:layout_alignLeft="@+id/nuts_2"
+        android:layout_alignTop="@id/nuts_2"
+        android:layout_marginLeft="60dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:src="@drawable/nuts" />
+    <ImageView
+    android:id="@+id/nuts_4"
+    android:layout_width="75dp"
+    android:layout_height="72dp"
+    android:layout_alignLeft="@+id/nuts_1"
+    android:layout_alignTop="@id/nuts_1"
+    android:layout_marginTop="60dp"
+    android:adjustViewBounds="false"
+    android:cropToPadding="false"
+    android:src="@drawable/nuts" />
+    <ImageView
+    android:id="@+id/nuts_5"
+    android:layout_width="75dp"
+    android:layout_height="72dp"
+    android:layout_alignLeft="@+id/nuts_1"
+    android:layout_alignTop="@id/nuts_1"
+    android:layout_marginLeft="60dp"
+    android:layout_marginTop="60dp"
+    android:adjustViewBounds="false"
+    android:cropToPadding="false"
+    android:src="@drawable/nuts" />
+    <ImageView
+        android:id="@+id/nuts_6"
+        android:layout_width="75dp"
+        android:layout_height="72dp"
+        android:layout_alignLeft="@+id/nuts_2"
+        android:layout_alignTop="@id/nuts_2"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="60dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:src="@drawable/nuts" />
+    -->
     <ImageView
         android:id="@+id/nuts2"
         android:layout_width="147dp"
@@ -94,8 +156,8 @@
         android:src="@drawable/nuts" />
 
     <ImageView
-        android:id="@+id/bubble"
-        android:layout_width="330dp"
+        android:id="@+id/bearBubble"
+        android:layout_width="371dp"
         android:layout_height="264dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
@@ -105,16 +167,16 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="179dp"
-        android:layout_height="150dp"
+        android:layout_width="271dp"
+        android:layout_height="137dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="201dp"
-        android:layout_marginStart="380dp"
+        android:layout_marginBottom="209dp"
+        android:layout_marginStart="378dp"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:typeface="sans"
         tools:text="Hallo, kannst du mir helfen?" />
 

@@ -2,14 +2,18 @@ package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Stack;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,6 +27,7 @@ public class Task1 extends Activity {
     private TextView textView;
     private ImageView bubble;
     private int nutCount = 0;
+    private boolean[] nutPlaceOccupied = new boolean[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class Task1 extends Activity {
         ImageView squirrel = findViewById(R.id.squirrel);
         textView = findViewById(R.id.textView);
         textView.setText("Hallo, kannst du mir helfen?");
-        bubble = findViewById(R.id.bubble);
+        bubble = findViewById(R.id.bearBubble);
         squirrel.setOnClickListener(new TextTouchListener());
 
 
@@ -78,7 +83,7 @@ public class Task1 extends Activity {
             bubbleSetVisible(true);
             if (firstClicked && nutCount != 6) {
                 firstClicked = false;
-                textView.setText("Könntest du mir 6 Nüsse in meinen Beutel tun?");
+                textView.setText("Könntest du mir 3 x 2 Nüsse in meinen Beutel tun?");
 
             } else if (firstClicked && nutCount == 6) {
                 Intent intent = new Intent(view.getContext(), Task2.class);
@@ -101,6 +106,7 @@ public class Task1 extends Activity {
 
         private boolean inBag = false;
         private boolean changed = false;
+        private int myNutPosition;
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -150,10 +156,19 @@ public class Task1 extends Activity {
                         if (inBag) {
                             lParams.height /= 2;
                             lParams.width /= 2;
+                            int nutPosition = 0;
+                            while(nutPlaceOccupied[nutPosition]) {
+                                nutPosition++;
+                            }
+                            myNutPosition = nutPosition;
+                            nutPlaceOccupied[nutPosition] = true;
+                            lParams.leftMargin = (int) getPx(870 + (nutPosition)%3*60);
+                            lParams.topMargin = (int) getPx(520 + (nutPosition)/3*60);
                             nutCount += 2;
                         } else {
                             lParams.height *= 2;
                             lParams.width *= 2;
+                            nutPlaceOccupied[myNutPosition] = false;
                             nutCount -= 2;
                         }
                     }
@@ -184,6 +199,11 @@ public class Task1 extends Activity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
+    }
+
+    private float getPx(float dp) {
+        Resources r = getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
 
