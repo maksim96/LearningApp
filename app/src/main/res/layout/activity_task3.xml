@@ -25,7 +25,6 @@
         android:src="@drawable/earth" />
 
 
-
     <ImageView
         android:id="@+id/squirrel"
         android:layout_width="132dp"
@@ -34,6 +33,7 @@
         android:layout_alignStart="@+id/plate2"
         android:layout_marginBottom="-65dp"
         android:layout_marginStart="-53dp"
+        android:scaleType="fitXY"
         android:src="@drawable/squirrel" />
 
     <ImageView
@@ -78,7 +78,7 @@
     <ImageView
         android:id="@+id/board"
         android:layout_width="340dp"
-        android:layout_height="358dp"
+        android:layout_height="390dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="48dp"
@@ -296,9 +296,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
         android:layout_below="@id/line2"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/finger_paint"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/line1"
@@ -307,20 +307,20 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="118dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/finger_paint"
         android:typeface="monospace"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/line2"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:layout_below="@id/line1"
         android:fontFamily="@font/finger_paint"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/line6"
@@ -328,32 +328,31 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
         android:layout_below="@+id/line5"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/finger_paint"
         android:typeface="monospace"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/line5"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:layout_below="@id/line4"
         android:fontFamily="@font/finger_paint"
         android:typeface="monospace"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/line4"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:layout_below="@id/line3"
         android:fontFamily="@font/finger_paint"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bearBubble"

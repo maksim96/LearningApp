@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00cc64"
+    tools:context=".Task1"
+    android:id="@+id/ending">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/forest" />
+
+
+    <ImageView
+        android:id="@+id/squirrel"
+        android:layout_width="136dp"
+        android:layout_height="176dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="257dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/squirrel" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="579dp"
+        android:layout_height="669dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="317dp"
+        android:src="@drawable/tree" />
+
+    <ImageView
+        android:id="@+id/bear"
+        android:layout_width="226dp"
+        android:layout_height="342dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="61dp"
+        android:layout_marginEnd="42dp"
+        android:src="@drawable/bear" />
+
+
+    <ImageView
+        android:id="@+id/bunny"
+        android:layout_width="174dp"
+        android:layout_height="264dp"
+        android:layout_alignEnd="@+id/imageView7"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="68dp"
+        android:src="@drawable/bunny" />
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/bearBubble"
+        android:layout_width="680dp"
+        android:layout_height="368dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="72dp"
+        android:scaleType="fitXY"
+        android:scaleX="-1"
+        android:text="Vielen Dank und auf Wiedersehen!" />
+
+</RelativeLayout>

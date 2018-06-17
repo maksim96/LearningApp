@@ -9,51 +9,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".DragAndDropActivity"
             android:label="@string/title_activity_drag_and_drop"
             android:roundIcon="@mipmap/ic_launcher_round"
+            android:screenOrientation="landscape"
             android:supportsRtl="true"
-            android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"
-            android:screenOrientation="landscape">
-        </activity>
+            android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"></activity>
         <activity
             android:name=".Task1"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_drag"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape">
-
-
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".Task2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_drag"
             android:parentActivityName=".Task1"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape">
-
-
-        </activity>
-
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme">
+            </activity>
         <activity
             android:name=".Task3"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_drag"
             android:parentActivityName=".Task2"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme">
+
+
 
 
         </activity>
@@ -61,6 +54,15 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".Ending"
+            android:label="@string/title_activity_ending"
+            android:parentActivityName=".Task3">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="research.educational.thiessen.learningappmock.Task3" />
+        </activity>
     </application>
 
 </manifest>

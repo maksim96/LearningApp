@@ -99,12 +99,20 @@ public class Task2 extends Activity {
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                honeyEditText.requestFocus();
                 handler.removeCallbacks(signShaker);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                honeyEditText.requestFocus();
             }
         });
+        honeyEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                handler.removeCallbacks(signShaker);
+                return false;
+            }
+        });
+
 
        /* honeyEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
@@ -126,6 +134,7 @@ public class Task2 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 squirrel.startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
 
@@ -134,6 +143,7 @@ public class Task2 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 bear.startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
         signShaker = new Runnable() {
@@ -141,6 +151,7 @@ public class Task2 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 sign.startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
         bunnyShaker = new Runnable() {
@@ -148,6 +159,7 @@ public class Task2 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 bunny.startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
 
@@ -169,12 +181,9 @@ public class Task2 extends Activity {
                         bearThoughtBubble.setVisibility(View.VISIBLE);
                     } else if (introSubTask == 2) {
                         bearThoughtBubble.setVisibility(View.INVISIBLE);
-                        bearBubble.setText("Es kleben immer 3 Waben aneinander.");
+                        bearBubble.setText("Wie du siehst, kleben immer 3 Waben nebeneinander.");
                         bearBubble.setVisibility(View.VISIBLE);
-                    } else if (introSubTask == 3){
-                        bearBubble.setVisibility(View.VISIBLE);
-                        bearBubble.setText("Ich habe 2 · 3 Waben gesammelt und in meinen Beutel getan.");
-                    } else if (introSubTask == 4) {
+                    } else if (introSubTask == 3) {
                         bearBubble.setVisibility(View.VISIBLE);
                         bearBubble.setText("Tipp mal den Beutel an!");
                         bag.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +194,9 @@ public class Task2 extends Activity {
                                     currentFoodCount= bearSubTasks[currentSubTask];
                                 } else {
                                     currentFoodCount = bunnySubTasks[currentSubTask];
+                                }
+                                if (situation == Situation.DONE) {
+                                    currentFoodCount = 0;
                                 }
                                 for (int i = 0; i < 7; i++) {
                                     if (i < currentFoodCount) {
@@ -206,19 +218,24 @@ public class Task2 extends Activity {
                                 }, 1500);
                             }
                         });
-                    } else if (introSubTask == 5) {
+                    } else if (introSubTask == 4) {
                         bearBubble.setVisibility(View.VISIBLE);
                         bearBubble.setText("Kannst du mir auf das Schild schreiben, wie viele Waben ich habe?");
+
+                    } else if (introSubTask == 5) {
+                        bearBubble.setVisibility(View.VISIBLE);
+                        bearBubble.setText("Ich habe 2 · 3 Waben gesammelt und in meinen Beutel getan.");
                         handler.postDelayed(signShaker, 5000);
                         situation = Situation.TASK1;
                         honeyEditText.setOnEditorActionListener(new OnSignEdit());
                         timeOfSubTaskStart = System.currentTimeMillis();
+
                     }
                     introSubTask++;
                 } else if (situation == Situation.TASK1) {
                     if (bearDone) {
                         bubbleSetVisible(1, true);
-                        bearBubble.setText("Schau mal, wer im Wald noch sammeln war.");
+                        bearBubble.setText("Schau mal, wer auch noch im Wald gesammelt hat.");
                         bunny.setVisibility(View.VISIBLE);
                         bunny.setOnClickListener(new BunnyOnClickListener());
                         situation = Situation.TASK2;
@@ -294,13 +311,13 @@ public class Task2 extends Activity {
                         long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
 
                         if (currentSubTask < bearSubTasks.length-2) {
-                            bearBubble.setText("Ja, richtig! Wie viele Waben habe ich bei " + bearSubTasks[currentSubTask] +
-                                    " · 3?");
+                            bearBubble.setText("Ja, richtig! Wie viele sind es, wenn ich " + bearSubTasks[currentSubTask] +
+                                    " · 3 Waben gesammelt habe?");
                             bubbleSetVisible(1, true);
                         //letzte Aufgabe nur für schnelle Kinder die keine Fehler gemacht haben
-                        } else if (currentSubTask == bearSubTasks.length-2 && timeDiff <= 30 && !madeMistakes){
-                            bearBubble.setText("Ja, richtig! Wie viele Waben habe ich bei " + bearSubTasks[currentSubTask] +
-                                    " · 3?");
+                        } else if (currentSubTask == bearSubTasks.length-2 && timeDiff <= 60 && !madeMistakes){
+                            bearBubble.setText("Ja, richtig! Wie viele sind es, wenn ich " + bearSubTasks[currentSubTask] +
+                                    " · 3 Waben gesammelt habe?");
                             bubbleSetVisible(1, true);
                         } else {
                             bearBubble.setText("Ja, richtig!");
@@ -328,13 +345,13 @@ public class Task2 extends Activity {
                         long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
 
                         if (currentSubTask < bunnySubTasks.length-3) {
-                            bunnyBubble.setText("Ja, richtig! Wie viele Möhren habe ich bei " + bunnySubTasks[currentSubTask] +
-                                    " · 4?");
+                            bunnyBubble.setText("Ja, richtig! Wie viele sind es, wenn ich " + bunnySubTasks[currentSubTask] +
+                                    " · 4 Möhren gesammelt habe?");
                             bubbleSetVisible(2, true);
                             //letzte Aufgabe nur für schnelle Kinder die keine Fehler gemacht haben
-                        } else if (currentSubTask >= bunnySubTasks.length-3 && timeDiff <= 30 && !madeMistakes && currentSubTask <= bunnySubTasks.length-1){
-                            bunnyBubble.setText("Ja, richtig! Wie viele Möhren habe ich bei " + bunnySubTasks[currentSubTask] +
-                                    " · 4?");
+                        } else if (currentSubTask >= bunnySubTasks.length-3 && timeDiff <= 60 && !madeMistakes && currentSubTask <= bunnySubTasks.length-1){
+                            bunnyBubble.setText("Ja, richtig! Wie viele sind es, wenn ich " + bunnySubTasks[currentSubTask] +
+                                    " · 4 Möhren gesammelt habe?");
                             bubbleSetVisible(2, true);
                         } else {
                             bunnyBubble.setText("Ja, richtig!");
@@ -347,7 +364,7 @@ public class Task2 extends Activity {
 
                     } else {
                         bunnyBubble.setText("Das ist noch nicht ganz richtig. Tipp den Beutel an, falls du Hilfe brauchst.");
-                        bubbleSetVisible(1, true);
+                        bubbleSetVisible(2, true);
                         madeMistakes = true;
 
                     }
@@ -355,7 +372,7 @@ public class Task2 extends Activity {
 
                 InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
-                return true; // consume.
+                return false; // consume.
 
             }
             return false; // pass on to other listeners.

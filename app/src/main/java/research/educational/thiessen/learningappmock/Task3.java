@@ -1,6 +1,7 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,6 +43,7 @@ public class Task3 extends Activity {
     private SpeechBubble bunnyBubble;
     private boolean firstTimeAutoFocus = true;
     private ImageView rightFood;
+    private boolean completelyDone = false;
 
 
     @Override
@@ -224,6 +226,8 @@ public class Task3 extends Activity {
             if (currentSubTask == 6) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearBubble.setText("Wow! Danke");
+                completelyDone = true;
+                rootLayout.requestFocus();
                 return;
             } else {
                 currentSubTask++;
@@ -295,6 +299,10 @@ public class Task3 extends Activity {
         private boolean firstTime = true;
         @Override
         public void onClick(View view) {
+            if (completelyDone) {
+                Intent intent = new Intent(bunnyBubble.getContext(), Ending.class);
+                startActivity(intent);
+            }
             if (firstTime) {
                 squirrelBubble.setText("Mit welcher Aufgabe kann ich errechnen, wie viel auf den Tellern liegt?");
                 firstTime = false;
@@ -308,6 +316,7 @@ public class Task3 extends Activity {
 
                 checkResult();
             }
+
 
 
             }

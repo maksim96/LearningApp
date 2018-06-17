@@ -94,6 +94,7 @@ public class Task1 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 squirrel.startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
 
@@ -102,6 +103,7 @@ public class Task1 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 nuts[0].startAnimation(shake);
+                handler.postDelayed(this, 5000);
             }
         };
 
@@ -140,7 +142,7 @@ public class Task1 extends Activity {
     private final int[] nutTasks = {5,4,6,7,8,9,10};
     private int secondSubTaskPart = 0;
     private boolean madeMistake = false;
-    private boolean startOfSubtask = true;
+    private boolean startOfSubTask = true;
     private boolean done = false;
     private boolean veryFirstTime = true;
     private long startTime;
@@ -149,10 +151,10 @@ public class Task1 extends Activity {
         if (done) {
             Intent intent = new Intent(this, Task2.class);
             startActivity(intent);
-        } else if (startOfSubtask) {
+        } else if (startOfSubTask) {
             bubble.setText("Könntest du mir als nächstes "
                     + nutTasks[secondSubTaskPart] + " \u00B7 2 Nüsse sammeln?");
-            startOfSubtask = false;
+            startOfSubTask = false;
             handler.postDelayed(nutShaker, 5000);
             if (veryFirstTime) {
                 veryFirstTime = false;
@@ -165,7 +167,7 @@ public class Task1 extends Activity {
                 madeMistake = true;
             } else {
                 bubble.setText("Richtig! Du hast " + nutTasks[secondSubTaskPart]*2 + " Nüsse in den Beutel getan!" );
-                startOfSubtask = true;
+                startOfSubTask = true;
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
                 if (secondSubTaskPart >= nutTasks.length -4 && timeDiff > 60) {
                     done = true;
@@ -200,9 +202,22 @@ public class Task1 extends Activity {
             if (situation == Situation.INTRODUCTION) {
                 intro();
             } else if (situation == Situation.TASK1) {
-                    firstSubTask(view, firstClicked);
+                firstSubTask(view, firstClicked);
                 firstClicked = false;
+                if (waitForOneClick) {
+                    waitForOneClick = false;
+                    if (subTask == 1) {
+                        bubble.setText("Hilfst du mir ein zweites mal 2 Nüsse zu sammeln?");
+                    } else if (subTask == 2) {
+                        bubble.setText("Hilfst du mir ein drittes mal 2 Nüsse zu sammeln?");
+                    }
+
+                }
             } else {
+                if (waitForOneClick) {
+                    waitForOneClick = false;
+                    restoreNuts();
+                }
                 secondSubTask();
             }
 
@@ -233,7 +248,6 @@ public class Task1 extends Activity {
         introPart++;
     }
 
-    private boolean firstTimeSecondSubTask = true;
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
         private boolean inBag = false;
@@ -243,6 +257,9 @@ public class Task1 extends Activity {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (waitForOneClick) {
+                return true;
+            }
             handler.removeCallbacks(nutShaker);
             bubbleSetVisible(false);
             final int x = (int) motionEvent.getRawX();
@@ -359,15 +376,18 @@ public class Task1 extends Activity {
         nutPlaceOccupied = new boolean[11];
     }
 
+    boolean waitForOneClick = false;
     private void validateFirstSubTask() {
         if (nutCount == (subTask+1)*2) {
             bubbleSetVisible(true);
-            bubble.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
+            bubble.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse!");
+            handler.postDelayed(squirrelShaker,5000);
+            waitForOneClick = true;
             subTask++;
             if (subTask == 3) {
-                restoreNuts();
-                secondSubTask();
-                firstTimeSecondSubTask = false;
+                bubble.setText("Vielen Dank, du hast 3 \u00B7 2 Nüsse für mich gesammelt.");
+                handler.postDelayed(squirrelShaker,5000);
+                waitForOneClick = true;
                 situation = Situation.TASK2;
             }
 
