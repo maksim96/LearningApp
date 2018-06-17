@@ -43,6 +43,9 @@ public class ThoughtBubble extends RelativeLayout {
         if (this.getScaleX() == -1.0) {
             food.setScaleX(-1);
         }
+        if (this.getScaleY() == -1.0) {
+            food.setScaleY(-1);
+        }
 
 
 

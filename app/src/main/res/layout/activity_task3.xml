@@ -22,15 +22,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/earth" />
 
-    <ImageView
-        android:id="@+id/table"
-        android:layout_width="592dp"
-        android:layout_height="587dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/table" />
+
 
     <ImageView
         android:id="@+id/squirrel"
@@ -60,6 +52,16 @@
         android:layout_marginStart="19dp"
         android:src="@drawable/bear"
         android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/table"
+        android:layout_width="592dp"
+        android:layout_height="587dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/table" />
 
     <ImageView
         android:id="@+id/sign"
@@ -223,6 +225,13 @@
 
     </RelativeLayout>
 
+    <!--Dummy component to take focus away-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
     <EditText
         android:id="@+id/editTextRight"
         android:layout_width="80dp"
@@ -283,7 +292,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="206dp"
         android:layout_marginEnd="321dp"
-        android:text="x"
+        android:text="·"
         android:textSize="36sp" />
 
     <TextView
@@ -351,71 +360,43 @@
         android:fontFamily="@font/finger_paint"
         android:textSize="20sp"/>
 
-    <ImageView
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bearBubble"
         android:layout_width="680dp"
         android:layout_height="205dp"
-        android:layout_alignStart="@+id/table"
-        android:layout_alignTop="@+id/line4"
-        android:scaleType="fitXY"
-        android:src="@drawable/sprechblase_left"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/bearText"
-        android:layout_width="416dp"
-        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/plate3"
-        android:layout_marginStart="325dp"
+        android:layout_marginStart="90dp"
+        android:scaleType="fitXY"
         android:text="Ich habe auch meine Honigwaben mitgebracht!"
-        android:textColor="@android:color/black"
-        android:textSize="36sp"
         android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/squirrelBubble"
-        android:layout_width="419dp"
-        android:layout_height="173dp"
-        android:layout_alignBottom="@+id/plate2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="194dp"
-        android:scaleY="-1"
-        android:src="@drawable/sprechblase_left" />
-
-    <ImageView
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bunnyBubble"
         android:layout_width="419dp"
         android:layout_height="173dp"
-        android:layout_below="@+id/line3"
-        android:layout_toEndOf="@+id/plate2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="93dp"
+        android:layout_toEndOf="@+id/plate1"
         android:scaleX="-1"
         android:scaleY="-1"
         android:src="@drawable/sprechblase_left"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/squirrelText"
-        android:layout_width="231dp"
-        android:layout_height="75dp"
-        android:layout_alignBottom="@+id/line5"
-        android:layout_toEndOf="@+id/plate1"
-        android:gravity="center"
-        android:text="Ich feiere eine Party. Mit welcher Aufgabe kann ich ausrechnen, wie viele Nüsse ich habe?"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/bunnyText"
-        android:layout_width="231dp"
-        android:layout_height="75dp"
-        android:layout_alignBaseline="@+id/line5"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="434dp"
-        android:gravity="center"
         android:text="Ich habe ganz viele Möhren gesammelt!"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
         android:visibility="invisible" />
+
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/squirrelBubble"
+        android:layout_width="419dp"
+        android:layout_height="173dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="175dp"
+        android:gravity="center"
+        android:scaleY="-1"
+        android:text="Jetzt, wo wir so viel gesammelt haben, können wir ein Fest feiern!"
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/leftImage"

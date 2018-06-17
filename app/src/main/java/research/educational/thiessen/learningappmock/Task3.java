@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -35,12 +37,9 @@ public class Task3 extends Activity {
     private ImageView bear;
     private ImageView bunny;
     private ImageView squirrel;
-    private ImageView bearBubble;
-    private TextView bearText;
-    private TextView squirrelText;
-    private ImageView squirrelBubble;
-    private ImageView bunnyBubble;
-    private TextView bunnyText;
+    private SpeechBubble bearBubble;
+    private SpeechBubble squirrelBubble;
+    private SpeechBubble bunnyBubble;
     private boolean firstTimeAutoFocus = true;
     private ImageView rightFood;
 
@@ -78,9 +77,7 @@ public class Task3 extends Activity {
         squirrel = findViewById(R.id.squirrel);
         bunny = findViewById(R.id.bunny);
         bearBubble = findViewById(R.id.bearBubble);
-        bearText = findViewById(R.id.bearText);
         bunnyBubble = findViewById(R.id.bunnyBubble);
-        bunnyText = findViewById(R.id.bunnyText);
 
         editTextLeft = findViewById(R.id.editTextLeft);
         editTextRight = findViewById(R.id.editTextRight);
@@ -100,7 +97,6 @@ public class Task3 extends Activity {
         editTextProduct.setOnFocusChangeListener(new OnLeaveListener());
 
         squirrelBubble = findViewById(R.id.squirrelBubble);
-        squirrelText = findViewById(R.id.squirrelText);
 
         rightFood = findViewById(R.id.rightImage);
 
@@ -118,11 +114,8 @@ public class Task3 extends Activity {
                     return;
                 }
                 squirrelBubble.setVisibility(View.INVISIBLE);
-                squirrelText.setVisibility(View.INVISIBLE);
                 bunnyBubble.setVisibility(View.INVISIBLE);
-                bunnyText.setVisibility(View.INVISIBLE);
                 bearBubble.setVisibility(View.INVISIBLE);
-                bearText.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -227,12 +220,10 @@ public class Task3 extends Activity {
 
         if (tasksLeft[i] == left && tasksRight[i] == right && product == left*right) {
             squirrelBubble.setVisibility(View.INVISIBLE);
-            squirrelText.setVisibility(View.INVISIBLE);
-            linesOnBoard[i].setText(left + " x " + right + " = " + (left*right));
+            linesOnBoard[i].setText(left + " \u00B7 " + right + " = " + (left*right));
             if (currentSubTask == 6) {
                 bearBubble.setVisibility(View.VISIBLE);
-                bearText.setVisibility(View.VISIBLE);
-                bearText.setText("Wow! Danke");
+                bearBubble.setText("Wow! Danke");
                 return;
             } else {
                 currentSubTask++;
@@ -242,8 +233,7 @@ public class Task3 extends Activity {
           //  rootLayout.invalidate();
         } else {
             squirrelBubble.setVisibility(View.VISIBLE);
-            squirrelText.setVisibility(View.VISIBLE);
-            squirrelText.setText("Bist du sicher?");
+            squirrelBubble.setText("Bist du sicher?");
         }
     }
 
@@ -257,7 +247,7 @@ public class Task3 extends Activity {
                 for (int i = 2; i < plates.length; i++) {
                     plates[i].setVisibility(View.INVISIBLE);
                 }
-                squirrelText.setText("Richtig! Wie viele Nüsse sind es nun?");
+                squirrelBubble.setText("Richtig! Wie viele Nüsse sind es nun?");
                 bubbleSetVisible(0, true);
                 break;
             case 3:
@@ -273,12 +263,11 @@ public class Task3 extends Activity {
                 rightFood.setImageResource(R.drawable.honey);
                 bear.setVisibility(View.VISIBLE);
                 bearBubble.setVisibility(View.VISIBLE);
-                bearText.setVisibility(View.VISIBLE);
 
                 break;
             case 4:
                 plates[3].setVisibility(View.VISIBLE);
-                bearText.setText("Genau! Und jetzt?");
+                bearBubble.setText("Genau! Und jetzt?");
                 bubbleSetVisible(1, true);
                 break;
             case 5:
@@ -291,33 +280,35 @@ public class Task3 extends Activity {
                 rightFood.setImageResource(R.drawable.carrots);
                 bunny.setVisibility(View.VISIBLE);
                 bunnyBubble.setVisibility(View.VISIBLE);
-                bunnyText.setVisibility(View.VISIBLE);
                 break;
             case 6:
                 plates[2].setVisibility(View.VISIBLE);
                 plates[3].setVisibility(View.VISIBLE);
                 plates[4].setVisibility(View.VISIBLE);
-                bunnyText.setText("Klasse! Wie viele Möhren gibt es zum Nachtisch?");
+                bunnyBubble.setText("Klasse! Wie viele Möhren gibt es zum Nachtisch?");
                 bubbleSetVisible(2, true);
                 break;
         }
     }
 
     private final class GlobalOnTouchListener implements View.OnClickListener {
-
+        private boolean firstTime = true;
         @Override
         public void onClick(View view) {
-            squirrelBubble.setVisibility(View.INVISIBLE);
-            squirrelText.setVisibility(View.INVISIBLE);
-            bunnyBubble.setVisibility(View.INVISIBLE);
-            bunnyText.setVisibility(View.INVISIBLE);
-            bearBubble.setVisibility(View.INVISIBLE);
-            bearText.setVisibility(View.INVISIBLE);
+            if (firstTime) {
+                squirrelBubble.setText("Mit welcher Aufgabe kann ich errechnen, wie viel auf den Tellern liegt?");
+                firstTime = false;
+            } else {
+                squirrelBubble.setVisibility(View.INVISIBLE);
+                bunnyBubble.setVisibility(View.INVISIBLE);
+                bearBubble.setVisibility(View.INVISIBLE);
 
-            InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-            checkResult();
+                checkResult();
+            }
+
 
             }
 
@@ -385,39 +376,27 @@ public class Task3 extends Activity {
         if (animal == 0) {
             if (visible) {
                 squirrelBubble.setVisibility(View.VISIBLE);
-                squirrelText.setVisibility(View.VISIBLE);
                 bunnyBubble.setVisibility(View.INVISIBLE);
-                bunnyText.setVisibility(View.INVISIBLE);
                 bearBubble.setVisibility(View.INVISIBLE);
-                bearText.setVisibility(View.INVISIBLE);
             } else {
                 squirrelBubble.setVisibility(View.INVISIBLE);
-                squirrelText.setVisibility(View.INVISIBLE);
             }
 
         } else if (animal == 1) {
             if (visible) {
                 bearBubble.setVisibility(View.VISIBLE);
-                bearText.setVisibility(View.VISIBLE);
                 squirrelBubble.setVisibility(View.INVISIBLE);
-                squirrelText.setVisibility(View.INVISIBLE);
                 bunnyBubble.setVisibility(View.INVISIBLE);
-                bunnyText.setVisibility(View.INVISIBLE);
             } else {
                 bearBubble.setVisibility(View.INVISIBLE);
-                bearText.setVisibility(View.INVISIBLE);
             }
         } else if (animal == 2) {
             if (visible) {
                 bunnyBubble.setVisibility(View.VISIBLE);
-                bunnyText.setVisibility(View.VISIBLE);
                 squirrelBubble.setVisibility(View.INVISIBLE);
-                squirrelText.setVisibility(View.INVISIBLE);
                 bearBubble.setVisibility(View.INVISIBLE);
-                bearText.setVisibility(View.INVISIBLE);
             } else {
                 bunnyBubble.setVisibility(View.INVISIBLE);
-                bunnyText.setVisibility(View.INVISIBLE);
             }
         }
 

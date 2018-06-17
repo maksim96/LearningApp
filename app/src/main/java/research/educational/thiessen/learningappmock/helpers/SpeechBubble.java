@@ -53,6 +53,14 @@ public class SpeechBubble extends RelativeLayout {
             text.setText(t);
         }
 
+        if (this.getScaleX() == -1.0) {
+            text.setScaleX(-1);
+        }
+        if (this.getScaleY() == -1.0) {
+            text.setScaleY(-1);
+        }
+
+
         Log.d(TAG, "attrs " + d + " " + t);
         a.recycle();
 
