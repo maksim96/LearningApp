@@ -15,9 +15,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.Stack;
+import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
+import research.educational.thiessen.learningappmock.helpers.ThoughtBubble;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -28,16 +28,18 @@ public class Task1 extends Activity {
     private ImageView nuts[];
     private ViewGroup rootLayout;
     private ImageView bag;
-    private TextView textView;
-    private ImageView bubble;
+    private SpeechBubble bubble;
     private int nutCount = 0;
-    private boolean[] nutPlaceOccupied = new boolean[6];
+    private boolean[] nutPlaceOccupied = new boolean[11];
     private int subTask = 0;
-    private float defaultNutPos[][] = new float[6][2];
+    private float defaultNutPos[][] = new float[11][2];
     private int defaultNutSize[] = new int[2];
     ImageView squirrel;
     Handler handler = new Handler();
-    Runnable shaker;
+    Runnable nutShaker;
+    Runnable squirrelShaker;
+    private Situation situation = Situation.INTRODUCTION;
+    private ThoughtBubble thoughtBubble;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,9 @@ public class Task1 extends Activity {
         rootLayout = findViewById(R.id.task1_root);
         bag = findViewById(R.id.bag);
 
-        nuts = new ImageView[6];
+        nuts = new ImageView[11];
 
-        final int[] nutIds = new int[] { R.id.nuts, R.id.nuts2, R.id.nuts3, R.id.nuts4, R.id.nuts5, R.id.nuts6 };
+        final int[] nutIds = new int[] { R.id.nuts, R.id.nuts2, R.id.nuts3, R.id.nuts4, R.id.nuts5, R.id.nuts6, R.id.nuts7, R.id.nuts8, R.id.nuts9, R.id.nuts10, R.id.nuts11 };
         for (int i = 0; i < nutIds.length; i++) {
             nuts[i] = findViewById(nutIds[i]);
             nuts[i].setOnTouchListener(new ChoiceTouchListener());
@@ -65,6 +67,7 @@ public class Task1 extends Activity {
                             nuts[i].setOnTouchListener(new ChoiceTouchListener());
                             defaultNutPos[i][0] = nuts[i].getX();
                             defaultNutPos[i][1] = nuts[i].getY();
+                            System.out.println(nuts[i].getX());
                         }
                         defaultNutSize[0] = nuts[0].getWidth();
                         defaultNutSize[1] = nuts[1].getHeight();
@@ -73,13 +76,30 @@ public class Task1 extends Activity {
                     }
                 });
 
-        rootLayout.setOnClickListener( new TextTouchListener());
+       // rootLayout.setOnClickListener( new TextTouchListener());
 
         squirrel = findViewById(R.id.squirrel);
-        textView = findViewById(R.id.textView);
-        textView.setText("Hallo, kannst du mir helfen?");
-        bubble = findViewById(R.id.bearBubble);
+        bubble = findViewById(R.id.speechbubble);
+        thoughtBubble = findViewById(R.id.thoughtbubble);
         squirrel.setOnClickListener(new TextTouchListener());
+
+        squirrelShaker = new Runnable() {
+            @Override
+            public void run() {
+                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                squirrel.startAnimation(shake);
+            }
+        };
+
+        nutShaker = new Runnable() {
+            @Override
+            public void run() {
+                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                nuts[0].startAnimation(shake);
+            }
+        };
+
+        handler.postDelayed(squirrelShaker, 5000);
 
 
      /*   RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getPx(nut.getWidth()), getPx(nut.getHeight()));
@@ -94,53 +114,64 @@ public class Task1 extends Activity {
     private void bubbleSetVisible(boolean visible) {
         if (visible) {
             bubble.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
         } else {
             bubble.setVisibility(View.INVISIBLE);
-            textView.setVisibility(View.INVISIBLE);
         }
 
     }
 
     private final void firstSubTask(View view, boolean firstClicked) {
         bubbleSetVisible(true);
+        thoughtBubble.setVisibility(View.INVISIBLE);
         if (firstClicked) {
-            textView.setText("Hilfst du mir 2 Nüsse zu sammeln?");
-            shaker = new Runnable() {
-                @Override
-                public void run() {
-                    Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
-                    nuts[0].startAnimation(shake);
-                }
-            };
-            handler.postDelayed(shaker, 3000);
+            bubble.setText("Hilfst du mir 2 Nüsse zu sammeln?");
+
+            handler.postDelayed(nutShaker, 5000);
 
         }
     }
 
-    private final void secondSubTask(View view, boolean firstClicked) {
+    private final int[] nutTasks = {5,4,6,7,8,9,10};
+    private int secondSubTaskPart = 0;
+    private boolean madeMistake = false;
+    private boolean startOfSubtask = true;
+    private boolean done = false;
+    private final void secondSubTask() {
         bubbleSetVisible(true);
-        if (firstClicked && nutCount != 8) {
-            textView.setText("Danke, das waren jetzt 3 x 2 Nüsse! Könntest du mir als nächstes 4 x 2 Nüsse sammeln?");
-
-        } else if (textView.getText().equals("Wow! Vielen Dank!") && nutCount == 8) {
-            Intent intent = new Intent(view.getContext(), Task2.class);
+        if (done) {
+            Intent intent = new Intent(this, Task2.class);
             startActivity(intent);
+        } else if (startOfSubtask) {
+            bubble.setText("Könntest du mir als nächstes "
+                    + nutTasks[secondSubTaskPart] + " \u00B7 2 Nüsse sammeln?");
+            startOfSubtask = false;
+            handler.postDelayed(nutShaker, 5000);
+
         } else {
-            if (nutCount < 8) {
-                textView.setText("Ich brauche ein paar mehr Nüsse");
-            } else if (nutCount == 8) {
-                textView.setText("Wow! Vielen Dank!");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
-                        squirrel.startAnimation(shake);
-                    }
-                }, 3000);
+            if (nutCount != nutTasks[secondSubTaskPart]*2) {
+                bubble.setText("Das ist noch nicht ganz richtig.");
+                madeMistake = true;
             } else {
-                textView.setText("So viele brauche ich doch gar nicht...");
+                bubble.setText("Richtig! Du hast " + nutTasks[secondSubTaskPart]*2 + " Nüsse in den Beutel getan!" );
+                startOfSubtask = true;
+                if (nutTasks[secondSubTaskPart] == 10) {
+                    done = true;
+                } else if (madeMistake) {
+                    secondSubTaskPart++;
+                } else {
+                    if (nutTasks[secondSubTaskPart] == 5) {
+                        secondSubTaskPart += 3;
+                    } else if (nutTasks[secondSubTaskPart] == 7) {
+                        done = true;
+                    } else {
+                            secondSubTaskPart++;
+                    }
+                }
+
+                handler.postDelayed(squirrelShaker, 5000);
+                restoreNuts();
+                madeMistake = false;
+
             }
         }
     }
@@ -151,17 +182,43 @@ public class Task1 extends Activity {
 
         @Override
         public void onClick(View view) {
-            handler.removeCallbacks(shaker);
-            if (subTask == 0) {
-                firstSubTask(view, firstClicked);
+            handler.removeCallbacks(squirrelShaker);
+            if (situation == Situation.INTRODUCTION) {
+                intro();
+            } else if (situation == Situation.TASK1) {
+                    firstSubTask(view, firstClicked);
+                firstClicked = false;
             } else {
-                secondSubTask(view, false);
+                secondSubTask();
             }
 
 
-            firstClicked = false;
+
         }
+
+
     }
+
+    int introPart = 0;
+    private void intro() {
+        bubbleSetVisible(true);
+        if (introPart == 0) {
+            bubble.setText("Hallo, ich bin Ela das Eichhörnchen und ich möchte heute im Wald Nüsse sammeln gehen. Ich brauche deine Hilfe!");
+            bubbleSetVisible(true);
+        } else if (introPart == 1) {
+            bubble.setText("Meine Lieblingsnüsse hängen immer zu zweit am Baum. So sehen sie aus:");
+            bubbleSetVisible(true);
+        } else {
+            thoughtBubble.setVisibility(View.VISIBLE);
+            bubble.setVisibility(View.INVISIBLE);
+            situation = Situation.TASK1;
+        }
+
+
+        handler.postDelayed(squirrelShaker, 5000);
+        introPart++;
+    }
+
     private boolean firstTimeSecondSubTask = true;
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
@@ -172,7 +229,7 @@ public class Task1 extends Activity {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            handler.removeCallbacks(shaker);
+            handler.removeCallbacks(nutShaker);
             bubbleSetVisible(false);
             final int x = (int) motionEvent.getRawX();
             final int y = (int) motionEvent.getRawY();
@@ -225,8 +282,8 @@ public class Task1 extends Activity {
                             }
                             myNutPosition = nutPosition;
                             nutPlaceOccupied[nutPosition] = true;
-                            lParams.leftMargin = (int) getPx(870 + (nutPosition)%3*60);
-                            lParams.topMargin = (int) getPx(520 + (nutPosition)/3*60);
+                            lParams.leftMargin = (int) getPx(870 + (nutPosition)%4*50);
+                            lParams.topMargin = (int) getPx(520 + (nutPosition)/4*50);
                             nutCount += 2;
 
                         } else {
@@ -239,10 +296,11 @@ public class Task1 extends Activity {
 
 
                         System.out.println(subTask);
-                        if (subTask < 3) {
+                        if (situation == Situation.TASK1) {
                             validateFirstSubTask();
                         } else {
-                            handler.postDelayed(shaker, 3000);
+                            handler.removeCallbacks(squirrelShaker);
+                            handler.postDelayed(squirrelShaker, 5000);
                         }
                     }
                     view.setLayoutParams(lParams);
@@ -285,31 +343,21 @@ public class Task1 extends Activity {
             System.out.println(defaultNutPos[i][0] + " " + defaultNutPos[i][1] + " " + defaultNutSize[0] + " " + defaultNutSize[1]);
 
         }
+        rootLayout.requestLayout();
         nutCount = 0;
-        nutPlaceOccupied = new boolean[6];
-        shaker = new Runnable() {
-            @Override
-            public void run() {
-                shaker = new Runnable() {
-                    @Override
-                    public void run() {
-                        Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
-                        squirrel.startAnimation(shake);
-                    }
-                };
-            }
-        };
+        nutPlaceOccupied = new boolean[11];
     }
 
     private void validateFirstSubTask() {
         if (nutCount == (subTask+1)*2) {
             bubbleSetVisible(true);
-            textView.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
+            bubble.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse! Hilfst du mir nochmal 2 Nüsse zu sammeln?");
             subTask++;
             if (subTask == 3) {
                 restoreNuts();
-                secondSubTask(textView, firstTimeSecondSubTask);
+                secondSubTask();
                 firstTimeSecondSubTask = false;
+                situation = Situation.TASK2;
             }
 
         }
@@ -327,6 +375,10 @@ public class Task1 extends Activity {
     private float getPx(float dp) {
         Resources r = getResources();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+    }
+
+    private enum Situation {
+        INTRODUCTION, TASK1, TASK2
     }
 
 

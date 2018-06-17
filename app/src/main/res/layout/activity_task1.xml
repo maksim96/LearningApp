@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/forest" />
 
@@ -54,8 +55,8 @@
         android:src="@drawable/bag2" />
     <ImageView
         android:id="@+id/nuts4"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="370dp"
@@ -64,8 +65,8 @@
 
     <ImageView
         android:id="@+id/nuts3"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="400dp"
@@ -74,8 +75,8 @@
 
     <ImageView
         android:id="@+id/nuts"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="700dp"
         android:layout_marginTop="200dp"
@@ -147,8 +148,8 @@
     -->
     <ImageView
         android:id="@+id/nuts5"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="477dp"
@@ -159,8 +160,8 @@
 
     <ImageView
         android:id="@+id/nuts6"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="600dp"
@@ -171,8 +172,8 @@
 
     <ImageView
         android:id="@+id/nuts2"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="541dp"
@@ -180,29 +181,72 @@
         android:src="@drawable/nuts" />
 
     <ImageView
-        android:id="@+id/bearBubble"
-        android:layout_width="371dp"
-        android:layout_height="264dp"
+        android:id="@+id/nuts7"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="502dp"
+        android:src="@drawable/nuts" />
+
+    <ImageView
+        android:id="@+id/nuts9"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="750dp"
+        android:layout_marginTop="310dp"
+        android:src="@drawable/nuts" />
+
+    <ImageView
+        android:id="@+id/nuts10"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="670dp"
+        android:layout_marginTop="79dp"
+        android:src="@drawable/nuts" />
+
+    <ImageView
+        android:id="@+id/nuts11"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginStart="610dp"
+        android:src="@drawable/nuts" />
+
+    <ImageView
+        android:id="@+id/nuts8"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="355dp"
+        android:layout_marginTop="350dp"
+        android:src="@drawable/nuts" />
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/speechbubble"
+        android:layout_width="432dp"
+        android:layout_height="307dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/bag"
+        android:layout_marginStart="258dp"
+        android:layout_marginTop="-95dp"
+        android:visibility="invisible"/>
+
+    <research.educational.thiessen.learningappmock.helpers.ThoughtBubble
+        android:id="@+id/thoughtbubble"
+        android:layout_width="359dp"
+        android:layout_height="372dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="135dp"
-        android:layout_marginStart="293dp"
-        android:src="@drawable/sprechblase_left" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="271dp"
-        android:layout_height="137dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="209dp"
-        android:layout_marginStart="378dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark"
-        android:textSize="20sp"
-        android:typeface="sans"
-        tools:text="Hallo, kannst du mir helfen?" />
-
+        android:layout_marginBottom="201dp"
+        android:layout_marginStart="268dp"
+        android:scaleX="-1"
+        android:visibility="invisible"/>
 
 </RelativeLayout>
