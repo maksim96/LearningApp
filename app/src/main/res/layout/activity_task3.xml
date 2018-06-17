@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:background="#00cc64"
     tools:context=".Task3"
-    android:id="@+id/task3_root">
+    android:id="@+id/task3_root"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -224,13 +226,6 @@
             android:src="@drawable/nuts" />
 
     </RelativeLayout>
-
-    <!--Dummy component to take focus away-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"/>
 
     <EditText
         android:id="@+id/editTextRight"

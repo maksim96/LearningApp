@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:background="#00cc64"
     tools:context=".Task2"
-    android:id="@+id/task2_root">
+    android:id="@+id/task2_root"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -45,99 +47,151 @@
 
     <ImageView
         android:id="@+id/honey1"
-        android:layout_width="105dp"
-        android:layout_height="109dp"
-        android:layout_above="@+id/honey2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:layout_toEndOf="@+id/bunny"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
+
+
+    <ImageView
+        android:id="@+id/honey7"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/honey1"
+        android:layout_toEndOf="@+id/honey2"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/honey4"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginBottom="257dp"
+        android:layout_marginEnd="529dp"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/honey5"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/honey1"
+        android:layout_marginStart="-499dp"
+        android:layout_toEndOf="@+id/honey3"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/honey3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="118dp"
         android:layout_marginEnd="499dp"
         android:alpha="0.4"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/honey3"
-        android:layout_width="105dp"
-        android:layout_height="109dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/sign"
-        android:layout_marginEnd="562dp"
-        android:alpha="0.4"
-        android:src="@drawable/honey"
-        android:visibility="invisible" />
-
-    <ImageView
         android:id="@+id/honey2"
-        android:layout_width="119dp"
-        android:layout_height="110dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/bubbleSquirrel"
-        android:layout_marginEnd="436dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/honey3"
+        android:layout_toEndOf="@+id/honey1"
         android:alpha="0.4"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
 
-
     <ImageView
-        android:id="@+id/bubbleBear"
-        android:layout_width="330dp"
-        android:layout_height="264dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="152dp"
-        android:layout_marginTop="118dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/sprechblase" />
+        android:id="@+id/honey6"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
 
-    <TextView
-        android:id="@+id/textViewBear"
-        android:layout_width="218dp"
-        android:layout_height="150dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="228dp"
-        android:layout_marginTop="150dp"
-        android:gravity="center"
-        android:text="Hallo Eichhörnchen, kannst du mir helfen?"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
-        android:typeface="sans"
-        tools:text="Hallo Eichhörnchen, kannst du mir helfen?" />
-
-
+        android:layout_above="@+id/honey1"
+        android:layout_alignStart="@+id/honey1"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
     <ImageView
         android:id="@+id/bear"
         android:layout_width="187dp"
         android:layout_height="261dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/honeyEdit"
-        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="77dp"
+        android:layout_marginEnd="81dp"
         android:src="@drawable/bear" />
 
-    <ImageView
-        android:id="@+id/sign"
-        android:layout_width="513dp"
-        android:layout_height="350dp"
-        android:layout_alignParentStart="true"
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/bubbleBear"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="166dp"
-        android:src="@drawable/sign" />
+        android:layout_alignStart="@+id/honey5"
+        android:layout_marginTop="188dp"
+        android:scaleType="fitXY"
+        android:scaleX="-1"
+        android:text="Hallo, ich bin Bertha der Bär. Ich esse am liebsten Honigwaben."
+        android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/honeyEdit"
-        android:layout_width="199dp"
-        android:layout_height="184dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="193dp"
-        android:layout_marginTop="207dp"
-        android:background="#80FFFFFF"
-        android:ems="10"
-        android:maxLength="4"
-        android:inputType="numberPassword"
-        android:textAlignment="center"
-        android:textSize="72dp" />
+    <research.educational.thiessen.learningappmock.helpers.ThoughtBubble
+        android:id="@+id/thoughtBubbleBear"
+        android:layout_width="330dp"
+        android:layout_height="264dp"
+        android:layout_above="@+id/honey4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="214dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign">
+        <ImageView
+
+            android:layout_width="513dp"
+            android:layout_height="350dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="166dp"
+            android:src="@drawable/sign" />
+        <EditText
+            android:id="@+id/honeyEdit"
+            android:layout_width="199dp"
+            android:layout_height="184dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="193dp"
+            android:layout_marginTop="207dp"
+            android:background="#80FFFFFF"
+            android:ems="10"
+            android:maxLength="4"
+            android:inputType="numberPassword"
+            android:textAlignment="center"
+            android:textSize="72dp" />
+
+    </RelativeLayout>
+
+
+
 
 
 
@@ -146,60 +200,39 @@
         android:layout_width="218dp"
         android:layout_height="324dp"
         android:layout_alignBottom="@+id/squirrel"
-        android:layout_alignEnd="@+id/textViewSquirrel"
+        android:layout_alignEnd="@+id/bubbleSquirrel"
         android:src="@drawable/bunny"
         android:visibility="invisible" />
 
-    <ImageView
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bunnyBubble"
         android:layout_width="398dp"
         android:layout_height="324dp"
         android:layout_above="@+id/bear"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="385dp"
-        android:src="@drawable/sprechblase_left"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/textViewBunny"
-        android:layout_width="293dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="140dp"
-        android:layout_toEndOf="@+id/textViewSquirrel"
-        android:gravity="center"
         android:text="Ich habe 2 x 4 Möhren gesammelt. Wie viele sind im Beutel?"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
-        android:typeface="sans"
         android:visibility="invisible" />
 
-    <ImageView
+    <research.educational.thiessen.learningappmock.helpers.ThoughtBubble
+        android:id="@+id/thoughtBubbleBunny"
+        android:layout_width="398dp"
+        android:layout_height="324dp"
+        android:layout_above="@+id/bear"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="385dp"
+        android:visibility="invisible"
+        android:src="@drawable/carrots"
+        android:scaleX="-1" />
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bubbleSquirrel"
         android:layout_width="330dp"
         android:layout_height="264dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="291dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/sprechblase_left"
-        android:visibility="invisible" />
-
-
-    <TextView
-        android:id="@+id/textViewSquirrel"
-        android:layout_width="179dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="399dp"
-        android:layout_marginTop="279dp"
-        android:gravity="center"
-        android:text="Ja klar, kannst du dem Bären helfen?"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
-        android:typeface="sans"
-        android:visibility="invisible" />
+        android:text="Schau mal wen ich im Wald getroffen habe!"/>
 
 
 </RelativeLayout>
