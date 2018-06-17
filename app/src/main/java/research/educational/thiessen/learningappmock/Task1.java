@@ -32,7 +32,6 @@ public class Task1 extends Activity {
     private SpeechBubble bubble;
     private int nutCount = 0;
     private boolean[] nutPlaceOccupied = new boolean[11];
-    private int subTask = 0;
     private float defaultNutPos[][] = new float[11][2];
     private int defaultNutSize[] = new int[2];
     ImageView squirrel;
@@ -41,6 +40,7 @@ public class Task1 extends Activity {
     Runnable squirrelShaker;
     private Situation situation = Situation.INTRODUCTION;
     private ThoughtBubble thoughtBubble;
+    private int subTask = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +77,14 @@ public class Task1 extends Activity {
                     }
                 });
 
-       // rootLayout.setOnClickListener( new TextTouchListener());
+        rootLayout.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View view) {
+                                              bubble.setVisibility(View.INVISIBLE);
+                                          }
+                                      });
 
-        squirrel = findViewById(R.id.squirrel);
+                squirrel = findViewById(R.id.squirrel);
         bubble = findViewById(R.id.speechbubble);
         thoughtBubble = findViewById(R.id.thoughtbubble);
         squirrel.setOnClickListener(new TextTouchListener());
@@ -137,6 +142,8 @@ public class Task1 extends Activity {
     private boolean madeMistake = false;
     private boolean startOfSubtask = true;
     private boolean done = false;
+    private boolean veryFirstTime = true;
+    private long startTime;
     private final void secondSubTask() {
         bubbleSetVisible(true);
         if (done) {
@@ -147,6 +154,10 @@ public class Task1 extends Activity {
                     + nutTasks[secondSubTaskPart] + " \u00B7 2 Nüsse sammeln?");
             startOfSubtask = false;
             handler.postDelayed(nutShaker, 5000);
+            if (veryFirstTime) {
+                veryFirstTime = false;
+                startTime = System.currentTimeMillis();
+            }
 
         } else {
             if (nutCount != nutTasks[secondSubTaskPart]*2) {
@@ -155,15 +166,18 @@ public class Task1 extends Activity {
             } else {
                 bubble.setText("Richtig! Du hast " + nutTasks[secondSubTaskPart]*2 + " Nüsse in den Beutel getan!" );
                 startOfSubtask = true;
-                if (nutTasks[secondSubTaskPart] == 10) {
+                long timeDiff = (System.currentTimeMillis() - startTime)/1000;
+                if (secondSubTaskPart >= nutTasks.length -4 && timeDiff > 60) {
+                    done = true;
+                } else if (secondSubTaskPart == nutTasks.length - 1) {
+                    done = true;
+                } else if (madeMistake && secondSubTaskPart >= nutTasks.length -4 ) {
                     done = true;
                 } else if (madeMistake) {
                     secondSubTaskPart++;
                 } else {
                     if (nutTasks[secondSubTaskPart] == 5) {
                         secondSubTaskPart += 3;
-                    } else if (nutTasks[secondSubTaskPart] == 7) {
-                        done = true;
                     } else {
                             secondSubTaskPart++;
                     }
@@ -171,7 +185,6 @@ public class Task1 extends Activity {
 
                 handler.postDelayed(squirrelShaker, 5000);
                 restoreNuts();
-                madeMistake = false;
 
             }
         }
@@ -294,9 +307,6 @@ public class Task1 extends Activity {
                             nutCount -= 2;
                         }
 
-
-
-                        System.out.println(subTask);
                         if (situation == Situation.TASK1) {
                             validateFirstSubTask();
                         } else {
