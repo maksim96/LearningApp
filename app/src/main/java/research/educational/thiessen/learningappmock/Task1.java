@@ -139,9 +139,9 @@ public class Task1 extends Activity {
         }
     }
 
-    private final int[] nutTasks = {5,4,6,7,8,9,10};
+    private final java.util.List<Integer> nutTasks = java.util.Arrays.asList(5,7,6,9,8,7,2);
+    private final int[][] transitions = {{1,2},{3,4},{4,5}};
     private int secondSubTaskPart = 0;
-    private boolean madeMistake = false;
     private boolean startOfSubTask = true;
     private boolean done = false;
     private boolean veryFirstTime = true;
@@ -153,7 +153,7 @@ public class Task1 extends Activity {
             startActivity(intent);
         } else if (startOfSubTask) {
             bubble.setText("Könntest du mir als nächstes "
-                    + nutTasks[secondSubTaskPart] + " \u00B7 2 Nüsse sammeln?");
+                    + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse sammeln?");
             startOfSubTask = false;
             handler.postDelayed(nutShaker, 5000);
             if (veryFirstTime) {
@@ -162,18 +162,30 @@ public class Task1 extends Activity {
             }
 
         } else {
-            if (nutCount != nutTasks[secondSubTaskPart]*2) {
+            if (nutCount != nutTasks.get(secondSubTaskPart)*2) {
                 bubble.setText("Das ist noch nicht ganz richtig.");
-                madeMistake = true;
             } else {
-                bubble.setText("Richtig! Du hast " + nutTasks[secondSubTaskPart]*2 + " Nüsse in den Beutel getan!" );
+                bubble.setText("Richtig! Du hast " + nutTasks.get(secondSubTaskPart)*2 + " Nüsse in den Beutel getan!" );
                 startOfSubTask = true;
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
-                if (secondSubTaskPart >= nutTasks.length -4 && timeDiff > 60) {
+                startTime = System.currentTimeMillis();
+                if (secondSubTaskPart == 0 && timeDiff >= 40){
+                     //Special easy task for slow kids
+                     secondSubTaskPart = nutTasks.size() - 1;
+                } else if (secondSubTaskPart >= 3) {
                     done = true;
-                } else if (secondSubTaskPart == nutTasks.length - 1) {
+                } else {
+                    if (timeDiff <= 20) {
+                        secondSubTaskPart = transitions[secondSubTaskPart][0];
+                    } else {
+                        secondSubTaskPart = transitions[secondSubTaskPart][1];
+                    }
+                }
+                /*if (secondSubTaskPart >= nutTasks.size() -4 && timeDiff > 60) {
                     done = true;
-                } else if (madeMistake && secondSubTaskPart >= nutTasks.length -4 ) {
+                } else if (secondSubTaskPart == nutTasks.size()- 1) {
+                    done = true;
+                } else if (madeMistake && secondSubTaskPart >= nutTasks.size() -4 ) {
                     done = true;
                 } else if (madeMistake) {
                     secondSubTaskPart++;
@@ -183,10 +195,14 @@ public class Task1 extends Activity {
                     } else {
                             secondSubTaskPart++;
                     }
-                }
+                }*/
+
 
                 handler.postDelayed(squirrelShaker, 5000);
-                restoreNuts();
+                if (!done) {
+                    restoreNuts();
+                }
+
 
             }
         }

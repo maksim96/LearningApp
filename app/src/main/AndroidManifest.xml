@@ -24,11 +24,7 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Task2"
@@ -37,6 +33,13 @@
             android:parentActivityName=".Task1"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             </activity>
         <activity
             android:name=".Task3"
