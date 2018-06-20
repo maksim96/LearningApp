@@ -38,12 +38,12 @@
 
     <ImageView
         android:id="@+id/bag"
-        android:layout_width="278dp"
-        android:layout_height="486dp"
+        android:layout_width="305dp"
+        android:layout_height="519dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginEnd="411dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="407dp"
         android:src="@drawable/bag2" />
 
     <ImageView
@@ -57,6 +57,17 @@
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
+
+    <ImageView
+        android:id="@+id/honey8"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/honey1"
+        android:layout_marginTop="-150dp"
+        android:layout_toStartOf="@+id/honey3"
+        android:alpha="0.4"
+        android:src="@drawable/honey"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/honey7"

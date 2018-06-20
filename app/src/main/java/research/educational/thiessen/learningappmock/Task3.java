@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -25,15 +28,16 @@ import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
  */
 public class Task3 extends Activity {
 
-    private int currentSubTask = 1;
+    private int currentSubTask = 0;
     private RelativeLayout plates[];
     private ImageView food[];
     private TextView linesOnBoard[];
     private EditText editTextLeft;
     private EditText editTextRight;
     private EditText editTextProduct;
-    private int[] tasksLeft = {5,2,3,4,2,5};
-    private int[] tasksRight = {2,2,3,3,4,4};
+    private int[] tasksLeft =  {2,5,10,4,6,3,  5,10,4,6,3,  4,8,5};
+    private int[] tasksRight = {2,2, 2,2,2,2,  3, 3,3,3,3,  4,4,4};
+    private int[][] transitions = {{1},{2,3},{6},{4,5},{6},{6}, {7,8}, {11},{9,10}, {11},{11}, {12,13},{},{}};
     private RelativeLayout rootLayout;
     private ImageView bear;
     private ImageView bunny;
@@ -44,6 +48,8 @@ public class Task3 extends Activity {
     private boolean firstTimeAutoFocus = true;
     private ImageView rightFood;
     private boolean completelyDone = false;
+    private Handler handler = new Handler();
+    private Runnable squirrelShaker;
 
 
     @Override
@@ -56,17 +62,17 @@ public class Task3 extends Activity {
         rootLayout = findViewById(R.id.task3_root);
         rootLayout.setOnClickListener(new GlobalOnTouchListener());
 
-        int[] plateIds = {R.id.plate1, R.id.plate2, R.id.plate3, R.id.plate4, R.id.plate5};
-        int[] foodIds = {R.id.food1, R.id.food2, R.id.food3, R.id.food4, R.id.food5};
+        int[] plateIds = {R.id.plate1, R.id.plate2, R.id.plate3, R.id.plate4, R.id.plate5, R.id.plate6, R.id.plate7, R.id.plate8, R.id.plate9, R.id.plate10};
+        int[] foodIds = {R.id.food1, R.id.food2, R.id.food3, R.id.food4, R.id.food5,R.id.food6, R.id.food7, R.id.food8, R.id.food9, R.id.food10};
 
-        plates = new RelativeLayout[5];
-        food = new ImageView[5];
+        plates = new RelativeLayout[10];
+        food = new ImageView[10];
         for (int i = 0; i < plateIds.length; i++) {
             plates[i] = findViewById(plateIds[i]);
             food[i] = findViewById(foodIds[i]);
         }
-        linesOnBoard = new TextView[6];
-        int[] lineIds = {R.id.line1, R.id.line2, R.id.line3, R.id.line4, R.id.line5, R.id.line6};
+        linesOnBoard = new TextView[7];
+        int[] lineIds = {R.id.line1, R.id.line2, R.id.line3, R.id.line4, R.id.line5, R.id.line6, R.id.line7};
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/finger_paint.ttf");
         for (int i = 0; i < lineIds.length; i++) {
@@ -102,6 +108,17 @@ public class Task3 extends Activity {
 
         rightFood = findViewById(R.id.rightImage);
 
+        squirrelShaker = new Runnable() {
+            @Override
+            public void run() {
+                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                squirrel.startAnimation(shake);
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+
+        handler.postDelayed(squirrelShaker, 5000);
     }
 
     private final class OnLeaveListener implements View.OnFocusChangeListener {
@@ -118,6 +135,7 @@ public class Task3 extends Activity {
                 squirrelBubble.setVisibility(View.INVISIBLE);
                 bunnyBubble.setVisibility(View.INVISIBLE);
                 bearBubble.setVisibility(View.INVISIBLE);
+                handler.removeCallbacks(squirrelShaker);
             }
         }
     }
@@ -131,6 +149,7 @@ public class Task3 extends Activity {
                     imm.hideSoftInputFromWindow(editTextProduct.getWindowToken(), 0);
 
                     checkResult();
+                    rootLayout.requestFocus();
                     return true; // consume.
 
                 }
@@ -139,6 +158,7 @@ public class Task3 extends Activity {
 
     }
 
+    /*
     private final class OnDoneAndMoveOnListener implements TextView.OnEditorActionListener {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -158,7 +178,7 @@ public class Task3 extends Activity {
             return false; // pass on to other listeners.
         }
 
-    }
+    }*/
 
    /* private final class OnNumberMoveOnListener implements View.OnKeyListener {
 
@@ -186,7 +206,12 @@ public class Task3 extends Activity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-            if (charSequence.length() > before) {
+            handler.removeCallbacks(squirrelShaker);
+            if ((tasksLeft[currentSubTask] < 10 && charSequence.length() > before && charSequence.length() == 1) ||
+                    (view.equals(editTextRight)&& charSequence.length() > before)) {
+                View nextView = this.view.focusSearch(View.FOCUS_RIGHT);
+                nextView.requestFocus();
+            } else if (tasksLeft[currentSubTask] >= 10 && charSequence.length() > before && charSequence.length() == 2) {
                 View nextView = this.view.focusSearch(View.FOCUS_RIGHT);
                 nextView.requestFocus();
             }
@@ -198,6 +223,8 @@ public class Task3 extends Activity {
         }
     }
 
+    private int totalTasksSolved = 0;
+    private long timeOfSubTaskStart;
     private final void checkResult() {
         int left, right, product;
         String leftString = editTextLeft.getText().toString();
@@ -218,87 +245,91 @@ public class Task3 extends Activity {
 
 
 
-        int i = currentSubTask-1;
-
-        if (tasksLeft[i] == left && tasksRight[i] == right && product == left*right) {
+        if (tasksLeft[currentSubTask] == left && tasksRight[currentSubTask] == right && product == left*right) {
+            long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
             squirrelBubble.setVisibility(View.INVISIBLE);
-            linesOnBoard[i].setText(left + " \u00B7 " + right + " = " + (left*right));
-            if (currentSubTask == 6) {
+            linesOnBoard[totalTasksSolved].setText(left + " \u00B7 " + right + " = " + (left*right));
+            if (transitions[currentSubTask].length == 0 || totalTasksSolved >= 6) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearBubble.setText("Wow! Danke");
+                handler.postDelayed(squirrelShaker, 5000);
                 completelyDone = true;
-                rootLayout.requestFocus();
                 return;
-            } else {
-                currentSubTask++;
-                updateTable();
+            } else if (transitions[currentSubTask].length == 1) {
+                currentSubTask = transitions[currentSubTask][0];
+            } else if (transitions[currentSubTask].length == 2) {
+                if (timeDiff <= 30) {
+                    currentSubTask = transitions[currentSubTask][0];
+                } else {
+                    currentSubTask = transitions[currentSubTask][1];
+                }
             }
+            totalTasksSolved++;
+            updateTable();
+           // rootLayout.requestFocus();
 
           //  rootLayout.invalidate();
         } else {
             squirrelBubble.setVisibility(View.VISIBLE);
-            squirrelBubble.setText("Bist du sicher?");
+            squirrelBubble.setText("Das ist noch nicht ganz richtig.");
         }
     }
 
     private final void updateTable() {
-        System.out.println("+++" + currentSubTask);
         editTextProduct.setText("");
         editTextLeft.setText("");
         editTextRight.setText("");
-        switch (currentSubTask) {
-            case 2:
-                for (int i = 2; i < plates.length; i++) {
-                    plates[i].setVisibility(View.INVISIBLE);
-                }
-                squirrelBubble.setText("Richtig! Wie viele Nüsse sind es nun?");
-                bubbleSetVisible(0, true);
-                break;
-            case 3:
-                plates[0].setVisibility(View.VISIBLE);
-                plates[1].setVisibility(View.VISIBLE);
-                plates[2].setVisibility(View.VISIBLE);
-                plates[3].setVisibility(View.INVISIBLE);
-                plates[4].setVisibility(View.INVISIBLE);
-
-                for (ImageView food: food) {
-                    food.setImageResource(R.drawable.honey);
-                }
-                rightFood.setImageResource(R.drawable.honey);
-                bear.setVisibility(View.VISIBLE);
-                bearBubble.setVisibility(View.VISIBLE);
-
-                break;
-            case 4:
-                plates[3].setVisibility(View.VISIBLE);
-                bearBubble.setText("Genau! Und jetzt?");
-                bubbleSetVisible(1, true);
-                break;
-            case 5:
-                plates[2].setVisibility(View.INVISIBLE);
-                plates[3].setVisibility(View.INVISIBLE);
-                plates[4].setVisibility(View.INVISIBLE);
-                for (ImageView food: food) {
-                    food.setImageResource(R.drawable.carrots);
-                }
-                rightFood.setImageResource(R.drawable.carrots);
-                bunny.setVisibility(View.VISIBLE);
-                bunnyBubble.setVisibility(View.VISIBLE);
-                break;
-            case 6:
-                plates[2].setVisibility(View.VISIBLE);
-                plates[3].setVisibility(View.VISIBLE);
-                plates[4].setVisibility(View.VISIBLE);
-                bunnyBubble.setText("Klasse! Wie viele Möhren gibt es zum Nachtisch?");
-                bubbleSetVisible(2, true);
-                break;
+        timeOfSubTaskStart = System.currentTimeMillis();
+        if (currentSubTask < 6) {
+            squirrelBubble.setText("Ja richtig! Und jetzt?");
+            bubbleSetVisible(0, true);
+        } else if (currentSubTask == 6) {
+            bearBubble.setText("Ja richtig! Und wie viele Waben sind es jetzt?");
+            bubbleSetVisible(1, true);
+            bear.setVisibility(View.VISIBLE);
+            for (ImageView food: food) {
+                food.setImageResource(R.drawable.honey);
+            }
+            rightFood.setImageResource(R.drawable.honey);
+        } else if (currentSubTask < 11) {
+            squirrelBubble.setText("Ja richtig! Und jetzt?");
+            bubbleSetVisible(1, true);
+            for (ImageView food: food) {
+                food.setImageResource(R.drawable.honey);
+            }
+        } else if (currentSubTask == 11) {
+            bunnyBubble.setText("Ja richtig! Und wie viele Möhren sind es jetzt?");
+            bubbleSetVisible(2, true);
+            bunny.setVisibility(View.VISIBLE);
+            for (ImageView food: food) {
+                food.setImageResource(R.drawable.carrots);
+            }
+            rightFood.setImageResource(R.drawable.carrots);
+        } else if (currentSubTask > 11) {
+            bunnyBubble.setText("Ja richtig! Und jetzt?");
+            bubbleSetVisible(2, true);
+            for (ImageView food: food) {
+                food.setImageResource(R.drawable.carrots);
+            }
         }
+
+        for (int i = 0; i < plates.length; i++) {
+            if (i < tasksLeft[currentSubTask]) {
+                plates[i].setVisibility(View.VISIBLE);
+            } else {
+                plates[i].setVisibility(View.INVISIBLE);
+            }
+        }
+
+        handler.postDelayed(squirrelShaker, 5000);
+
     }
 
     private final class GlobalOnTouchListener implements View.OnClickListener {
         private boolean firstTime = true;
         @Override
         public void onClick(View view) {
+            handler.removeCallbacks(squirrelShaker);
             if (completelyDone) {
                 Intent intent = new Intent(bunnyBubble.getContext(), Ending.class);
                 startActivity(intent);

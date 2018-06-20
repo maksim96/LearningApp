@@ -73,6 +73,6 @@
         android:layout_marginTop="72dp"
         android:scaleType="fitXY"
         android:scaleX="-1"
-        android:text="Vielen Dank und auf Wiedersehen!" />
+        android:text="Vielen Dank für deine Hilfe und auf Wiedersehen!" />
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class Task2 extends Activity {
     private EditText honeyEditText;
     private int subTask = 0;
     private ImageView bear;
-    private ImageView[] food = new ImageView[7];
+    private ImageView[] food = new ImageView[8];
     private ImageView bunny;
     private SpeechBubble bunnyBubble;
     private ImageView squirrel;
@@ -82,8 +82,8 @@ public class Task2 extends Activity {
         squirrelBubble = findViewById(R.id.bubbleSquirrel);
         bear = findViewById(R.id.bear);
 
-        int[] foodIds = {R.id.honey1, R.id.honey2, R.id.honey3, R.id.honey4, R.id.honey5, R.id.honey6, R.id.honey7};
-        for (int i = 0; i < 7; i++) {
+        int[] foodIds = {R.id.honey1, R.id.honey2, R.id.honey3, R.id.honey4, R.id.honey5, R.id.honey6, R.id.honey7, R.id.honey8};
+        for (int i = 0; i < 8; i++) {
             food[i] = findViewById(foodIds[i]);
         }
         bunny = findViewById(R.id.bunny);
@@ -114,20 +114,16 @@ public class Task2 extends Activity {
         });
 
 
-       /* honeyEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        honeyEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View view, boolean hasFocus){
-                System.out.println("muh!!!: " + hasFocus);
                 if (!hasFocus) {
-                    if (honeyEditText.getText().equals("6")) {
-                        bearText.setText("Ja, richtig!");
-                    } else {
-                        bearText.setText("Bist du sicher?");
-                    }
+                    InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
-        });*/
+        });
 
         squirrelShaker = new Runnable() {
             @Override
@@ -181,7 +177,7 @@ public class Task2 extends Activity {
                         bearThoughtBubble.setVisibility(View.VISIBLE);
                     } else if (introSubTask == 2) {
                         bearThoughtBubble.setVisibility(View.INVISIBLE);
-                        bearBubble.setText("Wie du siehst, kleben immer 3 Waben nebeneinander.");
+                        bearBubble.setText("Wie du siehst, kleben immer 3 Waben anneinander.");
                         bearBubble.setVisibility(View.VISIBLE);
                     } else if (introSubTask == 3) {
                         bearBubble.setVisibility(View.VISIBLE);
@@ -276,7 +272,7 @@ public class Task2 extends Activity {
                 if (situation == Situation.DONE) {
                     currentFoodCount = 0;
                 }
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 8 ; i++) {
                     if (i < currentFoodCount) {
                         food[i].setVisibility(View.VISIBLE);
                     } else {
@@ -289,7 +285,7 @@ public class Task2 extends Activity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < 7; i++) {
+                        for (int i = 0; i < 8; i++) {
                             food[i].setVisibility(View.INVISIBLE);
                         }
                     }
@@ -399,7 +395,7 @@ public class Task2 extends Activity {
             if (introSubTask == 0) {
                 bunnyBubble.setText("Hallo, ich bin Hugo der Hase.");
                 bubbleSetVisible(2, true);
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 8; i++) {
                     food[i].setImageResource(R.drawable.carrots);
                     food[i].setVisibility(View.INVISIBLE);
                 }

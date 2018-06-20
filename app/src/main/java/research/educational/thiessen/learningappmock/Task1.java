@@ -135,7 +135,7 @@ public class Task1 extends Activity {
             bubble.setText("Hilfst du mir 2 Nüsse zu sammeln?");
 
             handler.postDelayed(nutShaker, 5000);
-
+            nutDragActivated = true;
         }
     }
 
@@ -264,6 +264,7 @@ public class Task1 extends Activity {
         introPart++;
     }
 
+    private boolean nutDragActivated = false;
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
         private boolean inBag = false;
@@ -273,7 +274,7 @@ public class Task1 extends Activity {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (waitForOneClick) {
+            if (waitForOneClick || !nutDragActivated) {
                 return true;
             }
             handler.removeCallbacks(nutShaker);

@@ -29,10 +29,9 @@
         android:id="@+id/squirrel"
         android:layout_width="132dp"
         android:layout_height="168dp"
-        android:layout_alignBottom="@+id/line2"
-        android:layout_alignStart="@+id/plate2"
-        android:layout_marginBottom="-65dp"
-        android:layout_marginStart="-53dp"
+        android:layout_alignBottom="@+id/bunny"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="97dp"
         android:scaleType="fitXY"
         android:src="@drawable/squirrel" />
 
@@ -49,9 +48,9 @@
         android:id="@+id/bear"
         android:layout_width="151dp"
         android:layout_height="224dp"
-        android:layout_alignBottom="@+id/plate5"
+        android:layout_alignBottom="@+id/sign"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="52dp"
         android:src="@drawable/bear"
         android:visibility="invisible" />
 
@@ -78,11 +77,11 @@
     <ImageView
         android:id="@+id/board"
         android:layout_width="340dp"
-        android:layout_height="390dp"
+        android:layout_height="420dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/board" />
 
 
@@ -92,18 +91,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="238dp"
-        android:layout_marginStart="108dp">
+        android:layout_marginBottom="130dp"
+        android:layout_marginStart="361dp">
 
         <ImageView
             android:id="@+id/_plate1"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:rotation="72"
             android:src="@drawable/plate" />
 
         <ImageView
@@ -115,24 +113,26 @@
             android:src="@drawable/nuts" />
     </RelativeLayout>
 
+
     <RelativeLayout
         android:id="@+id/plate2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="85dp">
+        android:layout_marginBottom="167dp"
+        android:layout_marginStart="218dp"
+        android:rotation="36">
 
         <ImageView
             android:id="@+id/_plate2"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:rotation="144"
+            android:layout_marginTop="20dp"
+
             android:src="@drawable/plate" />
 
         <ImageView
@@ -149,17 +149,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="449dp"
-        android:layout_marginTop="54dp">
+        android:layout_centerVertical="true"
+        android:layout_marginStart="141dp"
+        android:rotation="72"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/_plate3"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:rotation="216"
             android:src="@drawable/plate" />
 
         <ImageView
@@ -175,20 +175,21 @@
         android:id="@+id/plate4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="248dp"
-        android:layout_marginStart="510dp">
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="123dp"
+        android:rotation="108"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/_plate4"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:rotation="288"
             android:src="@drawable/plate" />
 
         <ImageView
@@ -204,15 +205,16 @@
         android:id="@+id/plate5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="158dp"
-        android:layout_marginStart="338dp">
+        android:layout_marginEnd="-388dp"
+        android:layout_marginTop="40dp"
+        android:layout_toStartOf="@+id/plate6"
+        android:rotation="144"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/_plate5"
-            android:layout_width="200dp"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/plate" />
@@ -226,6 +228,153 @@
             android:src="@drawable/nuts" />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plate6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="388dp"
+        android:rotation="180"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/_plate6"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/plate" />
+
+        <ImageView
+            android:id="@+id/food6"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nuts" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plate7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/plate5"
+        android:layout_marginStart="537dp"
+        android:rotation="216"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/_plate7"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/plate" />
+
+        <ImageView
+            android:id="@+id/food7"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nuts" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plate8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="560dp"
+        android:layout_marginTop="152dp"
+        android:rotation="252"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/_plate8"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/plate" />
+
+        <ImageView
+            android:id="@+id/food8"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nuts" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plate9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="288dp"
+        android:layout_marginEnd="551dp"
+        android:rotation="288"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/_plate9"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/plate" />
+
+        <ImageView
+            android:id="@+id/food9"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nuts" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plate10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginStart="520dp"
+        android:rotation="324"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/_plate10"
+            android:layout_width="120dp"
+            android:layout_height="108dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/plate" />
+
+        <ImageView
+            android:id="@+id/food10"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nuts" />
+    </RelativeLayout>
+
 
     <EditText
         android:id="@+id/editTextRight"
@@ -291,23 +440,13 @@
         android:textSize="36sp" />
 
     <TextView
-        android:id="@+id/line3"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/line1"
-        android:layout_below="@id/line2"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/finger_paint"
-        android:textSize="30sp" />
-
-    <TextView
         android:id="@+id/line1"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="118dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="38dp"
         android:fontFamily="@font/finger_paint"
         android:typeface="monospace"
         android:textSize="30sp"/>
@@ -317,9 +456,36 @@
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="2dp"
         android:layout_below="@id/line1"
         android:fontFamily="@font/finger_paint"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/line1"
+        android:layout_below="@id/line2"
+        android:fontFamily="@font/finger_paint"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/line4"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/line1"
+        android:layout_below="@id/line3"
+        android:fontFamily="@font/finger_paint"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/line5"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/line1"
+        android:layout_below="@id/line4"
+        android:fontFamily="@font/finger_paint"
+        android:typeface="monospace"
         android:textSize="30sp"/>
 
     <TextView
@@ -328,39 +494,31 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/line1"
         android:layout_below="@+id/line5"
+        android:fontFamily="@font/finger_paint"
+        android:typeface="monospace"
+        android:textSize="30sp"/>
+    <TextView
+        android:id="@+id/line7"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/line1"
+        android:layout_below="@+id/line6"
         android:layout_marginTop="2dp"
         android:fontFamily="@font/finger_paint"
         android:typeface="monospace"
         android:textSize="30sp"/>
 
-    <TextView
-        android:id="@+id/line5"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="2dp"
-        android:layout_below="@id/line4"
-        android:fontFamily="@font/finger_paint"
-        android:typeface="monospace"
-        android:textSize="30sp"/>
 
-    <TextView
-        android:id="@+id/line4"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/line1"
-        android:layout_marginTop="2dp"
-        android:layout_below="@id/line3"
-        android:fontFamily="@font/finger_paint"
-        android:textSize="30sp"/>
+
+
+
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bearBubble"
         android:layout_width="680dp"
         android:layout_height="205dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/plate3"
-        android:layout_marginStart="90dp"
+        android:layout_alignStart="@+id/squirrel"
+        android:layout_alignTop="@+id/plate3"
         android:scaleType="fitXY"
         android:text="Ich habe auch meine Honigwaben mitgebracht!"
         android:visibility="invisible" />
@@ -369,9 +527,10 @@
         android:id="@+id/bunnyBubble"
         android:layout_width="419dp"
         android:layout_height="173dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="93dp"
-        android:layout_toEndOf="@+id/plate1"
+        android:layout_marginStart="348dp"
+        android:layout_marginTop="134dp"
         android:scaleX="-1"
         android:scaleY="-1"
         android:src="@drawable/sprechblase_left"
