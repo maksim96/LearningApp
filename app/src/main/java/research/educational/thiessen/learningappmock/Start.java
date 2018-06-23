@@ -12,7 +12,7 @@ public class Start extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        findViewById(R.id.start_root).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.squirrel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Task1.class);

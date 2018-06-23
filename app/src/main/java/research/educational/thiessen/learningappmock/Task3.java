@@ -118,7 +118,7 @@ public class Task3 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 squirrel.startAnimation(shake);
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, 3000);
             }
         };
 
@@ -127,7 +127,7 @@ public class Task3 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 bear.startAnimation(shake);
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, 3000);
             }
         };
         bunnyShaker = new Runnable() {
