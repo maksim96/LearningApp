@@ -240,6 +240,43 @@
         android:layout_marginTop="-95dp"
         android:visibility="invisible"/>
 
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/choice_bubble2"
+        android:layout_width="161dp"
+        android:layout_height="193dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="30dp"
+        android:text="2"
+        android:scaleX="-1"
+        android:visibility="invisible" />
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/choice_bubble3"
+        android:layout_width="161dp"
+        android:layout_height="193dp"
+        android:layout_below="@id/choice_bubble2"
+        android:layout_alignLeft="@id/choice_bubble2"
+        android:layout_marginTop="10dp"
+        android:text="3"
+        android:scaleX="-1"
+        android:visibility="invisible" />
+
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/choice_bubble4"
+        android:layout_width="161dp"
+        android:layout_height="193dp"
+        android:layout_below="@id/choice_bubble3"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/choice_bubble2"
+        android:scaleX="-1"
+        android:text="4"
+        android:visibility="invisible"/>
+
+
+
+
     <research.educational.thiessen.learningappmock.helpers.ThoughtBubble
         android:id="@+id/thoughtbubble"
         android:layout_width="359dp"

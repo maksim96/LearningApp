@@ -10,6 +10,17 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
         <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:name=".Start"
+            android:label="Eichhörnchen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Task1"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Eichhörnchen"
@@ -37,11 +48,7 @@
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -56,11 +63,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="research.educational.thiessen.learningappmock.Task3" />
         </activity>
-        <activity
-            android:name=".Start"
-            android:label="@string/title_activity_start">
 
-        </activity>
     </application>
 
 </manifest>

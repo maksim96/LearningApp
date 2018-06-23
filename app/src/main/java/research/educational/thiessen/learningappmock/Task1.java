@@ -42,6 +42,9 @@ public class Task1 extends Activity {
     private Situation situation = Situation.INTRODUCTION;
     private ThoughtBubble thoughtBubble;
     private int subTask = 0;
+    private SpeechBubble choiceBubble2;
+    private SpeechBubble choiceBubble3;
+    private SpeechBubble choiceBubble4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +98,7 @@ public class Task1 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 squirrel.startAnimation(shake);
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, 3000);
             }
         };
 
@@ -104,11 +107,16 @@ public class Task1 extends Activity {
             public void run() {
                 Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
                 nuts[0].startAnimation(shake);
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, 3000);
             }
         };
 
-        handler.postDelayed(squirrelShaker, 5000);
+        handler.postDelayed(squirrelShaker, 3000);
+
+        choiceBubble2 = findViewById(R.id.choice_bubble2);
+        choiceBubble3 = findViewById(R.id.choice_bubble3);
+        choiceBubble4 = findViewById(R.id.choice_bubble4);
+
 
 
      /*   RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getPx(nut.getWidth()), getPx(nut.getHeight()));
@@ -137,76 +145,73 @@ public class Task1 extends Activity {
             bubble.setText(Html.fromHtml(htmlText));
             bubble.setAnimateDots(false);
 
-            handler.postDelayed(nutShaker, 5000);
+            handler.postDelayed(nutShaker, 3000);
             nutDragActivated = true;
         }
     }
 
     private final java.util.List<Integer> nutTasks = java.util.Arrays.asList(5,7,6,9,8,7,2);
     private final int[][] transitions = {{1,2},{3,4},{4,5}};
-    private int secondSubTaskPart = 0;
+    private int thirdSubTaskPart = 0;
     private boolean startOfSubTask = true;
     private boolean done = false;
     private boolean veryFirstTime = true;
     private long startTime;
-    private final void secondSubTask() {
+    private final void thirdSubTask() {
         bubbleSetVisible(true);
-        if (done) {
-            Intent intent = new Intent(this, Task2.class);
-            startActivity(intent);
-        } else if (startOfSubTask) {
+        if (startOfSubTask) {
 
             if (veryFirstTime) {
                 startTime = System.currentTimeMillis();
                 bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
-                        + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
+                        + nutTasks.get(thirdSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
                 startOfSubTask = true;
                 waitForOneClick = true;
                 bubble.setAnimateDots(true);
-                handler.postDelayed(squirrelShaker, 5000);
+                handler.postDelayed(squirrelShaker, 3000);
             } else {
                 bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
-                        + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
+                        + nutTasks.get(thirdSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
                 startOfSubTask = false;
                 bubble.setAnimateDots(false);
-                handler.postDelayed(nutShaker, 5000);
+                handler.postDelayed(nutShaker, 3000);
             }
 
         } else {
-            if (nutCount != nutTasks.get(secondSubTaskPart)*2) {
+            if (nutCount != nutTasks.get(thirdSubTaskPart)*2) {
                 bubble.setText("Das ist noch nicht ganz richtig.");
                 bubble.setAnimateDots(false);
             } else {
-                bubble.setText(Html.fromHtml("Richtig! Du hast <br><b>" + nutTasks.get(secondSubTaskPart)*2 + " Nüsse</b> in den Beutel getan!"));
+                bubble.setText(Html.fromHtml("Richtig! Du hast <br><b>" + nutTasks.get(thirdSubTaskPart)*2 + " Nüsse</b> in den Beutel getan!"));
                 startOfSubTask = true;
                 bubble.setAnimateDots(true);
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
                 startTime = System.currentTimeMillis();
-                if (secondSubTaskPart == 0 && timeDiff >= 40){
+                if (thirdSubTaskPart == 0 && timeDiff >= 40){
                      //Special easy task for slow kids
-                     secondSubTaskPart = nutTasks.size() - 1;
-                } else if (secondSubTaskPart >= 3) {
+                     thirdSubTaskPart = nutTasks.size() - 1;
+                } else if (thirdSubTaskPart >= 3) {
                     done = true;
                 } else {
                     if (timeDiff <= 20) {
-                        secondSubTaskPart = transitions[secondSubTaskPart][0];
+                        thirdSubTaskPart = transitions[thirdSubTaskPart][0];
                     } else {
-                        secondSubTaskPart = transitions[secondSubTaskPart][1];
+                        thirdSubTaskPart = transitions[thirdSubTaskPart][1];
                     }
                 }
-                /*if (secondSubTaskPart >= nutTasks.size() -4 && timeDiff > 60) {
+                /*if (thirdSubTaskPart >= nutTasks.size() -4 && timeDiff > 60) {
                     done = true;
-                } else if (secondSubTaskPart == nutTasks.size()- 1) {
+                } else if (thirdSubTaskPart == nutTasks.size()- 1) {
                     done = true;
-                } else if (madeMistake && secondSubTaskPart >= nutTasks.size() -4 ) {
+                } else if (madeMistake && thirdSubTaskPart >= nutTasks.size() -4 ) {
                     done = true;
                 } else if (madeMistake) {
-                    secondSubTaskPart++;
+                    thirdSubTaskPart++;
                 } else {
-                    if (nutTasks[secondSubTaskPart] == 5) {
-                        secondSubTaskPart += 3;
+                    if (nutTasks[thirdSubTaskPart] == 5) {
+                        thirdSubTaskPart += 3;
                     } else {
-                            secondSubTaskPart++;
+                            thirdSubTaskPart++;
                     }
                 }*/
 
@@ -219,11 +224,15 @@ public class Task1 extends Activity {
 
             }
         }
+        if (done) {
+            situation = Situation.TASK3;
+            waitForOneClick = true;
+        }
     }
 
     private final class TextTouchListener implements View.OnClickListener {
         boolean firstClicked = true;
-
+        boolean choiceSolved = false;
 
         @Override
         public void onClick(View view) {
@@ -244,7 +253,8 @@ public class Task1 extends Activity {
                     }
 
                 }
-            } else {
+            } else if(situation == Situation.TASK2) {
+
                 if (veryFirstTime && waitForOneClick) {
                     bubble.setText("Tipp mich an, wenn du fertig bist.");
                     bubble.setAnimateDots(false);
@@ -256,11 +266,83 @@ public class Task1 extends Activity {
                 } else if (waitForOneClick) {
                     waitForOneClick = false;
                     restoreNuts();
-                    secondSubTask();
+                    thirdSubTask();
                 } else {
-                    secondSubTask();
+                    thirdSubTask();
+                }
+            } else if (situation == Situation.TASK3){
+
+
+                if (waitForOneClick) {
+                    bubble.setText(Html.fromHtml("Schau dir den Beutel an. <b>Wie oft</b> habe ich schon gepfügt?"));
+                    bubble.setAnimateDots(true);
+                    handler.postDelayed(squirrelShaker, 3000);
+
+                    restoreNuts();
+                    for (int i = 0; i < 4; i++) {
+                        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) nuts[i].getLayoutParams();
+                        lParams.height /= 2;
+                        lParams.width /= 2;
+                        lParams.leftMargin = (int) getPx(870 + (i)%4*50);
+                        lParams.topMargin = (int) getPx(520 + (i)/4*50);
+                        nuts[i].setLayoutParams(lParams);
+                    }
+                    waitForOneClick = false;
+                    firstClicked = true;
+                } else if (firstClicked) {
+                    firstClicked = false;
+                    bubble.setVisibility(View.INVISIBLE);
+                    Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                    shake.setRepeatCount(Integer.MAX_VALUE);
+                    shake.setDuration(1000);
+                    choiceBubble2.startAnimation(shake);
+                    choiceBubble2.setVisibility(View.VISIBLE);
+                    choiceBubble3.startAnimation(shake);
+                    choiceBubble3.setVisibility(View.VISIBLE);
+                    choiceBubble4.startAnimation(shake);
+                    choiceBubble4.setVisibility(View.VISIBLE);
+
+                    choiceBubble2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            bubble.setVisibility(View.VISIBLE);
+                            bubble.setText("Das ist noch nicht ganz richtig.");
+                        }
+                    });
+                    choiceBubble3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            bubble.setVisibility(View.VISIBLE);
+                            bubble.setText("Das ist noch nicht ganz richtig.");
+                        }
+                    });
+                    choiceBubble4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            bubble.setVisibility(View.VISIBLE);
+                            bubble.setText("Richtig!");
+                            choiceBubble2.setVisibility(View.GONE);
+                            choiceBubble3.setVisibility(View.GONE);
+                            choiceBubble4.setVisibility(View.GONE);
+                            choiceBubble2.clearAnimation();
+                            choiceBubble3.clearAnimation();
+                            choiceBubble4.clearAnimation();
+                            situation = Situation.DONE;
+                            waitForOneClick = false;
+                            bubble.setAnimateDots(true);
+                            handler.postDelayed(squirrelShaker,3000);
+                            restoreNuts();
+                        }
+                    });
+
+                } else if (choiceSolved) {
+
+
                 }
 
+            } else {
+                Intent intent = new Intent(view.getContext(), Task2.class);
+                startActivity(intent);
             }
 
 
@@ -289,6 +371,7 @@ public class Task1 extends Activity {
             thoughtBubble.setVisibility(View.VISIBLE);
             bubble.setVisibility(View.INVISIBLE);
             situation = Situation.TASK1;
+            waitForOneClick = true;
         }
 
 
@@ -438,9 +521,10 @@ public class Task1 extends Activity {
                 bubble.setText(Html.fromHtml("Vielen Dank, du hast <b>3 \u00B7 2 Nüsse</b> für mich gesammelt."));
                 bubble.setAnimateDots(true);
                 handler.postDelayed(squirrelShaker,3000);
-                waitForOneClick = true;
-                situation = Situation.TASK2;
                 waitForOneClick = false;
+                situation = Situation.TASK2;
+                restoreNuts();
+                //waitForOneClick = false;
             }
 
         }

@@ -190,6 +190,7 @@ public class Task2 extends Activity {
                     }  else if (introSubTask == 3) {
                         bearBubble.setVisibility(View.VISIBLE);
                         bearBubble.setText("Tipp mal den Beutel an!");
+                        bearThoughtBubble.setVisibility(View.INVISIBLE);
                         bag.setOnClickListener(new BagListener());
 
                     } else if (introSubTask == 4) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:interpolator="@android:anim/bounce_interpolator"
+    android:fillAfter="true"
+    android:fillEnabled="true">
+
+    <!-- Use your working translate animation here-->
+
+
+
+    <set xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:shareInterpolator="false"
+        android:fillAfter="true"
+        android:fillEnabled="true">
+        <translate
+        android:duration="1500"
+        android:fromXDelta="0%p"
+        android:toXDelta="-20%p"
+            />
+    </set>
+    <translate
+        android:duration="1500"
+        android:fromYDelta="0%p"
+        android:toYDelta="70%p" />
+
+
+
+</set>

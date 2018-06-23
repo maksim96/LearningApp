@@ -135,14 +135,14 @@
         android:alpha="0.4"
         android:src="@drawable/honey"
         android:visibility="invisible" />
+
     <ImageView
         android:id="@+id/bear"
         android:layout_width="230dp"
         android:layout_height="300dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/honey8"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="77dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginEnd="79dp"
         android:src="@drawable/bear" />
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble

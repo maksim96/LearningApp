@@ -24,17 +24,6 @@
         android:src="@drawable/forest" />
 
 
-    <ImageView
-        android:id="@+id/squirrel"
-        android:layout_width="136dp"
-        android:layout_height="202dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="195dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/squirrel" />
-
 
     <ImageView
         android:id="@+id/imageView7"
@@ -47,5 +36,15 @@
         android:scaleType="fitXY"
         android:src="@drawable/tree" />
 
+
+    <ImageView
+        android:id="@+id/squirrel"
+        android:layout_width="136dp"
+        android:layout_height="202dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="401dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/squirrel" />
 
 </RelativeLayout>
