@@ -137,8 +137,8 @@
         android:visibility="invisible" />
     <ImageView
         android:id="@+id/bear"
-        android:layout_width="187dp"
-        android:layout_height="261dp"
+        android:layout_width="230dp"
+        android:layout_height="300dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="77dp"
@@ -147,11 +147,12 @@
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bubbleBear"
-        android:layout_width="330dp"
-        android:layout_height="264dp"
+        android:layout_width="372dp"
+        android:layout_height="296dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/honey5"
-        android:layout_marginTop="188dp"
+        android:layout_marginStart="-42dp"
+        android:layout_marginTop="113dp"
+        android:layout_toEndOf="@+id/honey8"
         android:scaleType="fitXY"
         android:scaleX="-1"
         android:text="Hallo, ich bin Bertha der Bär. Ich esse am liebsten Honigwaben."
@@ -203,16 +204,14 @@
     </RelativeLayout>
 
 
-
-
-
-
     <ImageView
         android:id="@+id/bunny"
-        android:layout_width="218dp"
+        android:layout_width="170dp"
         android:layout_height="324dp"
-        android:layout_alignBottom="@+id/squirrel"
-        android:layout_alignEnd="@+id/bubbleSquirrel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="37dp"
+        android:layout_marginStart="412dp"
         android:src="@drawable/bunny"
         android:visibility="invisible" />
 
@@ -220,9 +219,10 @@
         android:id="@+id/bunnyBubble"
         android:layout_width="398dp"
         android:layout_height="324dp"
-        android:layout_above="@+id/bear"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="385dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="387dp"
+        android:layout_marginTop="112dp"
         android:text="Ich habe 2 x 4 Möhren gesammelt. Wie viele sind im Beutel?"
         android:visibility="invisible" />
 
@@ -230,12 +230,13 @@
         android:id="@+id/thoughtBubbleBunny"
         android:layout_width="398dp"
         android:layout_height="324dp"
-        android:layout_above="@+id/bear"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="385dp"
-        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="351dp"
+        android:layout_marginTop="154dp"
+        android:scaleX="-1"
         android:src="@drawable/carrots"
-        android:scaleX="-1" />
+        android:visibility="invisible" />
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/bubbleSquirrel"

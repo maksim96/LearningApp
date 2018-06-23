@@ -46,10 +46,11 @@
 
     <ImageView
         android:id="@+id/bear"
-        android:layout_width="151dp"
-        android:layout_height="224dp"
+        android:layout_width="187dp"
+        android:layout_height="254dp"
         android:layout_alignBottom="@+id/sign"
         android:layout_alignParentStart="true"
+        android:layout_marginBottom="-30dp"
         android:layout_marginStart="52dp"
         android:src="@drawable/bear"
         android:visibility="invisible" />
@@ -152,7 +153,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="141dp"
         android:rotation="72"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/_plate3"

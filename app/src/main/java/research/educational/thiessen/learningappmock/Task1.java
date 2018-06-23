@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -132,7 +133,8 @@ public class Task1 extends Activity {
         bubbleSetVisible(true);
         thoughtBubble.setVisibility(View.INVISIBLE);
         if (firstClicked) {
-            bubble.setText("Hilfst du mir 2 Nüsse zu sammeln?");
+            String htmlText = "Hilfst du mir <br><b>2 Nüsse</b> in meinen Beutel zu packen?";
+            bubble.setText(Html.fromHtml(htmlText));
             bubble.setAnimateDots(false);
 
             handler.postDelayed(nutShaker, 5000);
@@ -153,14 +155,21 @@ public class Task1 extends Activity {
             Intent intent = new Intent(this, Task2.class);
             startActivity(intent);
         } else if (startOfSubTask) {
-            bubble.setText("Könntest du mir als nächstes "
-                    + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse sammeln?");
-            startOfSubTask = false;
-            bubble.setAnimateDots(false);
-            handler.postDelayed(nutShaker, 5000);
+
             if (veryFirstTime) {
-                veryFirstTime = false;
                 startTime = System.currentTimeMillis();
+                bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
+                        + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
+                startOfSubTask = true;
+                waitForOneClick = true;
+                bubble.setAnimateDots(true);
+                handler.postDelayed(squirrelShaker, 5000);
+            } else {
+                bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
+                        + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
+                startOfSubTask = false;
+                bubble.setAnimateDots(false);
+                handler.postDelayed(nutShaker, 5000);
             }
 
         } else {
@@ -168,7 +177,7 @@ public class Task1 extends Activity {
                 bubble.setText("Das ist noch nicht ganz richtig.");
                 bubble.setAnimateDots(false);
             } else {
-                bubble.setText("Richtig! Du hast " + nutTasks.get(secondSubTaskPart)*2 + " Nüsse in den Beutel getan!" );
+                bubble.setText(Html.fromHtml("Richtig! Du hast <br><b>" + nutTasks.get(secondSubTaskPart)*2 + " Nüsse</b> in den Beutel getan!"));
                 startOfSubTask = true;
                 bubble.setAnimateDots(true);
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
@@ -202,7 +211,7 @@ public class Task1 extends Activity {
                 }*/
 
 
-                handler.postDelayed(squirrelShaker, 5000);
+                handler.postDelayed(squirrelShaker, 3000);
                 if (!done) {
                     restoreNuts();
                 }
@@ -227,20 +236,31 @@ public class Task1 extends Activity {
                 if (waitForOneClick) {
                     waitForOneClick = false;
                     if (subTask == 1) {
-                        bubble.setText("Hilfst du mir ein zweites mal 2 Nüsse zu sammeln?");
+                        bubble.setText(Html.fromHtml("Hilfst du mir ein <b>zweites mal</b> 2 Nüsse zu sammeln?"));
                         bubble.setAnimateDots(false);
                     } else if (subTask == 2) {
-                        bubble.setText("Hilfst du mir ein drittes mal 2 Nüsse zu sammeln?");
+                        bubble.setText(Html.fromHtml("Hilfst du mir ein <b>drittes mal</b> 2 Nüsse zu sammeln?"));
                         bubble.setAnimateDots(false);
                     }
 
                 }
             } else {
-                if (waitForOneClick) {
+                if (veryFirstTime && waitForOneClick) {
+                    bubble.setText("Tipp mich an, wenn du fertig bist.");
+                    bubble.setAnimateDots(false);
+                    veryFirstTime = false;
+                    handler.postDelayed(nutShaker, 3000);
                     waitForOneClick = false;
                     restoreNuts();
+                    startOfSubTask = false;
+                } else if (waitForOneClick) {
+                    waitForOneClick = false;
+                    restoreNuts();
+                    secondSubTask();
+                } else {
+                    secondSubTask();
                 }
-                secondSubTask();
+
             }
 
 
@@ -258,7 +278,11 @@ public class Task1 extends Activity {
             bubble.setAnimateDots(true);
             bubbleSetVisible(true);
         } else if (introPart == 1) {
-            bubble.setText("Meine Lieblingsnüsse hängen immer zu zweit am Baum. So sehen sie aus:");
+            bubble.setText(Html.fromHtml("Von meinen Lieblingsnüssen hängen immer <b>2 zusammen</b>."));
+            bubble.setAnimateDots(true);
+            bubbleSetVisible(true);
+        } else if (introPart == 2) {
+            bubble.setText("So sehen sie aus:");
             bubble.setAnimateDots(true);
             bubbleSetVisible(true);
         } else {
@@ -268,7 +292,7 @@ public class Task1 extends Activity {
         }
 
 
-        handler.postDelayed(squirrelShaker, 5000);
+        handler.postDelayed(squirrelShaker, 3000);
         introPart++;
     }
 
@@ -353,7 +377,7 @@ public class Task1 extends Activity {
                             validateFirstSubTask();
                         } else {
                             handler.removeCallbacks(squirrelShaker);
-                            handler.postDelayed(squirrelShaker, 5000);
+                            handler.postDelayed(squirrelShaker, 3000);
                         }
                     }
                     view.setLayoutParams(lParams);
@@ -405,17 +429,18 @@ public class Task1 extends Activity {
     private void validateFirstSubTask() {
         if (nutCount == (subTask+1)*2) {
             bubbleSetVisible(true);
-            bubble.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse!");
+            bubble.setText(Html.fromHtml("Super, das waren jetzt <b>" + (subTask+1)*2 + " Nüsse</b>!"));
             bubble.setAnimateDots(true);
-            handler.postDelayed(squirrelShaker,5000);
+            handler.postDelayed(squirrelShaker,3000);
             waitForOneClick = true;
             subTask++;
             if (subTask == 3) {
-                bubble.setText("Vielen Dank, du hast 3 \u00B7 2 Nüsse für mich gesammelt.");
+                bubble.setText(Html.fromHtml("Vielen Dank, du hast <b>3 \u00B7 2 Nüsse</b> für mich gesammelt."));
                 bubble.setAnimateDots(true);
-                handler.postDelayed(squirrelShaker,5000);
+                handler.postDelayed(squirrelShaker,3000);
                 waitForOneClick = true;
                 situation = Situation.TASK2;
+                waitForOneClick = false;
             }
 
         }

@@ -4,44 +4,35 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/icon"
+        android:label="Eichhörnchen"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
-        <activity android:name=".MainActivity"></activity>
-        <activity
-            android:name=".DragAndDropActivity"
-            android:label="@string/title_activity_drag_and_drop"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:screenOrientation="landscape"
-            android:supportsRtl="true"
-            android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"></activity>
         <activity
             android:name=".Task1"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_drag"
+            android:label="Eichhörnchen"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
-
 
         </activity>
         <activity
             android:name=".Task2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_drag"
+            android:label="Eichhörnchen"
             android:parentActivityName=".Task1"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
 
 
 
-            </activity>
+        </activity>
         <activity
             android:name=".Task3"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_drag"
+            android:label="Eichhörnchen"
             android:parentActivityName=".Task2"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
@@ -51,7 +42,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -60,11 +50,16 @@
 
         <activity
             android:name=".Ending"
-            android:label="@string/title_activity_ending"
+            android:label="Eichhörnchen"
             android:parentActivityName=".Task3">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="research.educational.thiessen.learningappmock.Task3" />
+        </activity>
+        <activity
+            android:name=".Start"
+            android:label="@string/title_activity_start">
+
         </activity>
     </application>
 

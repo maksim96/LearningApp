@@ -42,9 +42,15 @@ public class SpeechBubble extends RelativeLayout {
             //dots.setTextSize(text.getTextSize());
             handler.postDelayed(dotAnimator, 500);
             dots.setVisibility(VISIBLE);
+            if (this.getScaleY() == -1.0) {
+                findViewById(R.id.textviewUpper).setVisibility(GONE);
+            }
         } else {
             handler.removeCallbacks(dotAnimator);
             dots.setVisibility(GONE);
+            if (this.getScaleY() == -1.0) {
+                findViewById(R.id.textviewUpper).setVisibility(VISIBLE);
+            }
         }
     }
 
@@ -82,7 +88,10 @@ public class SpeechBubble extends RelativeLayout {
         }
         if (this.getScaleY() == -1.0) {
             text.setScaleY(-1);
-            dots.setScaleY(-1);
+            dots.setVisibility(GONE);
+            dots = findViewById(R.id.dotsinbubble_upper);
+            dots.setVisibility(VISIBLE);
+            findViewById(R.id.textviewUpper).setVisibility(GONE);
         }
 
         setAnimateDots(false);
