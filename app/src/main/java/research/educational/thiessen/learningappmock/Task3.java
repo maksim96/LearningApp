@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -60,7 +61,7 @@ public class Task3 extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         rootLayout = findViewById(R.id.task3_root);
-        rootLayout.setOnClickListener(new GlobalOnTouchListener());
+        rootLayout.setOnTouchListener(new GlobalOnTouchListener());
 
         int[] plateIds = {R.id.plate1, R.id.plate2, R.id.plate3, R.id.plate4, R.id.plate5, R.id.plate6, R.id.plate7, R.id.plate8, R.id.plate9, R.id.plate10};
         int[] foodIds = {R.id.food1, R.id.food2, R.id.food3, R.id.food4, R.id.food5,R.id.food6, R.id.food7, R.id.food8, R.id.food9, R.id.food10};
@@ -119,6 +120,8 @@ public class Task3 extends Activity {
 
 
         handler.postDelayed(squirrelShaker, 5000);
+
+        squirrelBubble.setAnimateDots(true);
     }
 
     private final class OnLeaveListener implements View.OnFocusChangeListener {
@@ -126,7 +129,11 @@ public class Task3 extends Activity {
         public void onFocusChange(View view, boolean hasFocus) {
             System.out.println(hasFocus);
             if (!hasFocus) {
-                checkResult();
+               /* if (rootLayout.hasFocus()) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }*/
+               // checkResult();
             } else {
                 if (firstTimeAutoFocus) {
                     firstTimeAutoFocus = false;
@@ -136,6 +143,7 @@ public class Task3 extends Activity {
                 bunnyBubble.setVisibility(View.INVISIBLE);
                 bearBubble.setVisibility(View.INVISIBLE);
                 handler.removeCallbacks(squirrelShaker);
+
             }
         }
     }
@@ -153,7 +161,7 @@ public class Task3 extends Activity {
                     return true; // consume.
 
                 }
-                return false; // pass on to other listeners.
+                return true; // pass on to other listeners.
             }
 
     }
@@ -325,34 +333,37 @@ public class Task3 extends Activity {
 
     }
 
-    private final class GlobalOnTouchListener implements View.OnClickListener {
+    private final class GlobalOnTouchListener implements View.OnTouchListener {
         private boolean firstTime = true;
         @Override
-        public void onClick(View view) {
-            handler.removeCallbacks(squirrelShaker);
-            if (completelyDone) {
-                Intent intent = new Intent(bunnyBubble.getContext(), Ending.class);
-                startActivity(intent);
-            }
-            if (firstTime) {
-                squirrelBubble.setText("Mit welcher Aufgabe kann ich errechnen, wie viel auf den Tellern liegt?");
-                firstTime = false;
-            } else {
-                squirrelBubble.setVisibility(View.INVISIBLE);
-                bunnyBubble.setVisibility(View.INVISIBLE);
-                bearBubble.setVisibility(View.INVISIBLE);
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                handler.removeCallbacks(squirrelShaker);
+                if (completelyDone) {
+                    Intent intent = new Intent(bunnyBubble.getContext(), Ending.class);
+                    startActivity(intent);
+                }
+                if (firstTime) {
+                    squirrelBubble.setText("Mit welcher Aufgabe kann ich errechnen, wie viel auf den Tellern liegt?");
+                    firstTime = false;
+                } else {
+                    squirrelBubble.setVisibility(View.INVISIBLE);
+                    bunnyBubble.setVisibility(View.INVISIBLE);
+                    bearBubble.setVisibility(View.INVISIBLE);
 
-                InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                checkResult();
-            }
-
-
-
+                    checkResult();
+                }
             }
 
+
+
+
+            return true;
         }
+    }
 
     /*
     private void bubbleSetVisible(boolean bear, boolean visible) {

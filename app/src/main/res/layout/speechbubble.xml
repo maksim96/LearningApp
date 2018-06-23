@@ -38,13 +38,27 @@
             android:typeface="sans"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
-
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/dotsinbubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:text="..."
+            android:typeface="monospace"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:paddingRight="50dp"
+            android:layout_weight="0.2"
+            android:paddingBottom="20dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/textViewBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"/>
 
 
     </LinearLayout>
+
+
 </RelativeLayout>

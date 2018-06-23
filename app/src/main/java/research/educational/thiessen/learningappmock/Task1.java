@@ -133,6 +133,7 @@ public class Task1 extends Activity {
         thoughtBubble.setVisibility(View.INVISIBLE);
         if (firstClicked) {
             bubble.setText("Hilfst du mir 2 Nüsse zu sammeln?");
+            bubble.setAnimateDots(false);
 
             handler.postDelayed(nutShaker, 5000);
             nutDragActivated = true;
@@ -155,6 +156,7 @@ public class Task1 extends Activity {
             bubble.setText("Könntest du mir als nächstes "
                     + nutTasks.get(secondSubTaskPart) + " \u00B7 2 Nüsse sammeln?");
             startOfSubTask = false;
+            bubble.setAnimateDots(false);
             handler.postDelayed(nutShaker, 5000);
             if (veryFirstTime) {
                 veryFirstTime = false;
@@ -164,9 +166,11 @@ public class Task1 extends Activity {
         } else {
             if (nutCount != nutTasks.get(secondSubTaskPart)*2) {
                 bubble.setText("Das ist noch nicht ganz richtig.");
+                bubble.setAnimateDots(false);
             } else {
                 bubble.setText("Richtig! Du hast " + nutTasks.get(secondSubTaskPart)*2 + " Nüsse in den Beutel getan!" );
                 startOfSubTask = true;
+                bubble.setAnimateDots(true);
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
                 startTime = System.currentTimeMillis();
                 if (secondSubTaskPart == 0 && timeDiff >= 40){
@@ -224,8 +228,10 @@ public class Task1 extends Activity {
                     waitForOneClick = false;
                     if (subTask == 1) {
                         bubble.setText("Hilfst du mir ein zweites mal 2 Nüsse zu sammeln?");
+                        bubble.setAnimateDots(false);
                     } else if (subTask == 2) {
                         bubble.setText("Hilfst du mir ein drittes mal 2 Nüsse zu sammeln?");
+                        bubble.setAnimateDots(false);
                     }
 
                 }
@@ -249,9 +255,11 @@ public class Task1 extends Activity {
         bubbleSetVisible(true);
         if (introPart == 0) {
             bubble.setText("Hallo, ich bin Ela das Eichhörnchen und ich möchte heute im Wald Nüsse sammeln gehen. Ich brauche deine Hilfe!");
+            bubble.setAnimateDots(true);
             bubbleSetVisible(true);
         } else if (introPart == 1) {
             bubble.setText("Meine Lieblingsnüsse hängen immer zu zweit am Baum. So sehen sie aus:");
+            bubble.setAnimateDots(true);
             bubbleSetVisible(true);
         } else {
             thoughtBubble.setVisibility(View.VISIBLE);
@@ -398,11 +406,13 @@ public class Task1 extends Activity {
         if (nutCount == (subTask+1)*2) {
             bubbleSetVisible(true);
             bubble.setText("Super, das waren jetzt " + (subTask+1)*2 + " Nüsse!");
+            bubble.setAnimateDots(true);
             handler.postDelayed(squirrelShaker,5000);
             waitForOneClick = true;
             subTask++;
             if (subTask == 3) {
                 bubble.setText("Vielen Dank, du hast 3 \u00B7 2 Nüsse für mich gesammelt.");
+                bubble.setAnimateDots(true);
                 handler.postDelayed(squirrelShaker,5000);
                 waitForOneClick = true;
                 situation = Situation.TASK2;

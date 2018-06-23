@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -25,9 +26,31 @@ import static android.content.ContentValues.TAG;
 public class SpeechBubble extends RelativeLayout {
     private TextView text;
     private ImageView bubble;
+    private TextView dots;
+    private TextView bottom;
+    private boolean animateDots = false;
+
+    public boolean isAnimateDots() {
+        return animateDots;
+    }
+
+    private Handler handler = new Handler();
+    private Runnable dotAnimator;
+    public void setAnimateDots(boolean animateDots) {
+        this.animateDots = animateDots;
+        if (animateDots) {
+            //dots.setTextSize(text.getTextSize());
+            handler.postDelayed(dotAnimator, 500);
+            dots.setVisibility(VISIBLE);
+        } else {
+            handler.removeCallbacks(dotAnimator);
+            dots.setVisibility(GONE);
+        }
+    }
 
     public void setText(CharSequence cs) {
         text.setText(cs);
+        setAnimateDots(false);
     }
 
     public CharSequence getText() {
@@ -55,15 +78,18 @@ public class SpeechBubble extends RelativeLayout {
 
         if (this.getScaleX() == -1.0) {
             text.setScaleX(-1);
+            dots.setScaleX(-1);
         }
         if (this.getScaleY() == -1.0) {
             text.setScaleY(-1);
+            dots.setScaleY(-1);
         }
+
+        setAnimateDots(false);
 
 
         Log.d(TAG, "attrs " + d + " " + t);
         a.recycle();
-
     }
 
     public SpeechBubble(Context context, AttributeSet attrs, int defStyle) {
@@ -75,5 +101,24 @@ public class SpeechBubble extends RelativeLayout {
         inflate(getContext(), R.layout.speechbubble, this);
         this.bubble = findViewById(R.id.actualbubble);
         this.text = findViewById(R.id.bubbleText);
+        this.dots = findViewById(R.id.dotsinbubble);
+        this.bottom = findViewById(R.id.textViewBottom);
+
+        dotAnimator = new Runnable() {
+            @Override
+            public void run() {
+                if (dots.getText().toString().equals("...")) {
+                    dots.setText("   ");
+                } else if (dots.getText().toString().equals(".. ")) {
+                    dots.setText("...");
+                } else if (dots.getText().toString().equals(".  ")) {
+                    dots.setText(".. ");
+                }else if (dots.getText().toString().equals("   ")) {
+                    dots.setText(".  ");
+                }
+                handler.removeCallbacks(this);
+                handler.postDelayed(this, 500);
+            }
+        };
     }
 }
