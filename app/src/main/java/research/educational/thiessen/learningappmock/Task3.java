@@ -3,6 +3,7 @@ package research.educational.thiessen.learningappmock;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -55,7 +56,75 @@ public class Task3 extends Activity {
     private Runnable bearShaker;
     private Runnable bunnyShaker;
 
+    private int elaIds[] = {R.raw.e1,
+            R.raw.e2,
+            R.raw.e3,
+            R.raw.e4,
+            R.raw.e5,
+            R.raw.e6,
+            R.raw.e7,
+            R.raw.e8,
+            R.raw.e9,
+            R.raw.e10,
+            R.raw.e11,
+            R.raw.e12,
+            R.raw.e13,
+            R.raw.e14,
+            R.raw.e15,
+            R.raw.e16,
+            R.raw.e17,
+            R.raw.e18,
+            R.raw.e19,
+            R.raw.e20,
+            R.raw.e21,
+            R.raw.e22,
+            R.raw.e23,
+            R.raw.e24,
+            R.raw.e25,
+            R.raw.e26,
+            R.raw.e27,
+            R.raw.e28,
+            R.raw.e29,
+            R.raw.e30,
+            R.raw.e31};
 
+    private int berthaIds[] = {R.raw.b1,
+            R.raw.b2,
+            R.raw.b3,
+            R.raw.b4,
+            R.raw.b5,
+            R.raw.b6,
+            R.raw.b7,
+            R.raw.b8,
+            R.raw.b9,
+            R.raw.b10,
+            R.raw.b11,
+            R.raw.b12,
+            R.raw.b13,
+            R.raw.b14,
+            R.raw.b15,
+            R.raw.b16,
+            R.raw.b17,
+            R.raw.b18};
+
+    private int hugoIds[] = {R.raw.h1,
+            R.raw.h2,
+            R.raw.h3,
+            R.raw.h4,
+            R.raw.h5,
+            R.raw.h6,
+            R.raw.h7,
+            R.raw.h8,
+            R.raw.h9,
+            R.raw.h10,
+            R.raw.h11,
+            R.raw.h12,
+            R.raw.h13,
+            R.raw.h14,
+            R.raw.h15};
+
+    private MediaPlayer mediaPlayer;
+    private int durationUntilShaking = 3000; //default value if no playback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,10 +209,16 @@ public class Task3 extends Activity {
         };
 
 
-        handler.postDelayed(squirrelShaker, 3000);
+
 
         squirrelBubble.setAnimateDots(true);
         squirrelBubble.makeDotsSmaller();
+
+        initMediaPlayer(0,26);
+        mediaPlayer.start();
+        durationUntilShaking = mediaPlayer.getDuration();
+
+        handler.postDelayed(squirrelShaker, durationUntilShaking);
     }
 
     private final class OnLeaveListener implements View.OnFocusChangeListener {
@@ -286,7 +361,16 @@ public class Task3 extends Activity {
             if (transitions[currentSubTask].length == 0 || totalTasksSolved >= 6) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearBubble.setText("Wow, danke!");
-                handler.postDelayed(bearShaker, 3000);
+
+
+                if (!completelyDone) {
+
+                    initMediaPlayer(1,17);
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    mediaPlayer.start();
+                    handler.postDelayed(bearShaker, durationUntilShaking);
+
+                }
                 completelyDone = true;
                 return;
             } else if (transitions[currentSubTask].length == 1) {
@@ -307,10 +391,19 @@ public class Task3 extends Activity {
             if (currentSubTask < 6) {
                 squirrelBubble.setVisibility(View.VISIBLE);
                 squirrelBubble.setText("Das ist noch nicht ganz richtig.");
+                initMediaPlayer(0,28);
+                mediaPlayer.start();
+                durationUntilShaking = mediaPlayer.getDuration();
             } else if (currentSubTask < 11) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearBubble.setText("Das ist noch nicht ganz richtig.");
+                initMediaPlayer(1,15);
+                mediaPlayer.start();
+                durationUntilShaking = mediaPlayer.getDuration();
             } else {
+                initMediaPlayer(2,13);
+                mediaPlayer.start();
+                durationUntilShaking = mediaPlayer.getDuration();
                 bunnyBubble.setVisibility(View.VISIBLE);
                 bunnyBubble.setText("Das ist noch nicht ganz richtig.");
             }
@@ -330,25 +423,37 @@ public class Task3 extends Activity {
         timeOfSubTaskStart = System.currentTimeMillis();
         if (currentSubTask < 6) {
             squirrelBubble.setText("Ja richtig! Und jetzt?");
+            initMediaPlayer(0,29);
+            mediaPlayer.start();
+            durationUntilShaking = mediaPlayer.getDuration();
             bubbleSetVisible(0, true);
-            handler.postDelayed(squirrelShaker, 3000);
+            handler.postDelayed(squirrelShaker, durationUntilShaking);
         } else if (currentSubTask == 6) {
             bearBubble.setText(Html.fromHtml("Ja richtig! Und <b>wie viele Waben</b> sind es jetzt?"));
             bubbleSetVisible(1, true);
             bear.setVisibility(View.VISIBLE);
+            initMediaPlayer(1,14);
+            mediaPlayer.start();
+            durationUntilShaking = mediaPlayer.getDuration();
             for (ImageView food: food) {
                 food.setImageResource(R.drawable.honey);
             }
             rightFood.setImageResource(R.drawable.honey);
-            handler.postDelayed(bearShaker, 3000);
+            handler.postDelayed(bearShaker, durationUntilShaking);
         } else if (currentSubTask < 11) {
+            initMediaPlayer(1,16);
+            mediaPlayer.start();
+            durationUntilShaking = mediaPlayer.getDuration();
             bearBubble.setText("Ja richtig! Und jetzt?");
             bubbleSetVisible(1, true);
             for (ImageView food: food) {
                 food.setImageResource(R.drawable.honey);
             }
-            handler.postDelayed(bearShaker, 3000);
+            handler.postDelayed(bearShaker, durationUntilShaking);
         } else if (currentSubTask == 11) {
+            initMediaPlayer(2,12);
+            mediaPlayer.start();
+            durationUntilShaking = mediaPlayer.getDuration();
             bunnyBubble.setText(Html.fromHtml("Ja richtig! Und <b>wie viele Möhren</b> sind es jetzt?"));
             bubbleSetVisible(2, true);
             bunny.setVisibility(View.VISIBLE);
@@ -356,14 +461,17 @@ public class Task3 extends Activity {
                 food.setImageResource(R.drawable.carrots);
             }
             rightFood.setImageResource(R.drawable.carrots);
-            handler.postDelayed(bunnyShaker, 3000);
+            handler.postDelayed(bunnyShaker, durationUntilShaking);
         } else if (currentSubTask > 11) {
+            initMediaPlayer(2,14);
+            mediaPlayer.start();
+            durationUntilShaking = mediaPlayer.getDuration();
             bunnyBubble.setText("Ja richtig! Und jetzt?");
             bubbleSetVisible(2, true);
             for (ImageView food: food) {
                 food.setImageResource(R.drawable.carrots);
             }
-            handler.postDelayed(bunnyShaker, 3000);
+            handler.postDelayed(bunnyShaker, durationUntilShaking);
         }
 
         for (int i = 0; i < plates.length; i++) {
@@ -382,6 +490,9 @@ public class Task3 extends Activity {
         private boolean firstTime = true;
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                return true;
+            }
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 handler.removeCallbacks(squirrelShaker);
                 handler.removeCallbacks(bearShaker);
@@ -392,6 +503,9 @@ public class Task3 extends Activity {
                 }
                 if (firstTime) {
                     squirrelBubble.setText(Html.fromHtml("Mit welcher <b>Aufgabe</b> kann ich errechnen, <b>wie viel</b> auf den Tellern liegt?"));
+                    initMediaPlayer(0,27);
+                    mediaPlayer.start();
+                    durationUntilShaking = mediaPlayer.getDuration();
                     firstTime = false;
                 } else {
                     squirrelBubble.setVisibility(View.INVISIBLE);
@@ -510,6 +624,20 @@ public class Task3 extends Activity {
         }
     }
 
+    private void initMediaPlayer(int animal, int sample) {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (animal == 0) {
+            mediaPlayer = MediaPlayer.create(this, elaIds[sample]);
+        } else if (animal == 1) {
+            mediaPlayer = MediaPlayer.create(this, berthaIds[sample]);
+        } else {
+            mediaPlayer = MediaPlayer.create(this, hugoIds[sample]);
+        }
 
+    }
 
 }

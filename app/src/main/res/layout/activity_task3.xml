@@ -359,10 +359,9 @@
         android:id="@+id/sign"
         android:layout_width="438dp"
         android:layout_height="291dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/bunny"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="33dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="23dp"
         android:src="@drawable/sign" />
 
     <ImageView
@@ -380,10 +379,10 @@
         android:id="@+id/board"
         android:layout_width="340dp"
         android:layout_height="420dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="48dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="38dp"
         android:src="@drawable/board" />
 
 
@@ -391,23 +390,24 @@
         android:id="@+id/editTextRight"
         android:layout_width="80dp"
         android:layout_height="78dp"
-        android:layout_alignTop="@id/editTextLeft"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="227dp"
+        android:layout_alignTop="@+id/editTextProduct"
+        android:layout_marginEnd="209dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
         android:inputType="numberPassword"
-        android:textSize="72sp"
-        android:nextFocusRight="@+id/editTextProduct"/>
+        android:nextFocusRight="@+id/editTextProduct"
+        android:textSize="72sp" />
 
     <EditText
         android:id="@+id/editTextProduct"
         android:layout_width="122dp"
         android:layout_height="78dp"
-        android:layout_alignTop="@id/editTextLeft"
+        android:layout_above="@+id/bunny"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="-155dp"
+        android:layout_marginEnd="49dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
@@ -418,10 +418,9 @@
         android:id="@+id/editTextLeft"
         android:layout_width="80dp"
         android:layout_height="78dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="191dp"
-        android:layout_marginEnd="346dp"
+        android:layout_alignTop="@+id/editTextRight"
+        android:layout_marginEnd="325dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
@@ -434,8 +433,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_marginEnd="196dp"
+        android:layout_alignTop="@+id/squirrel"
+        android:layout_marginEnd="181dp"
         android:text="="
         android:textSize="36sp" />
 
@@ -443,10 +442,9 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="206dp"
-        android:layout_marginEnd="321dp"
+        android:layout_alignTop="@+id/squirrel"
+        android:layout_marginEnd="302dp"
         android:text="·"
         android:textSize="36sp" />
 
@@ -454,13 +452,12 @@
         android:id="@+id/line1"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="118dp"
-        android:layout_marginTop="38dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="-302dp"
+        android:layout_toEndOf="@+id/textView5"
         android:fontFamily="@font/finger_paint"
-        android:typeface="monospace"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:typeface="monospace" />
 
     <TextView
         android:id="@+id/line2"
@@ -561,23 +558,23 @@
         android:id="@+id/leftImage"
         android:layout_width="55dp"
         android:layout_height="59dp"
+        android:layout_alignBottom="@+id/squirrel"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/editTextRight"
-        android:layout_marginEnd="357dp"
+        android:layout_marginEnd="334dp"
+        android:alpha="0.6"
         android:scaleType="centerCrop"
-        android:src="@drawable/plate"
-        android:alpha="0.6"/>
+        android:src="@drawable/plate" />
 
     <ImageView
         android:id="@+id/rightImage"
         android:layout_width="55dp"
         android:layout_height="59dp"
+        android:layout_alignBottom="@+id/squirrel"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/editTextRight"
-        android:layout_marginEnd="237dp"
+        android:layout_marginEnd="220dp"
+        android:alpha="0.7"
         android:scaleType="fitXY"
-        android:src="@drawable/nuts"
-        android:alpha="0.7"/>
+        android:src="@drawable/nuts" />
 
 
 </RelativeLayout>

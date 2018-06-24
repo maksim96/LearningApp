@@ -11,7 +11,7 @@
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
         <activity
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:name=".Start"
             android:label="Eichhörnchen">
 
@@ -21,7 +21,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Eichhörnchen"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/FullscreenTheme">
 
         </activity>
@@ -30,18 +30,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Eichhörnchen"
             android:parentActivityName=".Task1"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme">
-
-
-
-        </activity>
-        <activity
-            android:name=".Task3"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Eichhörnchen"
-            android:parentActivityName=".Task2"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/FullscreenTheme">
 
             <intent-filter>
@@ -49,6 +38,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".Task3"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Eichhörnchen"
+            android:parentActivityName=".Task2"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/FullscreenTheme">
+
+
         </activity>
 
         <meta-data
@@ -58,7 +58,10 @@
         <activity
             android:name=".Ending"
             android:label="Eichhörnchen"
-            android:parentActivityName=".Task3">
+            android:parentActivityName=".Task3"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/FullscreenTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="research.educational.thiessen.learningappmock.Task3" />

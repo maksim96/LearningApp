@@ -22,7 +22,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
-        android:src="@drawable/forest2" />
+        android:src="@drawable/forest" />
 
 
     <ImageView
@@ -53,7 +53,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="150dp"
         android:layout_toEndOf="@+id/bunny"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
@@ -65,7 +65,7 @@
         android:layout_below="@+id/honey1"
         android:layout_marginTop="-150dp"
         android:layout_toStartOf="@+id/honey3"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
@@ -75,7 +75,7 @@
         android:layout_height="70dp"
         android:layout_above="@+id/honey1"
         android:layout_toEndOf="@+id/honey2"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible"/>
 
@@ -85,7 +85,7 @@
         android:layout_height="70dp"
         android:layout_above="@+id/honey2"
         android:layout_toEndOf="@+id/honey1"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
@@ -96,7 +96,7 @@
         android:layout_alignTop="@+id/honey1"
         android:layout_marginStart="-499dp"
         android:layout_toEndOf="@+id/honey3"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible"/>
 
@@ -108,7 +108,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="118dp"
         android:layout_marginEnd="499dp"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
@@ -118,7 +118,7 @@
         android:layout_height="70dp"
         android:layout_above="@+id/honey3"
         android:layout_toEndOf="@+id/honey1"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
@@ -130,7 +130,7 @@
 
         android:layout_above="@+id/honey1"
         android:layout_alignStart="@+id/honey1"
-        android:alpha="0.4"
+        android:alpha="0.6"
         android:src="@drawable/honey"
         android:visibility="invisible" />
 
