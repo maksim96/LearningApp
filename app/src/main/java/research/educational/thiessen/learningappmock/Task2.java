@@ -56,7 +56,7 @@ public class Task2 extends Activity {
     private ThoughtBubble bunnyThoughtBubble;
     private ImageView bag;
     private final int[] bearSubTasks = {4,6,5,8,7,6,3}; //BFS
-    private final int[] bunnySubTasks = {2,4,3,6,5,4,8};
+    private final int[] bunnySubTasks = {2,4,3,6,5,4,8,3};
     private final int[][] transitions = {{1,2},{3,4},{4,5}}; //transitions for first two layers, without any special stuff (>= 45s, <15s)
     private int currentSubTask = 0;
     private long timeOfSubTaskStart;
@@ -339,8 +339,6 @@ public class Task2 extends Activity {
                     currentSubTask = bearSubTasks.length - 1;
                 } else if (currentSubTask == bearSubTasks.length - 1) {
                     bearDone = true;
-                    //no bunny subtask took so long
-                    situation = Situation.DONE;
                 } else if (currentSubTask >= 3) {
                     bearDone = true;
                     currentSubTask = 0;
@@ -352,7 +350,7 @@ public class Task2 extends Activity {
                     }
                 }
                 if (!bearDone) {
-                    bearBubble.setText(Html.fromHtml("Ja, richtig! Wie viele sind es, wenn ich<b> " + bearSubTasks[currentSubTask] +
+                    bearBubble.setText(Html.fromHtml("Ja, richtig! <b>Wie viele</b> sind es, wenn ich<b> " + bearSubTasks[currentSubTask] +
                             " · 3 Waben</b> gesammelt habe?"));
                     bearBubble.setAnimateDots(false);
                     bubbleSetVisible(1, true);
@@ -373,9 +371,12 @@ public class Task2 extends Activity {
                 honeyEditText.setText("");
                 long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
                 timeOfSubTaskStart = System.currentTimeMillis();
-                if (currentSubTask == 1 && timeDiff <= 15){
-                    //Special task for fast kids
+                if (currentSubTask == 0 && timeDiff >= 45){
+                    //Special easy task for slow kids
                     currentSubTask = bunnySubTasks.length - 1;
+                } else if (currentSubTask == 1 && timeDiff <= 15){
+                    //Special task for fast kids
+                    currentSubTask = bunnySubTasks.length - 2;
                 } else if (currentSubTask >= 3) {
                     situation = Situation.DONE;
                 } else {
@@ -387,7 +388,7 @@ public class Task2 extends Activity {
                 }
 
                 if (situation != Situation.DONE) {
-                    bunnyBubble.setText(Html.fromHtml("Ja, richtig! Wie viele sind es, wenn ich <b>" + bunnySubTasks[currentSubTask] +
+                    bunnyBubble.setText(Html.fromHtml("Ja, richtig! <b>Wie viele</b> sind es, wenn ich <b>" + bunnySubTasks[currentSubTask] +
                             " · 4 Möhren</b> gesammelt habe?"));
                     bunnyBubble.setAnimateDots(false);
                     bubbleSetVisible(2, true);
@@ -449,8 +450,9 @@ public class Task2 extends Activity {
                 bunnyBubble.setAnimateDots(false);
             } else if (introSubTask == 5) {
                 bubbleSetVisible(2, true);
-                bunnyBubble.setText(Html.fromHtml("Ich habe <br><b>2 · 4 Möhren</b> gesammelt. Wie viele sind im Beutel?"));
+                bunnyBubble.setText(Html.fromHtml("Ich habe <br><b>2 · 4 Möhren</b> gesammelt. <b>Wie viele</b> sind im Beutel?"));
                 bunnyBubble.setAnimateDots(false);
+                bunnyThoughtBubble.setVisibility(View.INVISIBLE);
                 handler.postDelayed(signShaker, 3000);
                 timeOfSubTaskStart = System.currentTimeMillis();
                 currentSubTask = 0;

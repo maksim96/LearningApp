@@ -14,11 +14,7 @@
             android:screenOrientation="landscape"
             android:name=".Start"
             android:label="Eichhörnchen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Task1"
@@ -48,7 +44,11 @@
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

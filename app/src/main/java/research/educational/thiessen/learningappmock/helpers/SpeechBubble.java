@@ -19,6 +19,7 @@ import android.widget.TextView;
 import research.educational.thiessen.learningappmock.R;
 
 import static android.content.ContentValues.TAG;
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 /**
  * TODO: document your custom view class.
@@ -129,5 +130,10 @@ public class SpeechBubble extends RelativeLayout {
                 handler.postDelayed(this, 500);
             }
         };
+    }
+
+    public void makeDotsSmaller() {
+        dots.setTextSize(COMPLEX_UNIT_SP, 15f);
+        findViewById(R.id.dotsinbubble_upper).setVisibility(GONE);
     }
 }

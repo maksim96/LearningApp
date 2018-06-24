@@ -331,7 +331,6 @@ public class Task1 extends Activity {
                             waitForOneClick = false;
                             bubble.setAnimateDots(true);
                             handler.postDelayed(squirrelShaker,3000);
-                            restoreNuts();
                         }
                     });
 

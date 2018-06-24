@@ -546,10 +546,12 @@
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
         android:id="@+id/squirrelBubble"
-        android:layout_width="450dp"
-        android:layout_height="124dp"
-        android:layout_alignBottom="@+id/line2"
-        android:layout_alignEnd="@+id/bunny"
+        android:layout_width="452dp"
+        android:layout_height="137dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="Jetzt, wo wir so viel gesammelt haben, können wir ein Fest feiern!"
         android:visibility="visible"

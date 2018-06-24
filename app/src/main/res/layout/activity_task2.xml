@@ -38,12 +38,12 @@
 
     <ImageView
         android:id="@+id/bag"
-        android:layout_width="305dp"
+        android:layout_width="337dp"
         android:layout_height="519dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="407dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="417dp"
         android:src="@drawable/bag2" />
 
     <ImageView
@@ -83,10 +83,8 @@
         android:id="@+id/honey4"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="257dp"
-        android:layout_marginEnd="529dp"
+        android:layout_above="@+id/honey2"
+        android:layout_toEndOf="@+id/honey1"
         android:alpha="0.4"
         android:src="@drawable/honey"
         android:visibility="invisible" />
@@ -244,8 +242,8 @@
         android:layout_height="264dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="291dp"
-        android:text="Schau mal wen ich im Wald getroffen habe!"/>
+        android:layout_marginStart="263dp"
+        android:text="Schau mal wen ich im Wald getroffen habe!" />
 
 
 </RelativeLayout>

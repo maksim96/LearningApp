@@ -143,6 +143,7 @@ public class Task3 extends Activity {
         handler.postDelayed(squirrelShaker, 3000);
 
         squirrelBubble.setAnimateDots(true);
+        squirrelBubble.makeDotsSmaller();
     }
 
     private final class OnLeaveListener implements View.OnFocusChangeListener {
@@ -332,7 +333,7 @@ public class Task3 extends Activity {
             bubbleSetVisible(0, true);
             handler.postDelayed(squirrelShaker, 3000);
         } else if (currentSubTask == 6) {
-            bearBubble.setText(Html.fromHtml("Ja richtig! Und wie <b>viele Waben</b> sind es jetzt?"));
+            bearBubble.setText(Html.fromHtml("Ja richtig! Und <b>wie viele Waben</b> sind es jetzt?"));
             bubbleSetVisible(1, true);
             bear.setVisibility(View.VISIBLE);
             for (ImageView food: food) {
@@ -348,7 +349,7 @@ public class Task3 extends Activity {
             }
             handler.postDelayed(bearShaker, 3000);
         } else if (currentSubTask == 11) {
-            bunnyBubble.setText(Html.fromHtml("Ja richtig! Und wie <b>viele Möhren</b> sind es jetzt?"));
+            bunnyBubble.setText(Html.fromHtml("Ja richtig! Und <b>wie viele Möhren</b> sind es jetzt?"));
             bubbleSetVisible(2, true);
             bunny.setVisibility(View.VISIBLE);
             for (ImageView food: food) {
