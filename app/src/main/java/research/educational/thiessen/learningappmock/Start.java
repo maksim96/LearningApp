@@ -1,18 +1,29 @@
 package research.educational.thiessen.learningappmock;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class Start extends Activity {
 
     private Handler handler;
     private Runnable shaker;
     private Animation bounce;
+    public static FileOutputStream outputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,29 @@ public class Start extends Activity {
             }
         }, 3000);
 
+
+        int i = 1;
+        String fileName;
+        File file;
+        do {
+            fileName = "Kind"+i+".txt";
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+            System.out.println(file.getAbsolutePath());
+            i++;
+        } while (file.exists());
+        if (Build.VERSION.SDK_INT >= 23) {
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+        outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+            //outputStream.write("test".getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 

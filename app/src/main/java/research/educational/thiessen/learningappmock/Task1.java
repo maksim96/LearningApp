@@ -1,6 +1,7 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -17,6 +18,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import java.io.IOException;
 
 import research.educational.thiessen.learningappmock.helpers.Situation;
 import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
@@ -47,6 +50,8 @@ public class Task1 extends Activity {
     private SpeechBubble choiceBubble3;
     private SpeechBubble choiceBubble4;
     private MediaPlayer mediaPlayer;
+
+    private StringBuilder statsString = new StringBuilder();
 
 
 
@@ -162,6 +167,9 @@ public class Task1 extends Activity {
         choiceBubble3 = findViewById(R.id.choice_bubble3);
         choiceBubble4 = findViewById(R.id.choice_bubble4);
 
+        statsString.append("========1. Aufgabe=========\n");
+
+
 
     }
 
@@ -227,6 +235,7 @@ public class Task1 extends Activity {
             }
             bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
                     + nutTasks.get(thirdSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
+            statsString.append("Aufgabe: " + nutTasks.get(thirdSubTaskPart) + " x 2 Nuesse\n");
             if (veryFirstTime) {
                 startTime = System.currentTimeMillis();
 
@@ -235,6 +244,7 @@ public class Task1 extends Activity {
                 bubble.setAnimateDots(true);
                 handler.postDelayed(squirrelShaker, durationUntilShaking);
             } else {
+
                 startTime = System.currentTimeMillis();
                 startOfSubTask = false;
                 bubble.setAnimateDots(false);
@@ -249,6 +259,8 @@ public class Task1 extends Activity {
                 mediaPlayer.start();
                 durationUntilShaking = mediaPlayer.getDuration();
                 bubble.setText("Das ist noch nicht ganz richtig.");
+                long tempTimeDiff = (System.currentTimeMillis() - startTime)/1000;
+                statsString.append("    Fehler gemacht: " + nutCount + " Nuesse im Beutel. Zeit gebrauchrt: " + tempTimeDiff + "s\n");
                 bubble.setAnimateDots(false);
             } else {
                 if (nutTasks.get(thirdSubTaskPart) != 7 && nutTasks.get(thirdSubTaskPart) != 2) {
@@ -268,6 +280,7 @@ public class Task1 extends Activity {
                 startOfSubTask = true;
                 bubble.setAnimateDots(true);
                 long timeDiff = (System.currentTimeMillis() - startTime)/1000;
+                statsString.append("    Zeit gebraucht: " + timeDiff + "s\n");
                 startTime = System.currentTimeMillis();
                 if (thirdSubTaskPart == 0 && timeDiff >= 40){
                      //Special easy task for slow kids
@@ -308,6 +321,7 @@ public class Task1 extends Activity {
         }
         if (done) {
             situation = Situation.TASK3;
+            nutDragActivated = false;
             waitForOneClick = true;
         }
     }
@@ -400,6 +414,7 @@ public class Task1 extends Activity {
                     choiceBubble3.setVisibility(View.VISIBLE);
                     choiceBubble4.startAnimation(shake);
                     choiceBubble4.setVisibility(View.VISIBLE);
+                    statsString.append("Aufgabe: Sprechblase aussuchen\n");
 
                     choiceBubble2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -409,6 +424,7 @@ public class Task1 extends Activity {
                             initMediaPlayer(16);
                             mediaPlayer.start();
                             durationUntilShaking = mediaPlayer.getDuration();
+                            statsString.append("    Fehler gemacht: 2 gedrueckt\n");
                         }
                     });
                     choiceBubble3.setOnClickListener(new View.OnClickListener() {
@@ -419,6 +435,7 @@ public class Task1 extends Activity {
                             initMediaPlayer(16);
                             mediaPlayer.start();
                             durationUntilShaking = mediaPlayer.getDuration();
+                            statsString.append("    Fehler gemacht: 3 gedrueckt\n");
                         }
                     });
                     choiceBubble4.setOnClickListener(new View.OnClickListener() {
@@ -440,6 +457,7 @@ public class Task1 extends Activity {
                             waitForOneClick = false;
                             bubble.setAnimateDots(true);
                             handler.postDelayed(squirrelShaker,durationUntilShaking);
+                            statsString.append("    Absolviert\n");
                         }
                     });
 
@@ -449,6 +467,11 @@ public class Task1 extends Activity {
                 }
 
             } else {
+                try {
+                    Start.outputStream.write(statsString.toString().getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(view.getContext(), Task2.class);
                 startActivity(intent);
             }

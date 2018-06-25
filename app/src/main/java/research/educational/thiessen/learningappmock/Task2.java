@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import research.educational.thiessen.learningappmock.helpers.NumericKeyBoardTransformationMethod;
 import research.educational.thiessen.learningappmock.helpers.Situation;
 import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
@@ -58,6 +60,8 @@ public class Task2 extends Activity {
     private int currentSubTask = 0;
     private long timeOfSubTaskStart;
     private boolean bearDone = false;
+
+    private StringBuilder statsString = new StringBuilder();
     private int elaIds[] = {R.raw.e1,
             R.raw.e2,
             R.raw.e3,
@@ -307,7 +311,7 @@ public class Task2 extends Activity {
                          honeyEditText.setEnabled(false);
                          durationUntilShaking = mediaPlayer.getDuration();
                          honeyEditText.setEnabled(true);
-
+                         statsString.append("Aufgabe: 4 x 3\n");
                     }
                     introSubTask++;
                 } else if (situation == Situation.TASK1) {
@@ -326,6 +330,11 @@ public class Task2 extends Activity {
 
                     }
                 } else if (situation == Situation.DONE) {
+                    try {
+                        Start.outputStream.write(statsString.toString().getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent = new Intent(bunnyBubble.getContext(), Task3.class);
                     startActivity(intent);
                 }
@@ -389,7 +398,7 @@ public class Task2 extends Activity {
     });
 
     honeyEditText.setEnabled(false);
-
+    statsString.append("========2. Aufgabe=========\n");
 
     }
 
@@ -427,6 +436,10 @@ public class Task2 extends Activity {
                         }
                     }
                 }, 1500);
+                if (timeOfSubTaskStart > 10000) {
+                    timeOfSubTaskStart = 0;
+                }
+                statsString.append("    Beutel benutzt zum Zeitpunkt: " + (System.currentTimeMillis() - timeOfSubTaskStart)/1000 +"s\n");
             }
     }
 
@@ -449,8 +462,9 @@ public class Task2 extends Activity {
         // the user is done typing.
         if (situation == Situation.TASK1) {
             if (honeyEditText.getText().toString().equals(Integer.toString((bearSubTasks[currentSubTask])*3))) {
-                honeyEditText.setText("");
+
                 long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
+                statsString.append("    Zeit gebraucht: " + timeDiff + "s\n");
                 timeOfSubTaskStart = System.currentTimeMillis();
                 if (currentSubTask == 0 && timeDiff >= 45){
                     //Special easy task for slow kids
@@ -488,7 +502,7 @@ public class Task2 extends Activity {
                             " · 3 Waben</b> gesammelt habe?"));
                     bearBubble.setAnimateDots(false);
                     bubbleSetVisible(1, true);
-
+                    statsString.append("Aufgabe: " + bearSubTasks[currentSubTask] + " x 3\n");
                 }  else {
                     bearBubble.setText("Ja, richtig!");
                     bearBubble.setAnimateDots(true);
@@ -508,12 +522,13 @@ public class Task2 extends Activity {
                 mediaPlayer.start();
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
-                honeyEditText.setText("");
+                statsString.append("    Fehler gemacht. Eingabe war " + honeyEditText.getText().toString() + "\n");
             }
+
         } else if (situation == Situation.TASK2) {
             if (honeyEditText.getText().toString().equals(Integer.toString((bunnySubTasks[currentSubTask])*4))) {
-                honeyEditText.setText("");
                 long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
+                statsString.append("    Zeit gebraucht: " + timeDiff + "s\n");
                 timeOfSubTaskStart = System.currentTimeMillis();
                 if (currentSubTask == 0 && timeDiff >= 45){
                     //Special easy task for slow kids
@@ -556,6 +571,7 @@ public class Task2 extends Activity {
                 if (situation != Situation.DONE) {
                     bunnyBubble.setText(Html.fromHtml("Ja, richtig! <b>Wie viele</b> sind es, wenn ich <b>" + bunnySubTasks[currentSubTask] +
                             " · 4 Möhren</b> gesammelt habe?"));
+                    statsString.append("Aufgabe: " + bunnySubTasks[currentSubTask] + " x 4\n");
                     bunnyBubble.setAnimateDots(false);
                     bubbleSetVisible(2, true);
                     //letzte Aufgabe nur für schnelle Kinder die keine Fehler gemacht haben
@@ -582,10 +598,11 @@ public class Task2 extends Activity {
                 mediaPlayer.start();
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
-                honeyEditText.setText("");
+                statsString.append("    Fehler gemacht. Eingabe war " + honeyEditText.getText().toString() + "\n");
 
             }
         }
+        honeyEditText.setText("");
 
         InputMethodManager imm = (InputMethodManager)getSystemService(honeyEditText.getContext().INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(honeyEditText.getWindowToken(), 0);
@@ -655,9 +672,15 @@ public class Task2 extends Activity {
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
                 handler.postDelayed(signShaker, durationUntilShaking);
+                statsString.append("Aufgabe: 2 x 4\n");
             }
             bunnyIntroSubTask++;
             if (situation == Situation.DONE) {
+                try {
+                    Start.outputStream.write(statsString.toString().getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(bunnyBubble.getContext(), Task3.class);
                 startActivity(intent);
             }

@@ -4,6 +4,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 
+import java.io.IOException;
+
 public class Ending extends Activity {
 
     @Override
@@ -13,6 +15,12 @@ public class Ending extends Activity {
 
         MediaPlayer mediaPlayer  = MediaPlayer.create(this, R.raw.vielendank);
         mediaPlayer.start();
+
+        try {
+            Start.outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

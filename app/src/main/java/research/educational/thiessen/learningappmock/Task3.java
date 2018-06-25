@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import research.educational.thiessen.learningappmock.helpers.SpeechBubble;
 
 /**
@@ -55,7 +57,7 @@ public class Task3 extends Activity {
     private Runnable squirrelShaker;
     private Runnable bearShaker;
     private Runnable bunnyShaker;
-
+    private StringBuilder statsString = new StringBuilder();
     private int elaIds[] = {R.raw.e1,
             R.raw.e2,
             R.raw.e3,
@@ -152,7 +154,6 @@ public class Task3 extends Activity {
         for (int i = 0; i < lineIds.length; i++) {
             linesOnBoard[i] = findViewById(lineIds[i]);
             linesOnBoard[i].setTypeface(custom_font);
-
         }
 
         bear = findViewById(R.id.bear);
@@ -219,6 +220,7 @@ public class Task3 extends Activity {
         durationUntilShaking = mediaPlayer.getDuration();
 
         handler.postDelayed(squirrelShaker, durationUntilShaking);
+         statsString.append("========3. Aufgabe=========\n");
     }
 
     private final class OnLeaveListener implements View.OnFocusChangeListener {
@@ -356,6 +358,7 @@ public class Task3 extends Activity {
 
         if (tasksLeft[currentSubTask] == left && tasksRight[currentSubTask] == right && product == left*right) {
             long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
+            statsString.append("    Zeit gebraucht: " +  timeDiff +"s\n");
             squirrelBubble.setVisibility(View.INVISIBLE);
             linesOnBoard[totalTasksSolved].setText(left + " \u00B7 " + right + " = " + (left*right));
             if (transitions[currentSubTask].length == 0 || totalTasksSolved >= 6) {
@@ -394,6 +397,7 @@ public class Task3 extends Activity {
                 initMediaPlayer(0,28);
                 mediaPlayer.start();
                 durationUntilShaking = mediaPlayer.getDuration();
+
             } else if (currentSubTask < 11) {
                 bearBubble.setVisibility(View.VISIBLE);
                 bearBubble.setText("Das ist noch nicht ganz richtig.");
@@ -407,7 +411,8 @@ public class Task3 extends Activity {
                 bunnyBubble.setVisibility(View.VISIBLE);
                 bunnyBubble.setText("Das ist noch nicht ganz richtig.");
             }
-
+            long tempTimeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
+            statsString.append("    Fehler: " + leftString + " * " + rightString + " = "+  product  + " zum Zeitpunkt: " + tempTimeDiff + "s\n");
             editTextLeft.setText("");
             editTextRight.setText("");
             editTextProduct.setText("");
@@ -417,10 +422,11 @@ public class Task3 extends Activity {
     }
 
     private final void updateTable() {
+        timeOfSubTaskStart = System.currentTimeMillis();
+        statsString.append("Aufgabe " + editTextLeft.getText().toString() + " * " + editTextRight.getText().toString() + " = "+  editTextProduct.getText().toString() + "\n");;
         editTextProduct.setText("");
         editTextLeft.setText("");
         editTextRight.setText("");
-        timeOfSubTaskStart = System.currentTimeMillis();
         if (currentSubTask < 6) {
             squirrelBubble.setText("Ja richtig! Und jetzt?");
             initMediaPlayer(0,29);
@@ -498,6 +504,11 @@ public class Task3 extends Activity {
                 handler.removeCallbacks(bearShaker);
                 handler.removeCallbacks(bunnyShaker);
                 if (completelyDone) {
+                    try {
+                        Start.outputStream.write(statsString.toString().getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent = new Intent(bunnyBubble.getContext(), Ending.class);
                     startActivity(intent);
                 }
@@ -507,6 +518,8 @@ public class Task3 extends Activity {
                     mediaPlayer.start();
                     durationUntilShaking = mediaPlayer.getDuration();
                     firstTime = false;
+                    statsString.append("Aufgabe: 3*2=6\n");
+                    timeOfSubTaskStart = System.currentTimeMillis();
                 } else {
                     squirrelBubble.setVisibility(View.INVISIBLE);
                     bunnyBubble.setVisibility(View.INVISIBLE);
