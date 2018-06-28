@@ -1,7 +1,6 @@
 package research.educational.thiessen.learningappmock;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -47,8 +46,8 @@ public class Task1 extends Activity {
     private ThoughtBubble thoughtBubble;
     private int subTask = 0;
     private SpeechBubble choiceBubble2;
-    private SpeechBubble choiceBubble3;
     private SpeechBubble choiceBubble4;
+    private SpeechBubble choiceBubble8;
     private MediaPlayer mediaPlayer;
 
     private StringBuilder statsString = new StringBuilder();
@@ -131,6 +130,9 @@ public class Task1 extends Activity {
         rootLayout.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View view) {
+                                              if (!nutDragActivated) {
+                                                  return;
+                                              }
                                               if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                                                   return;
                                               }
@@ -155,17 +157,20 @@ public class Task1 extends Activity {
         nutShaker = new Runnable() {
             @Override
             public void run() {
-                Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
-                nuts[0].startAnimation(shake);
-                handler.postDelayed(this, 3000);
+                if (!nutPlaceOccupied[0]) {
+                    Animation shake = AnimationUtils.loadAnimation(rootLayout.getContext(), R.anim.shake);
+                    nuts[0].startAnimation(shake);
+                    handler.postDelayed(this, 3000);
+                }
+
             }
         };
 
         handler.postDelayed(squirrelShaker, 3000);
 
         choiceBubble2 = findViewById(R.id.choice_bubble2);
-        choiceBubble3 = findViewById(R.id.choice_bubble3);
         choiceBubble4 = findViewById(R.id.choice_bubble4);
+        choiceBubble8 = findViewById(R.id.choice_bubble8);
 
         statsString.append("========1. Aufgabe=========\n");
 
@@ -233,6 +238,7 @@ public class Task1 extends Activity {
                 mediaPlayer.start();
                 durationUntilShaking = mediaPlayer.getDuration();
             }
+            nutDragActivated = true;
             bubble.setText(Html.fromHtml("Könntest du mir als nächstes <br><b>"
                     + nutTasks.get(thirdSubTaskPart) + " \u00B7 2 Nüsse</b> in meinen Beutel packen?"));
             statsString.append("Aufgabe: " + nutTasks.get(thirdSubTaskPart) + " x 2 Nuesse\n");
@@ -410,10 +416,10 @@ public class Task1 extends Activity {
                     shake.setDuration(1000);
                     choiceBubble2.startAnimation(shake);
                     choiceBubble2.setVisibility(View.VISIBLE);
-                    choiceBubble3.startAnimation(shake);
-                    choiceBubble3.setVisibility(View.VISIBLE);
                     choiceBubble4.startAnimation(shake);
                     choiceBubble4.setVisibility(View.VISIBLE);
+                    choiceBubble8.startAnimation(shake);
+                    choiceBubble8.setVisibility(View.VISIBLE);
                     statsString.append("Aufgabe: Sprechblase aussuchen\n");
 
                     choiceBubble2.setOnClickListener(new View.OnClickListener() {
@@ -427,7 +433,7 @@ public class Task1 extends Activity {
                             statsString.append("    Fehler gemacht: 2 gedrueckt\n");
                         }
                     });
-                    choiceBubble3.setOnClickListener(new View.OnClickListener() {
+                    choiceBubble8.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             bubble.setVisibility(View.VISIBLE);
@@ -435,7 +441,7 @@ public class Task1 extends Activity {
                             initMediaPlayer(16);
                             mediaPlayer.start();
                             durationUntilShaking = mediaPlayer.getDuration();
-                            statsString.append("    Fehler gemacht: 3 gedrueckt\n");
+                            statsString.append("    Fehler gemacht: 8 gedrueckt\n");
                         }
                     });
                     choiceBubble4.setOnClickListener(new View.OnClickListener() {
@@ -448,11 +454,11 @@ public class Task1 extends Activity {
                             mediaPlayer.start();
                             durationUntilShaking = mediaPlayer.getDuration();
                             choiceBubble2.setVisibility(View.GONE);
-                            choiceBubble3.setVisibility(View.GONE);
                             choiceBubble4.setVisibility(View.GONE);
+                            choiceBubble8.setVisibility(View.GONE);
                             choiceBubble2.clearAnimation();
-                            choiceBubble3.clearAnimation();
                             choiceBubble4.clearAnimation();
+                            choiceBubble8.clearAnimation();
                             situation = Situation.DONE;
                             waitForOneClick = false;
                             bubble.setAnimateDots(true);
@@ -532,13 +538,13 @@ public class Task1 extends Activity {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            handler.removeCallbacks(nutShaker);
             if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                 return true;
             }
             if (waitForOneClick || !nutDragActivated) {
                 return true;
             }
-            handler.removeCallbacks(nutShaker);
             bubbleSetVisible(false);
             final int x = (int) motionEvent.getRawX();
             final int y = (int) motionEvent.getRawY();
@@ -662,6 +668,7 @@ public class Task1 extends Activity {
             initMediaPlayer(9);
             mediaPlayer.start();
             durationUntilShaking = mediaPlayer.getDuration();
+            nutDragActivated = false;
             bubble.setAnimateDots(true);
             waitForOneClick = false;
             situation = Situation.TASK2;

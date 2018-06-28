@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -48,6 +50,7 @@ public class Task2 extends Activity {
     private Runnable bearShaker;
     private Runnable signShaker;
     private Runnable bunnyShaker;
+    private Runnable bagHelperMessageDisplayer;
     Handler handler = new Handler();
     private RelativeLayout sign;
     private Situation situation = Situation.INTRODUCTION;
@@ -111,7 +114,8 @@ public class Task2 extends Activity {
             R.raw.b15,
             R.raw.b16,
             R.raw.b17,
-            R.raw.b18};
+            R.raw.b18,
+            R.raw.b19};
 
     private int hugoIds[] = {R.raw.h1,
             R.raw.h2,
@@ -176,6 +180,7 @@ public class Task2 extends Activity {
                 }
                 if (honeyEditText.isEnabled()) {
                     handler.removeCallbacks(signShaker);
+                    handler.removeCallbacks(bagHelperMessageDisplayer);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                     honeyEditText.requestFocus();
@@ -205,6 +210,7 @@ public class Task2 extends Activity {
 
             @Override
             public void onFocusChange(View view, boolean hasFocus){
+                handler.removeCallbacks(bagHelperMessageDisplayer);
                 if (!hasFocus) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(view.getContext().INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -247,102 +253,20 @@ public class Task2 extends Activity {
         };
 
 
-
-
-
-        bear.setOnClickListener(new View.OnClickListener() {
-            private int introSubTask = 0;
-
+        bagHelperMessageDisplayer = new Runnable() {
             @Override
-            public void onClick(View view) {
-                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                    return;
-                }
-                handler.removeCallbacks(bearShaker);
-                if (situation == Situation.INTRODUCTION) {
-                     if (introSubTask == 0) {
-                        bearThoughtBubble.setVisibility(View.INVISIBLE);
-                        bearBubble.setText(Html.fromHtml("Es kleben immer <br> <b>3 Waben aneinander</b>."));
-                        bearBubble.setVisibility(View.VISIBLE);
-                        bearBubble.setAnimateDots(true);
-                         initMediaPlayer(1,1);
-                         mediaPlayer.start();
-                         durationUntilShaking = mediaPlayer.getDuration();
-                         honeyEditText.setEnabled(false);
-                    } else if (introSubTask == 1) {
-                        bearBubble.setText("So sehen sie aus:");
-                        bearBubble.setAnimateDots(true);
-                         initMediaPlayer(1,2);
-                         mediaPlayer.start();
-                         durationUntilShaking = mediaPlayer.getDuration();
-                         honeyEditText.setEnabled(false);
-                    } else if (introSubTask == 2) {
-                        bearBubble.setVisibility(View.INVISIBLE);
-                        bearThoughtBubble.setVisibility(View.VISIBLE);
-                    }  else if (introSubTask == 3) {
-                        bearBubble.setVisibility(View.VISIBLE);
-                        bearBubble.setText("Tipp mal den Beutel an!");
-                        bearThoughtBubble.setVisibility(View.INVISIBLE);
-                        bearBubble.setAnimateDots(true);
-                        bag.setOnClickListener(new BagListener());
-                         initMediaPlayer(1,3);
-                         honeyEditText.setEnabled(false);
-                         mediaPlayer.start();
-                         durationUntilShaking = mediaPlayer.getDuration();
-
-                    } else if (introSubTask == 4) {
-                         bearBubble.setVisibility(View.VISIBLE);
-                         bearBubble.setText(Html.fromHtml("Ich habe <br><b>4 · 3 Waben</b> gesammelt und in meinen Beutel getan."));
-                          bearBubble.setAnimateDots(true);
-                         initMediaPlayer(1,5);
-                         mediaPlayer.start();
-                         honeyEditText.setEnabled(false);
-                         durationUntilShaking = mediaPlayer.getDuration();
-                    } else if (introSubTask == 5) {
-                         bearBubble.setVisibility(View.VISIBLE);
-                         bearBubble.setText(Html.fromHtml("Kannst du mir auf das Schild schreiben, <b>wie viele Waben</b> ich habe?"));
-                         bearBubble.setAnimateDots(false);
-                        handler.postDelayed(signShaker, durationUntilShaking);
-                        situation = Situation.TASK1;
-                        honeyEditText.setOnEditorActionListener(new OnSignEdit());
-                        timeOfSubTaskStart = System.currentTimeMillis();
-                         initMediaPlayer(1,4);
-                         mediaPlayer.start();
-                         honeyEditText.setEnabled(false);
-                         durationUntilShaking = mediaPlayer.getDuration();
-                         honeyEditText.setEnabled(true);
-                         statsString.append("Aufgabe: 4 x 3\n");
-                    }
-                    introSubTask++;
-                } else if (situation == Situation.TASK1) {
-                    if (bearDone) {
-                        bubbleSetVisible(1, true);
-                        bearBubble.setText("Schau mal, wer auch noch im Wald gesammelt hat.");
-                        bearBubble.setAnimateDots(false);
-                        bunny.setVisibility(View.VISIBLE);
-                        bunny.setOnClickListener(new BunnyOnClickListener());
-                        situation = Situation.TASK2;
-                        initMediaPlayer(1,13);
-                        mediaPlayer.start();
-                        honeyEditText.setEnabled(false);
-                        durationUntilShaking = mediaPlayer.getDuration();
-                        handler.postDelayed(bunnyShaker, durationUntilShaking);
-
-                    }
-                } else if (situation == Situation.DONE) {
-                    try {
-                        Start.outputStream.write(statsString.toString().getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Intent intent = new Intent(bunnyBubble.getContext(), Task3.class);
-                    startActivity(intent);
-                }
+            public void run() {
+                bubbleSetVisible(1, true);
+                bearBubble.setText("Tipp den Beutel an, falls du Hilfe brauchst.");
+                bearBubble.setAnimateDots(false);
+                initMediaPlayer(1,18);
+                mediaPlayer.start();
 
             }
+        };
 
 
-        });
+
 
 
         /*
@@ -394,6 +318,10 @@ public class Task2 extends Activity {
             handler.postDelayed(bearShaker, durationUntilShaking);
             bearBubble.setText(Html.fromHtml("Hallo, ich bin Bertha der Bär. Ich esse am liebsten <b>Honigwaben</b>."));
             bearBubble.setAnimateDots(true);
+            if (!bear.hasOnClickListeners()) {
+                bear.setOnClickListener(new BearOnClickListener());
+            }
+
         }
     });
 
@@ -402,11 +330,110 @@ public class Task2 extends Activity {
 
     }
 
+    private final class BearOnClickListener implements  View.OnClickListener {
+        private int introSubTask = 0;
+
+        @Override
+        public void onClick(View view) {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                return;
+            }
+            handler.removeCallbacks(bearShaker);
+            if (situation == Situation.INTRODUCTION) {
+                if (introSubTask == 0) {
+                    bearThoughtBubble.setVisibility(View.INVISIBLE);
+                    bearBubble.setText(Html.fromHtml("Es kleben immer <br> <b>3 Waben aneinander</b>."));
+                    bearBubble.setVisibility(View.VISIBLE);
+                    bearBubble.setAnimateDots(true);
+                    initMediaPlayer(1,1);
+                    mediaPlayer.start();
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    honeyEditText.setEnabled(false);
+                    handler.postDelayed(bearShaker, durationUntilShaking);
+                } else if (introSubTask == 1) {
+                    bearBubble.setText("So sehen sie aus:");
+                    bearBubble.setAnimateDots(true);
+                    initMediaPlayer(1,2);
+                    mediaPlayer.start();
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    honeyEditText.setEnabled(false);
+                    handler.postDelayed(bearShaker, durationUntilShaking);
+                } else if (introSubTask == 2) {
+                    bearBubble.setVisibility(View.INVISIBLE);
+                    bearThoughtBubble.setVisibility(View.VISIBLE);
+                    handler.postDelayed(bearShaker, 3000);
+                }  else if (introSubTask == 3) {
+                    bearBubble.setVisibility(View.VISIBLE);
+                    bearBubble.setText("Tipp mal den Beutel an!");
+                    timeOfSubTaskStart = System.currentTimeMillis();
+                    bearThoughtBubble.setVisibility(View.INVISIBLE);
+                    bearBubble.setAnimateDots(true);
+                    bag.setOnClickListener(new BagListener());
+                    initMediaPlayer(1,3);
+                    honeyEditText.setEnabled(false);
+                    mediaPlayer.start();
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    handler.postDelayed(bearShaker, durationUntilShaking);
+                } else if (introSubTask == 4) {
+                    bearBubble.setVisibility(View.VISIBLE);
+                    bearBubble.setText(Html.fromHtml("Ich habe <br><b>4 · 3 Waben</b> gesammelt und in meinen Beutel getan."));
+                    bearBubble.setAnimateDots(true);
+                    initMediaPlayer(1,5);
+                    mediaPlayer.start();
+                    honeyEditText.setEnabled(false);
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    handler.postDelayed(bearShaker, durationUntilShaking);
+                } else if (introSubTask == 5) {
+                    bearBubble.setVisibility(View.VISIBLE);
+                    bearBubble.setText(Html.fromHtml("Kannst du mir auf das Schild schreiben, <b>wie viele Waben</b> ich habe?"));
+                    bearBubble.setAnimateDots(false);
+                    handler.postDelayed(signShaker, durationUntilShaking);
+                    situation = Situation.TASK1;
+                    honeyEditText.setOnEditorActionListener(new OnSignEdit());
+                    timeOfSubTaskStart = System.currentTimeMillis();
+                    initMediaPlayer(1,4);
+                    mediaPlayer.start();
+                    honeyEditText.setEnabled(false);
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    honeyEditText.setEnabled(true);
+                    statsString.append("Aufgabe: 4 x 3\n");
+                }
+                introSubTask++;
+            } else if (situation == Situation.TASK1) {
+                if (bearDone) {
+                    bubbleSetVisible(1, true);
+                    bearBubble.setText("Schau mal, wer auch noch im Wald gesammelt hat.");
+                    bearBubble.setAnimateDots(false);
+                    bunny.setVisibility(View.VISIBLE);
+                    bunny.setOnClickListener(new BunnyOnClickListener());
+                    situation = Situation.TASK2;
+                    initMediaPlayer(1,13);
+                    mediaPlayer.start();
+                    honeyEditText.setEnabled(false);
+                    durationUntilShaking = mediaPlayer.getDuration();
+                    handler.postDelayed(bunnyShaker, durationUntilShaking);
+
+                }
+            } else if (situation == Situation.DONE) {
+                try {
+                    Start.outputStream.write(statsString.toString().getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(bunnyBubble.getContext(), Task3.class);
+                startActivity(intent);
+            }
+
+        }
+
+    }
+
     private final class BagListener implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 int currentFoodCount;
                 bubbleSetVisible(0, false);
+                handler.removeCallbacks(bagHelperMessageDisplayer);
                 if (bearDone && situation == Situation.TASK1) {
                     return; //this is the small pause before the bunny appears.
                 }
@@ -436,9 +463,6 @@ public class Task2 extends Activity {
                         }
                     }
                 }, 1500);
-                if (timeOfSubTaskStart > 10000) {
-                    timeOfSubTaskStart = 0;
-                }
                 statsString.append("    Beutel benutzt zum Zeitpunkt: " + (System.currentTimeMillis() - timeOfSubTaskStart)/1000 +"s\n");
             }
     }
@@ -459,13 +483,14 @@ public class Task2 extends Activity {
     }
 
     private void validateTask() {
-        // the user is done typing.
+        handler.removeCallbacks(bagHelperMessageDisplayer);
         if (situation == Situation.TASK1) {
             if (honeyEditText.getText().toString().equals(Integer.toString((bearSubTasks[currentSubTask])*3))) {
 
                 long timeDiff = (System.currentTimeMillis() - timeOfSubTaskStart)/1000;
                 statsString.append("    Zeit gebraucht: " + timeDiff + "s\n");
                 timeOfSubTaskStart = System.currentTimeMillis();
+                handler.postDelayed(bagHelperMessageDisplayer, 30000);
                 if (currentSubTask == 0 && timeDiff >= 45){
                     //Special easy task for slow kids
                     currentSubTask = bearSubTasks.length - 1;
@@ -630,7 +655,7 @@ public class Task2 extends Activity {
                     food[i].setImageResource(R.drawable.carrots);
                     food[i].setVisibility(View.INVISIBLE);
                 }
-
+                handler.postDelayed(bunnyShaker, durationUntilShaking);
             } else if (bunnyIntroSubTask == 1) {
                 bubbleSetVisible(2, true);
                 bunnyBubble.setText(Html.fromHtml("Ich liebe <b>Möhren</b> in Bündeln."));
@@ -639,6 +664,7 @@ public class Task2 extends Activity {
                 mediaPlayer.start();
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
+                handler.postDelayed(bunnyShaker, durationUntilShaking);
             }else if (bunnyIntroSubTask == 2) {
                     bubbleSetVisible(2, true);
                     bunnyBubble.setText(Html.fromHtml("Es hängen immer <b>4 zusammen</b>."));
@@ -647,7 +673,7 @@ public class Task2 extends Activity {
                 mediaPlayer.start();
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
-
+                handler.postDelayed(bunnyShaker, durationUntilShaking);
             } else if (bunnyIntroSubTask == 3) {
                 bubbleSetVisible(2, true);
                 bunnyBubble.setText("So sehen sie aus:");
@@ -656,10 +682,12 @@ public class Task2 extends Activity {
                 mediaPlayer.start();
                 honeyEditText.setEnabled(false);
                 durationUntilShaking = mediaPlayer.getDuration();
+                handler.postDelayed(bunnyShaker, durationUntilShaking);
             } else if (bunnyIntroSubTask == 4) {
                 bubbleSetVisible(2, false);
                 bunnyThoughtBubble.setVisibility(View.VISIBLE);
                 bunnyBubble.setAnimateDots(false);
+                handler.postDelayed(bunnyShaker, 3000);
             } else if (bunnyIntroSubTask == 5) {
                 bubbleSetVisible(2, true);
                 bunnyBubble.setText(Html.fromHtml("Ich habe <br><b>2 · 4 Möhren</b> gesammelt. <b>Wie viele</b> sind im Beutel?"));

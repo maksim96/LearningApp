@@ -47,4 +47,16 @@
         android:scaleType="fitXY"
         android:src="@drawable/squirrel" />
 
+    <research.educational.thiessen.learningappmock.helpers.SpeechBubble
+        android:id="@+id/startbubble"
+        android:layout_width="414dp"
+        android:layout_height="205dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="165dp"
+        android:layout_marginStart="262dp"
+        android:text="Wenn etwas wackelt, kannst du es antippen oder etwas anderes damit machen."
+        android:visibility="invisible" />
+
+
 </RelativeLayout>

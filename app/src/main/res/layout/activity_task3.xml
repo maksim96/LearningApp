@@ -32,7 +32,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="144dp"
-        android:layout_marginTop="93dp"
+        android:layout_marginTop="105dp"
         android:scaleType="fitXY"
         android:src="@drawable/squirrel"
         android:visibility="visible" />
@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="527dp"
-        android:layout_marginTop="162dp"
+        android:layout_marginTop="175dp"
         android:src="@drawable/bunny"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="20dp"
         android:scaleX="0.7"
         android:scaleY="0.7">
 
@@ -359,10 +359,11 @@
         android:id="@+id/sign"
         android:layout_width="438dp"
         android:layout_height="291dp"
-        android:layout_alignBottom="@+id/bunny"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="23dp"
-        android:src="@drawable/sign" />
+        android:layout_below="@+id/board"
+        android:layout_marginEnd="44dp"
+        android:src="@drawable/sign"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bear"
@@ -370,7 +371,7 @@
         android:layout_height="204dp"
         android:layout_alignBottom="@+id/relativeLayout"
         android:layout_alignEnd="@+id/squirrel"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginEnd="11dp"
         android:src="@drawable/bear"
         android:visibility="invisible" />
@@ -379,11 +380,11 @@
         android:id="@+id/board"
         android:layout_width="340dp"
         android:layout_height="420dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="11dp"
-        android:layout_marginEnd="38dp"
-        android:src="@drawable/board" />
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/leftImage"
+        android:src="@drawable/board"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <EditText
@@ -391,8 +392,8 @@
         android:layout_width="80dp"
         android:layout_height="78dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/editTextProduct"
-        android:layout_marginEnd="209dp"
+        android:layout_alignTop="@+id/editTextLeft"
+        android:layout_marginEnd="243dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
@@ -404,10 +405,9 @@
         android:id="@+id/editTextProduct"
         android:layout_width="122dp"
         android:layout_height="78dp"
-        android:layout_above="@+id/bunny"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="-155dp"
-        android:layout_marginEnd="49dp"
+        android:layout_alignTop="@+id/editTextRight"
+        android:layout_marginEnd="70dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
@@ -418,23 +418,25 @@
         android:id="@+id/editTextLeft"
         android:layout_width="80dp"
         android:layout_height="78dp"
+        android:layout_marginTop="480dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/editTextRight"
-        android:layout_marginEnd="325dp"
+        android:layout_marginEnd="356dp"
         android:background="#50ffffff"
         android:ems="10"
         android:gravity="center"
         android:inputType="numberPassword"
         android:nextFocusRight="@+id/editTextRight"
-        android:textSize="72sp" />
+        android:textSize="72sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/squirrel"
-        android:layout_marginEnd="181dp"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_marginEnd="212dp"
         android:text="="
         android:textSize="36sp" />
 
@@ -442,9 +444,9 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/squirrel"
-        android:layout_marginEnd="302dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/line6"
+        android:layout_marginBottom="213dp"
         android:text="·"
         android:textSize="36sp" />
 
@@ -452,9 +454,9 @@
         android:id="@+id/line1"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="-302dp"
-        android:layout_toEndOf="@+id/textView5"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="148dp"
         android:fontFamily="@font/finger_paint"
         android:textSize="30sp"
         android:typeface="monospace" />
@@ -535,7 +537,7 @@
         android:layout_width="299dp"
         android:layout_height="136dp"
         android:layout_alignBottom="@+id/squirrel"
-        android:layout_toStartOf="@+id/editTextLeft"
+        android:layout_toEndOf="@+id/relativeLayout"
         android:src="@drawable/sprechblase_left"
         android:text="Ich habe ganz viele Möhren gesammelt!"
         android:visibility="invisible" />
@@ -548,7 +550,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="210dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Jetzt, wo wir so viel gesammelt haben, können wir ein Fest feiern!"
         android:visibility="visible"
@@ -558,23 +560,26 @@
         android:id="@+id/leftImage"
         android:layout_width="55dp"
         android:layout_height="59dp"
-        android:layout_alignBottom="@+id/squirrel"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="334dp"
+        android:layout_below="@+id/editTextRight"
+        android:layout_marginEnd="370dp"
         android:alpha="0.6"
         android:scaleType="centerCrop"
-        android:src="@drawable/plate" />
+        android:src="@drawable/plate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/rightImage"
         android:layout_width="55dp"
         android:layout_height="59dp"
-        android:layout_alignBottom="@+id/squirrel"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="220dp"
+        android:layout_alignTop="@+id/leftImage"
+        android:layout_marginEnd="103dp"
         android:alpha="0.7"
         android:scaleType="fitXY"
-        android:src="@drawable/nuts" />
+        android:src="@drawable/nuts"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </RelativeLayout>

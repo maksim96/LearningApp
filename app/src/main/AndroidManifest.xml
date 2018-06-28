@@ -50,6 +50,7 @@
             android:theme="@style/FullscreenTheme">
 
 
+
         </activity>
 
         <meta-data

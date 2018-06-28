@@ -253,25 +253,25 @@
         android:visibility="invisible" />
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
-        android:id="@+id/choice_bubble3"
+        android:id="@+id/choice_bubble4"
         android:layout_width="161dp"
         android:layout_height="193dp"
         android:layout_below="@id/choice_bubble2"
         android:layout_alignLeft="@id/choice_bubble2"
         android:layout_marginTop="10dp"
-        android:text="3"
+        android:text="4"
         android:scaleX="-1"
         android:visibility="invisible" />
 
     <research.educational.thiessen.learningappmock.helpers.SpeechBubble
-        android:id="@+id/choice_bubble4"
+        android:id="@+id/choice_bubble8"
         android:layout_width="161dp"
         android:layout_height="193dp"
-        android:layout_below="@id/choice_bubble3"
+        android:layout_below="@id/choice_bubble4"
         android:layout_marginTop="10dp"
         android:layout_alignLeft="@id/choice_bubble2"
         android:scaleX="-1"
-        android:text="4"
+        android:text="8"
         android:visibility="invisible"/>
 
 

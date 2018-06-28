@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
@@ -40,21 +41,27 @@ public class Start extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                MediaPlayer m = MediaPlayer.create(findViewById(R.id.squirrel).getContext(), R.raw.e32);
+                m.start();
+                findViewById(R.id.startbubble).setVisibility(View.VISIBLE);
+
+                findViewById(R.id.start_root).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(view.getContext(), Task1.class);
+                        startActivity(intent);
+                    }
+                });
+
                 shaker = new Runnable() {
                     @Override
                     public void run() {
                         Animation shake = AnimationUtils.loadAnimation(findViewById(R.id.squirrel).getContext(), R.anim.shake_helper);
                         findViewById(R.id.squirrel).startAnimation(shake);
-                        findViewById(R.id.start_root).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(view.getContext(), Task1.class);
-                                startActivity(intent);
-                            }
-                        });
+
                     }
                 };
-                handler.postDelayed(shaker, 3000);
+                handler.postDelayed(shaker, 5000);
 
             }
 
